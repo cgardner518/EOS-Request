@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
+use File;
+use Storage;
 use App\EOSRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateEosRequest;
@@ -52,10 +54,10 @@ class EOSRequestsController extends Controller
     {
       $modalId = $request->modalId;
 
-      $eos = 
+      $eos = new EOSRequest;
       // dd($modalId);
 
-      return view('requests.modals.create', compact('modalId'));
+      return view('requests.modals.create', compact('modalId', 'eos'));
     }
 
     public function store(CreateEosRequest $request)
@@ -70,20 +72,22 @@ class EOSRequestsController extends Controller
       $thisRequest['status'] = 0;
       // dd(request()->file('stl'));
       // Get uploaded file info
+      // dd($request->stl);
       if($request->file('stl'))
       {
         $fileName = time() . '-' . $request->file('stl')->getClientOriginalName();
+        Storage::disk('local')->put('stlFiles/'.$fileName,File::get($request->file('stl')));
 
-        request()->file('stl')->storeAs('stlFiles', $fileName);
+        // $request->stl->store('stlFiles');
 
-        // request()->file('stl')->store('avatars');
 
-        $thisRequest['stl'] = $fileName;
+
+        // $thisRequest['stl'] = $fileName;
 
         $filePath = $request->file('stl')->path();
 
       }
-
+      dd([$thisRequest, $request->file('stl')]);
       $eos = EOSRequest::create($thisRequest);
 
       $eos->user_id = Auth::user()->id;
@@ -120,9 +124,13 @@ class EOSRequestsController extends Controller
       return view('requests.modals.edit', compact('modalId', 'eos'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
+      $eos = EOSRequest::findOrFail($id);
 
+      $eos->update($request->all());
+
+      return $this->index();
     }
 
 }

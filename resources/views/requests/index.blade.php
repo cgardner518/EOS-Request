@@ -29,9 +29,9 @@
             <th>
               Cost
             </th>
-            <th>
+            {{-- <th>
               Admin Notes
-            </th>
+            </th> --}}
             <th>
                STL File
             </th>
@@ -69,9 +69,9 @@
               <td>
                 ${{ $eos->cost}}
               </td>
-              <td>
+              {{-- <td>
                 {{ $eos->admin_notes}}
-              </td>
+              </td> --}}
               <td>
                 <a download href="{{$eos->filePath}}">
                 {{ $eos->stl}}

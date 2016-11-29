@@ -86,6 +86,8 @@
 
 @section('modal-js')
   <script>
-    modalAjaxSetup('{{ $modalId }}');
+    // modalAjaxSetup('{{ $modalId }}');
+    modalAjaxSetup({ modalId: '{{ $modalId }}' , success: console.log}); //for troubleshooting, prevents page reload
+
   </script>
 @stop
