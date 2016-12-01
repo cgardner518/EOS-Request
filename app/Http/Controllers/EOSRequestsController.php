@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
+use Gate;
 use File;
 use Storage;
 use App\EOSRequest;
@@ -16,20 +17,26 @@ class EOSRequestsController extends Controller
 
       $eosrequests = EOSRequest::with('users')->get();
       // dd($eosrequests);
-      // $user = Auth::user();
+      $user = Auth::user();
 
-      return view('requests.index', compact('eosrequests'));
+      return view('requests.index', compact('eosrequests', 'user'));
 
     }
 
-    public function show(EOSRequest $request)
+    public function show($id)
     {
-      return view('requests.show', compact('request'));
+      $eos = EOSRequest::findOrFail($id);
+
+      return view('requests.show', compact('eos'));
     }
 
     public function status($id, Request $request)
     {
       $modalId = $request->modalId;
+
+      $eos = EOSRequest::find($id);
+
+
 
       return view('requests.modals.changeStatus', compact('modalId', 'id'));
     }
@@ -43,21 +50,17 @@ class EOSRequestsController extends Controller
 
       $eos->save();
 
-      $eosrequests = EOSRequest::with('users')->get();
-
-      // return view('requests.index', compact('eosrequests'));
-      return $this->index();
+      return redirect('/requests');
 
     }
 
     public function create(Request $request)
     {
-      $modalId = $request->modalId;
 
       $eos = new EOSRequest;
       // dd($modalId);
 
-      return view('requests.modals.create', compact('modalId', 'eos'));
+      return view('requests.create', compact('eos'));
     }
 
     public function store(CreateEosRequest $request)
@@ -70,24 +73,18 @@ class EOSRequestsController extends Controller
       // $thisRequest['user_id'] = Auth::user()->id;
       $thisRequest['project_id'] = 3;
       $thisRequest['status'] = 0;
-      // dd(request()->file('stl'));
       // Get uploaded file info
-      // dd($request->stl);
       if($request->file('stl'))
       {
         $fileName = time() . '-' . $request->file('stl')->getClientOriginalName();
-        Storage::disk('local')->put('stlFiles/'.$fileName,File::get($request->file('stl')));
 
-        // $request->stl->store('stlFiles');
+        request()->file('stl')->store('stlFiles');
 
-
-
-        // $thisRequest['stl'] = $fileName;
+        $thisRequest['stl'] = $fileName;
 
         $filePath = $request->file('stl')->path();
 
       }
-      dd([$thisRequest, $request->file('stl')]);
       $eos = EOSRequest::create($thisRequest);
 
       $eos->user_id = Auth::user()->id;
@@ -117,20 +114,35 @@ class EOSRequestsController extends Controller
 
     public function edit($id)
     {
-      $modalId = 'edit_' . $id;
       $eos = EOSRequest::findOrFail($id);
-      // dd($modalId);
 
-      return view('requests.modals.edit', compact('modalId', 'eos'));
+      return view('requests.edit', compact('eos'));
     }
 
     public function update(Request $request, $id)
     {
       $eos = EOSRequest::findOrFail($id);
 
-      $eos->update($request->all());
+      switch ($request->status){
+        case 'pending':
+          $request->status = 0;
+          break;
+        case 'in-process':
+          $request->status = 1;
+          break;
+        case 'complete':
+          $request->status = 2;
+          break;
+      }
+      // dd($request->status);
+      $collection = collect($request->all());
 
-      return $this->index();
+      $eos->update($collection->forget('status')->toArray());
+
+      $eos->status = $request->status;
+      $eos->save();
+
+       return redirect('/requests');
     }
 
 }

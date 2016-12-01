@@ -30,7 +30,6 @@ class CreateEosRequest extends FormRequest
           'dimY'=> 'required',
           'dimZ'=> 'required',
           'number_of_parts'=> 'required',
-          // 'project_id'=> 'required',
           'stl'=> 'required'
         ];
     }

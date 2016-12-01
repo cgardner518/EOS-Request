@@ -15,7 +15,6 @@ class EOSRequest extends Model
     'dimX',
     'dimY',
     'dimZ',
-    'cost',
     'clean',
     'hinges',
     'threads',

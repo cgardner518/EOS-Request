@@ -1,10 +1,12 @@
 @extends('Labcoat::layouts/standard')
-
+@section('page-title')
+  EOS Requests
+@endsection
 @section('main-content')
   <div class="links content">
-    &#9243;
-    {{-- <a class="pull-right btn btn-primary btn-gradient" href="/requests/create">New Request</a> --}}
-    <button type="button" class="btn btn-primary btn-gradient pull-right" data-modal-url="{{ URL::route('request.create') }}" data-modal-id='createEos'>New Request</button>
+    &#128520;
+    <a class="pull-right btn btn-primary btn-gradient" href="/requests/create">New Request</a>
+    {{-- <button type="button" class="btn btn-primary btn-gradient pull-right" data-modal-url="{{ URL::route('request.create') }}" data-modal-id='createEos'>New Request</button> --}}
   </div>
   <div class="content">
     <div>
@@ -14,7 +16,6 @@
 				<p class="table-title">EOS Requests</p>
 				<p class="table-sub-title">The list of current EOS requests.</p>
 			</div>
-      @if( count($eosrequests)  )
       <table>
           <tr>
             <th>
@@ -29,9 +30,6 @@
             <th>
               Cost
             </th>
-            {{-- <th>
-              Admin Notes
-            </th> --}}
             <th>
                STL File
             </th>
@@ -53,15 +51,29 @@
               </th>
             @endcan
           </tr>
-      @foreach($eosrequests as $eos)
+            @foreach($eosrequests as $eos)
+              @if( $eos->users->id == $user->id  )
           <tr>
               <td>
                 {{ $eos->id}}
               </td>
               <td class="links">
-                <a href="javascript:void(0)" data-modal-url="{{ URL::route('request.edit', ['id'=> $eos->id]) }}" data-modal-id="edit_{{ $eos->id }}" >
-                  {{ $eos->name }}
-                </a>
+                @can('eosAdmin')
+                  @if($eos->status === 0)
+                    <a href="requests/{{ $eos->id }}/edit">
+                      {{ $eos->name }}
+                    </a>
+                  @else
+                    <a href="requests/{{ $eos->id }}">
+                      {{ $eos->name }}
+                    </a>
+                  @endif
+                @endcan
+                @can('eosRead')
+                  <a href="requests/{{ $eos->id }}">
+                    {{ $eos->name }}
+                  </a>
+                @endcan
               </td>
               <td>
                 {{ $eos->description}}
@@ -69,9 +81,6 @@
               <td>
                 ${{ $eos->cost}}
               </td>
-              {{-- <td>
-                {{ $eos->admin_notes}}
-              </td> --}}
               <td>
                 <a download href="{{$eos->filePath}}">
                 {{ $eos->stl}}
@@ -112,11 +121,10 @@
                 </td>
               @endcan
             </tr>
-      @endforeach
+          @endif
+        @endforeach
      </table>
-   @else
-     <h2>No Pending Requests</h2>
-   @endif
+ {{-- <h2>No Pending Requests</h2> --}}
    </div>
 
  </div>
