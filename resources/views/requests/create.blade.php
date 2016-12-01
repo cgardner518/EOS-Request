@@ -1,16 +1,20 @@
 @extends('Labcoat::layouts/standard')
 @section('page-title')
-  <a href="/requests" style="color:white">EOS Requests</a> /
-    Create
+  <a href="/requests" style="color:white">EOS Requests</a> / New Request
 @endsection
 @section('main-content')
-
   <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    New EOS Request
     {!! Form::open(['url' => 'requests', 'files' => true]) !!}
 
   <div class="form-row">
     {!! Form::label('name', 'Name') !!}
     {!! Form::text('name', $eos->name, ['class' => 'form-control']) !!}
+  </div><br>
+
+  <div class="form-row">
+    {!! Form::label('project_id', 'Project') !!}
+    {!! Form::select('project_id', $projects, $eos->project_id, ['class' => 'form-control']) !!}
   </div><br>
 
     <div class="form-row">

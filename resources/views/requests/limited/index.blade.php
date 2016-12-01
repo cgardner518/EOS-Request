@@ -3,20 +3,13 @@
   EOS Requests
 @endsection
 @section('main-content')
-  <style>
-    .bensolo{
-      display: flex;
-
-    }
-  </style>
   <div class="links content">
-    <div class="bensolo">
-      {{-- <h1>&#127825;</h1>
-      <h1>&#127814;</h1> --}}
-      <h1>&#127829;</h1>
-      <h1>&#127839;</h1>
-      <h1>&#127828;</h1>
-    </div>
+    {{-- &#127825; --}}
+    {{-- &#127814; --}}
+    &#127829;
+    &#127839;
+    &#127828;
+    &hearts;
     <a class="pull-right btn btn-primary btn-gradient" href="/requests/create">New Request</a>
     {{-- <button type="button" class="btn btn-primary btn-gradient pull-right" data-modal-url="{{ URL::route('request.create') }}" data-modal-id='createEos'>New Request</button> --}}
   </div>
@@ -65,6 +58,7 @@
               </th>
           </tr>
             @foreach($eosrequests as $eos)
+              @if( $eos->users->id == $user->id  )
           <tr>
               <td>
                 {{ $eos->id}}
@@ -137,6 +131,7 @@
                 </td>
                   <td align='center'><a href="javascript:undefined;" class="fa fa-fw fa-trash" style="text-decoration: none;" data-delete-url="{{ URL::route('request.destroy', $eos['id']) }}"></a></td>
             </tr>
+          @endif
         @endforeach
      </table>
  {{-- <h2>No Pending Requests</h2> --}}
@@ -144,8 +139,3 @@
 
  </div>
 @stop
-
-
-{{-- <button type="submit" data-modal-url="{{ URL::route('request.changeStatus', ['id' => $eos->id]) }}" class="btn btn-warning btn-gradient" data-modal-id="changeStatus-{{ $eos->id }}" >
-Change
-</button> --}}

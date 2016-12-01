@@ -40,7 +40,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">You Lose!</div>
+                <div class="title">!!!!!!</div>
             </div>
         </div>
     </body>

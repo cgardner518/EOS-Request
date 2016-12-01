@@ -1,8 +1,7 @@
 @extends('Labcoat::layouts/standard')
 
 @section('page-title')
-  <a href="/requests" style="color:white">EOS Requests</a> /
-    Edit
+  <a href="/requests" style="color:white">EOS Requests</a> / {{ $eos->name }}
 @endsection
 
 @section('main-content')
@@ -13,6 +12,11 @@
   <div class="form-row">
     {!! Form::label('name', 'Name') !!}
     {!! Form::text('name', $eos->name, ['class' => 'form-control']) !!}
+  </div><br>
+
+  <div class="form-row">
+    {!! Form::label('project_id', 'Project') !!}
+    {!! Form::select('project_id', $projects, $eos->project_id, ['class' => 'form-control']) !!}
   </div><br>
 
     <div class="form-row">
