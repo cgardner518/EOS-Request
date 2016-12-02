@@ -138,7 +138,7 @@ class EOSRequestsController extends Controller
       // I set the status in the switch stateent so I'll leave it out in the update method
       $collection = collect($request->all());
       $eos->update($collection->forget('status')->toArray());
-      
+
       $eos->status = $request->status;
       $eos->save();
 
@@ -150,6 +150,16 @@ class EOSRequestsController extends Controller
       EOSRequest::destroy($id);
 
       return redirect('/requests');
+    }
+    public function loggery()
+    {
+      // Auth::loginUsingId('855bf786-c83c-11e5-a306-08002777c33d');  // Donny Developer
+      //  Auth::loginUsingId('blah');  // Mom
+  	   Auth::loginUsingId('c5ad9b2d-b59e-11e6-8fb9-0aad45e20ffe');  // Peasant
+  		//  Auth::loginUsingId('48356e60-b576-11e6-8fb9-0aad45e20ffe');  // Michael Jackson
+      	// Auth::loginUsingId('5f23d3c6-b1b3-11e6-8fb9-0aad45e20ffe'); // CTG
+
+      return $this->index();
     }
 
 }

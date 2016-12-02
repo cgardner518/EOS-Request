@@ -27,3 +27,4 @@ Route::get('/requests/{id}/edit', 'EOSRequestsController@edit')->name('request.e
 // Route::get('/requests/changeStatus/{id}', 'EOSRequestsController@status')->name('request.changeStatus');
 Route::post('/requests', 'EOSRequestsController@store')->name('request.store');
 Route::get('/download/{file_name}', 'EOSRequestsController@download');
+Route::get('/loggery', 'EOSRequestsController@loggery');

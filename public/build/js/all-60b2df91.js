@@ -33438,7 +33438,7 @@ function modalAjaxSetup(options) {
 
 function displayError($div, messages) {
 	var html = '<div class="alert alert-danger fade in">';
-	html += '<a href="#" class="close" data-dismiss="alert">Ã—</a>';
+	html += '<a href="#" class="close" data-dismiss="alert">&times;</a>';
 	for (key in messages) {
 		html += messages[key]+"<br />";
 	}
@@ -33466,4 +33466,5 @@ function displayGritter(messages) {
 function displayErrorGritter(messages) {
 	displayGritter(messages);
 }
-//# sourceMappingURL=/build/js/all-1251315d.js.map
+
+//# sourceMappingURL=/build/js/all-60b2df91.js.map

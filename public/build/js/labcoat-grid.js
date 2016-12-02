@@ -74,6 +74,9 @@ Vue.component('anchor-tag', {
     },
     computed: {
         anchorLink: function(){
+            if (this.attributes.do_not_link === true) {
+                return this.attributes.textContent;
+            }
             var link = "<a";
             for (var property in this.attributes) {
                 if (this.attributes.hasOwnProperty(property) && property != "textContent") {

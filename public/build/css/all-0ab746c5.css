@@ -12409,4 +12409,33 @@ body.secure-marking #main-page-wrapper {
           #pw-validate-form #userPWRequire ul li.yes .fa:before {
             content: "\f00c"; }
 
-/*# sourceMappingURL=/build/css/all-c856b67b.css.map */
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+.form-section-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+form {
+  width: 55em; }
+
+.words {
+  width: 55em;
+  margin: 5%; }
+
+.dimensions {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 30%; }
+
+.dimensions input {
+  width: 60px; }
+
+.dims {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around; }
+
+/*# sourceMappingURL=/build/css/all-0ab746c5.css.map */
