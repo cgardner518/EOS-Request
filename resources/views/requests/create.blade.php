@@ -24,18 +24,18 @@
     </div>
     {!! Form::open(['url' => 'requests', 'files' => true]) !!}
 
-  <div class="form-group dims">
-    {!! Form::label('name', 'Name:', ['class' => 'control-label col-sm-1']) !!}
+  <div class="form-group nameField">
+    {!! Form::label('name', 'Name:', ['class' => 'control-label pull-left']) !!}
     <div class="col-sm-11">
-      {!! Form::text('name', $eos->name, ['class' => 'pull-left form-control']) !!}
+      {!! Form::text('name', $eos->name, ['class' => 'form-control']) !!}
     </div>
     <span class="badge red">Required</span>
   </div><br>
 
-  <div class="form-group">
-    {!! Form::label('project_id', 'Project:', ['class' => 'control-label col-sm-1']) !!}
+  <div class="project">
+    {!! Form::label('project_id', 'Project:', ['class' => 'control-label']) !!}
     <div class="col-sm-4">
-      {!! Form::select('project_id', $projects, $eos->project_id, ['class' => 'pull-left form-control']) !!}
+      {!! Form::select('project_id', $projects, $eos->project_id) !!}
     </div>
   </div><br>
 
@@ -69,23 +69,26 @@
     </div><br> --}}
 
     <div class="form-group">
-      <div class="col-md-4">
-          {!! Form::label('clean', 'Should Item Be Cleaned?') !!}
-          {!! Form::checkbox('clean', 1 ,$eos->clean) !!}
-        </div>
-        <div class="col-md-4">
-          {!! Form::label('hinges', 'Does Item Have Hinges?') !!}
-          {!! Form::checkbox('hinges', 1 ,$eos->hinges) !!}
-        </div>
-        <div class="col-md-4">
-          {!! Form::label('threads', 'Does Item Have Threads?') !!}
-          {!! Form::checkbox('threads', 1 ,$eos->threads)!!}
+      {!! Form::label('', 'Additional Information') !!}
+      <div class="chckbx">
+          {{-- {!! Form::label('clean', 'Should Item Be Cleaned?') !!} --}}
+          <div>{!! Form::checkbox('clean', 1 ,$eos->clean) !!} Perfom post building cleaning.</div>
+          {{-- {!! Form::label('hinges', 'Does Item Have Hinges?') !!} --}}
+          <div>
+            {!! Form::checkbox('hinges', 1 ,$eos->hinges) !!} Has hinges or other moving parts.
+          </div>
+          {{-- {!! Form::label('threads', 'Does Item Have Threads?') !!} --}}
+          <div>
+            {!! Form::checkbox('threads', 1 ,$eos->threads)!!} Has threads
+          </div>
         </div>
     </div><br>
 
-    <div class="form-row">
+    <div class="form-row dayPicker">
+      {{-- <div class="dayPicker"> --}}
       {!! Form::label('needed_by', 'Date Needed By:') !!}
       {!! Form::dateField() !!}
+    {{-- </div> --}}
       {{-- {!! Form::date('needed_by', $eos->needed_by, ['class' => 'form-control input-group-addon clickable fa fa-calendar hasDatepicker']) !!} --}}
       {{-- <span class="inline-left">
       <div class="input-group narrow left">
@@ -96,10 +99,12 @@
   </div>
 </span> --}}
     </div><br>
+    Note: It is preferable that you do not give a deadline. Because parts are built as space is available, a deadline that is very soon will not be achievable in many cases. Please allow time to get into the queue.
 
-    <div class="form-row">
-      {!! Form::label('stl', 'File') !!}
+    <div class="form-row stlFile">
+      {!! Form::label('stl', 'File: ') !!}
       {!! Form::file('stl') !!}
+      <span class="badge red">Required</span>
     </div><br>
 
     {{-- <div class="form-row">
@@ -107,9 +112,10 @@
       {{ $eos->status }}
     </div><br> --}}
 
-    <div class="form-row">
-      {!! Form::label('number_of_parts', 'Number of Parts') !!}
+    <div class="form-row parts">
+      {!! Form::label('number_of_parts', 'Number of Parts: ') !!}
       {!! Form::text('number_of_parts', $eos->number_of_parts, ['class' => 'form-control'])!!}
+      <span class="badge red">Required</span>
     </div><br>
 
     <div class="form-row">

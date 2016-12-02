@@ -16,11 +16,13 @@
 }
 
 form{
-  width: 55em;
+  width: 60em;
+  padding: 0;
+  outline: 1px solid aqua;
 }
 
 .words {
-  width: 55em;
+  width: 60em;
   margin: 5%;
 }
 
@@ -28,7 +30,7 @@ form{
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
-  width: 30%;
+  // width: 20%;
   // outline: 2px solid blue;
 }
 
@@ -40,4 +42,64 @@ form{
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
+  width: 80%;
+}
+
+.nameField{
+  outline: 1px solid purple;
+  display: flex;
+  align-items: flex-start;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.chckbx{
+  display: flex;
+  flex-direction: column;
+}
+
+.chckbx div{
+  margin-left: 2em;
+}
+.project{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: -10px;
+  padding: 0;
+  outline: 1px solid blue;
+  // height: 5%;
+}
+
+.project select{
+  margin-left: -.5em;
+  width: 30em;
+}
+
+.dayPicker{
+  display: flex;
+  outline: 1px solid orange;
+  padding: 0;
+  margin-bottom: -20px;
+}
+
+.stlFile{
+  display: flex;
+  align-items: center;
+  margin-top: 1em;
+}
+
+.stlFile span{
+  margin-left: -8em;
+}
+
+.parts{
+  display: flex;
+  align-items: flex-start;
+  outline: 1px solid red;
+}
+
+.parts input{
+  width: 4em;
+  margin-right: .7em
 }
