@@ -28,7 +28,7 @@ class CreateEOSRequestsTable extends Migration
             $table->boolean('threads');
             $table->date('needed_by')->nullable();
             $table->integer('number_of_parts');
-            $table->integer('status')->default(0);
+            $table->integer('status');
             $table->text('admin_notes')->nullable();
             $table->date('completion_date')->nullable();
             $table->string('stl')->nullable();

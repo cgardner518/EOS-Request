@@ -12,6 +12,7 @@ use App\EOSRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\EditEosRequest;
 use App\Http\Requests\CreateEosRequest;
+
 class EOSRequestsController extends Controller
 {
     public function index()
@@ -50,7 +51,6 @@ class EOSRequestsController extends Controller
       $eos = EOSRequest::find($id);
 
       $eos->status ++;
-
       $eos->save();
 
       return redirect('/requests');
@@ -58,13 +58,10 @@ class EOSRequestsController extends Controller
 
     public function create(Request $request)
     {
-
       $eos = new EOSRequest;
 
       $projects = Project::projectsForUser();
-
       $projects[0] = 'Not a project';
-
       ksort($projects);
 
       return view('requests.create', compact('eos', 'projects'));
@@ -74,33 +71,21 @@ class EOSRequestsController extends Controller
     {
 
       $thisRequest = $request->all();
-
+      // The DB was acting up because of the dates being empty so..
       $thisRequest['needed_by'] = date('Y-m-d h:i:s');
       $thisRequest['completion_date'] = date('Y-m-d h:i:s');
-      // $thisRequest['user_id'] = Auth::user()->id;
-      // $thisRequest['project_id'] = 3;
-      $thisRequest['status'] = 0;
+
       // Get uploaded file info
-      if($request->file('stl'))
-      {
-        $fileName = time() . '-' . $request->file('stl')->getClientOriginalName();
+      $fileName = time() . '-' . $request->file('stl')->getClientOriginalName();
+      $request->file('stl')->storeAs('stlFiles', $fileName);
+      $thisRequest['stl'] = $fileName;
 
-        request()->file('stl')->store('stlFiles');
-
-        $thisRequest['stl'] = $fileName;
-
-        $filePath = $request->file('stl')->path();
-
-      }
+      // Save the EOS Request, save the world
       $eos = EOSRequest::create($thisRequest);
-
       $eos->user_id = Auth::user()->id;
       $eos->save();
 
-      // Get all EOSRquests.. again
-      $eosrequests = EOSRequest::all();
-
-      return view('requests.index', compact('eosrequests'));
+      return redirect('/requests');
     }
 
     public function download($file_name)
@@ -117,6 +102,7 @@ class EOSRequestsController extends Controller
         readfile($file);
         exit;
       }
+
     }
 
     public function edit($id)
@@ -135,6 +121,7 @@ class EOSRequestsController extends Controller
 
       $eos = EOSRequest::findOrFail($id);
 
+      // Change status from string to integer
       switch ($request->status){
         case 'pending':
           $request->status = 0;
@@ -145,12 +132,13 @@ class EOSRequestsController extends Controller
         case 'complete':
           $request->status = 2;
           break;
+        default:
+          $request->status = $eos->status;
       }
-      // dd($request->status);
+      // I set the status in the switch stateent so I'll leave it out in the update method
       $collection = collect($request->all());
-
       $eos->update($collection->forget('status')->toArray());
-
+      
       $eos->status = $request->status;
       $eos->save();
 

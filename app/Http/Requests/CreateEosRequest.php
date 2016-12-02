@@ -13,7 +13,7 @@ class CreateEosRequest extends FormRequest
      */
     public function authorize()
     {
-      if (Auth::User()->can('eosAdmin')) {
+      if (Auth::User()->can('eosAdmin') || Auth::User()->can('eosGuest')) {
         return true;
       }
       \App::abort(403, 'Sup');

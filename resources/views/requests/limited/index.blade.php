@@ -3,13 +3,20 @@
   EOS Requests
 @endsection
 @section('main-content')
+<style>
+  .bensolo{
+    display: flex;
+
+  }
+</style>
   <div class="links content">
-    {{-- &#127825; --}}
-    {{-- &#127814; --}}
-    &#127829;
-    &#127839;
-    &#127828;
-    &hearts;
+    <div class="bensolo">
+      {{-- <h1>&#127825;</h1>
+      <h1>&#127814;</h1> --}}
+      <h1>&#127829;</h1>
+      <h1>&#127839;</h1>
+      <h1>&#127828;</h1>
+    </div>
     <a class="pull-right btn btn-primary btn-gradient" href="/requests/create">New Request</a>
     {{-- <button type="button" class="btn btn-primary btn-gradient pull-right" data-modal-url="{{ URL::route('request.create') }}" data-modal-id='createEos'>New Request</button> --}}
   </div>
@@ -47,12 +54,12 @@
             <th>
               User
             </th>
-              <th>
+              {{-- <th>
                 Change
               </th>
               <th>
                 Reject
-              </th>
+              </th> --}}
               <th>
                 Delete
               </th>
@@ -80,7 +87,11 @@
                 {{ $eos->description}}
               </td>
               <td>
+                @if($eos->project_id == 0)
+                  No Project
+                @else
                 {{ $projects[$eos->project_id] }}
+                @endif
               </td>
               <td>
                 <a download href="{{$eos->filePath}}">
@@ -107,7 +118,7 @@
               <td>
                 {{ $eos->users->name}}
               </td>
-                <td>
+                {{-- <td>
                   @if($eos->status === 0)
                     {!! Form::open(['method' => 'POST', 'url' => 'change/' . $eos->id ]) !!}
                     <button type="submit" class="btn btn-warning btn-gradient" >
@@ -121,14 +132,14 @@
                     </button>
                     {!! Form::close() !!}
                   @endif
-                </td>
-                <td>
+                </td> --}}
+                {{-- <td>
                   {!! Form::open(['method' => 'POST', 'url' => 'reject/' . $eos->id ]) !!}
                   <button type="submit" class="btn btn-danger btn-gradient" name="reject">
                     Reject
                   </button>
                   {!! Form::close() !!}
-                </td>
+                </td> --}}
                   <td align='center'><a href="javascript:undefined;" class="fa fa-fw fa-trash" style="text-decoration: none;" data-delete-url="{{ URL::route('request.destroy', $eos['id']) }}"></a></td>
             </tr>
           @endif
@@ -138,4 +149,6 @@
    </div>
 
  </div>
+ <script>$(document).mousemove(function(evt){$('.bensolo h1').css({"margin-left":evt.clientX/45+"px","transform":"perspective(600px) rotateY("+evt.clientX/3+"deg) rotateX("+evt.clientY/-1+"deg)"})})</script>
+
 @stop

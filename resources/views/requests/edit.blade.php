@@ -35,10 +35,6 @@
       {!! Form::text('dimZ', $eos->dimZ) !!}
     </div><br>
 
-    <div class="form-row">
-      {!! Form::label('cost', 'Cost') !!}
-      {!! Form::text('cost', $eos->cost, ['class' => 'form-control']) !!}
-    </div><br>
 
     <div class="form-group">
       <div class="col-md-4">
@@ -64,7 +60,11 @@
       {!! Form::label('stl', 'File') !!}
       {{$eos->stl}}
     </div><br>
-
+@can('eosAdmin')
+  <div class="form-row">
+    {!! Form::label('cost', 'Cost') !!}
+    {!! Form::text('cost', $eos->cost, ['class' => 'form-control']) !!}
+  </div><br>
   {!! Form::label('status', 'Status', ['class' => 'form-row']) !!}  <span class="badge red">Required</span>
     <div class="form-row">
       <div class="col-md-4">
@@ -83,7 +83,7 @@
       </div>
     </div>
     <br>
-
+@endcan
     <div class="form-row">
       {!! Form::label('number_of_parts', 'Number of Parts') !!}
       {!! Form::text('number_of_parts', $eos->number_of_parts, ['class' => 'form-control'])!!}

@@ -7,9 +7,11 @@
     New EOS Request
     {!! Form::open(['url' => 'requests', 'files' => true]) !!}
 
-  <div class="form-row">
-    {!! Form::label('name', 'Name') !!}
-    {!! Form::text('name', $eos->name, ['class' => 'form-control']) !!}
+  <div class="form-group">
+    {!! Form::label('name', 'Name:', ['class' => ' control-label col-sm-1']) !!}
+    <div class="col-sm-11">
+      {!! Form::text('name', $eos->name, ['class' => 'pull-left form-control']) !!}
+    </div>
   </div><br>
 
   <div class="form-row">
@@ -81,4 +83,5 @@
     <input class="pull-right btn btn-success btn-gradient" type="submit">
 
     {!! Form::close() !!}
+  </div>
 @stop
