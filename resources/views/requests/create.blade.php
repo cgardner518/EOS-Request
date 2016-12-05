@@ -22,7 +22,7 @@
     <div class="words">
       Sed ultrices viverra nibh, eget consectetur enim imperdiet ut. Morbi mauris tellus, tempor vitae dui a, faucibus consectetur nisi. Maecenas tempor tincidunt viverra. Curabitur fermentum et felis vitae vehicula. Aliquam convallis magna eget quam suscipit, ac fermentum purus volutpat.
     </div>
-    {!! Form::open(['url' => 'requests', 'files' => true]) !!}
+    {!! Form::open(['url' => 'requests', 'files' => true, 'id' => 'form']) !!}
 
   <div class="form-group nameField">
     {!! Form::label('name', 'Name:', ['class' => 'control-label pull-left']) !!}

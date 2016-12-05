@@ -16,7 +16,6 @@
       <h1>&#127839;</h1>
       <h1>&#127828;</h1>
     </div>
-    <a class="pull-right btn btn-primary btn-gradient" href="/requests/create">New Request</a>
     {{-- <button type="button" class="btn btn-primary btn-gradient pull-right" data-modal-url="{{ URL::route('request.create') }}" data-modal-id='createEos'>New Request</button> --}}
   </div>
   <div class="content">
@@ -24,6 +23,7 @@
       <br>
       <br>
       <div class="indent-padding width-limited-1200">
+        <a class="pull-right btn btn-primary btn-gradient" href="/requests/create">New Request</a>
         <div class="table-header">
           <p class="table-title">EOS Requests</p>
           <p class="table-sub-title">The list of current EOS requests.</p>

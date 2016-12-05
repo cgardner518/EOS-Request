@@ -12417,7 +12417,7 @@ body.secure-marking #main-page-wrapper {
   justify-content: center;
   align-items: center; }
 
-form {
+#form {
   width: 60em;
   padding: 0;
   outline: 1px solid aqua; }
@@ -12489,4 +12489,4 @@ form {
   width: 4em;
   margin-right: 0.7em; }
 
-/*# sourceMappingURL=/build/css/all-36948336.css.map */
+/*# sourceMappingURL=/build/css/all-55f64aa6.css.map */
