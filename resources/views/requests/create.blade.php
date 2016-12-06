@@ -25,8 +25,8 @@
     {!! Form::open(['url' => 'requests', 'files' => true, 'id' => 'form']) !!}
 
   <div class="form-group nameField">
-    {!! Form::label('name', 'Name:', ['class' => 'control-label pull-left']) !!}
-    <div class="col-sm-11">
+    {!! Form::label('name', 'Name:', ['class' => 'control-label']) !!}
+    <div class="inputWrapper">
       {!! Form::text('name', $eos->name, ['class' => 'form-control']) !!}
     </div>
     <span class="badge red">Required</span>
@@ -34,7 +34,7 @@
 
   <div class="project">
     {!! Form::label('project_id', 'Project:', ['class' => 'control-label']) !!}
-    <div class="col-sm-4">
+    <div >
       {!! Form::select('project_id', $projects, $eos->project_id) !!}
     </div>
   </div><br>

@@ -10,17 +10,22 @@
   }
 </style>
   <div class="links content">
+    @if($user->name == 'Ben Solo')
     <div class="bensolo">
-      {{-- <h1>&#127825;</h1>
-      <h1>&#127814;</h1> --}}
+      <h1>&#127825;</h1>
+      <h1>&#127814;</h1>
       <h1>&#127829;</h1>
       <h1>&#127839;</h1>
       <h1>&#127828;</h1>
     </div>
-    <a class="pull-right btn btn-primary btn-gradient" href="/requests/create">New Request</a>
+    @endif
+
+
     {{-- <button type="button" class="btn btn-primary btn-gradient pull-right" data-modal-url="{{ URL::route('request.create') }}" data-modal-id='createEos'>New Request</button> --}}
   </div>
+  <div class="indent-padding width-limited-1200">
   <div class="content">
+    <a class="pull-right btn btn-primary btn-gradient" href="/requests/create">New Request</a>
     <div>
       <br>
       <br>
@@ -72,7 +77,7 @@
               </td>
               <td class="links">
 
-                  @if($eos->status === 0 || $eos->status === 1)
+                  @if($eos->status === 0)
                     <a href="requests/{{ $eos->id }}/edit">
                       {{ $eos->name }}
                     </a>
@@ -140,7 +145,11 @@
                   </button>
                   {!! Form::close() !!}
                 </td> --}}
-                  <td align='center'><a href="javascript:undefined;" class="fa fa-fw fa-trash" style="text-decoration: none;" data-delete-url="{{ URL::route('request.destroy', $eos['id']) }}"></a></td>
+                  <td align='center'>
+                    @if($eos->status == 0 || $eos->status == 3)
+                    <a href="javascript:undefined;" class="fa fa-fw fa-trash" style="text-decoration: none;" data-delete-url="{{ URL::route('request.destroy', $eos['id']) }}"></a>
+                    @endif
+                  </td>
             </tr>
           @endif
         @endforeach
@@ -148,6 +157,7 @@
  {{-- <h2>No Pending Requests</h2> --}}
    </div>
 
+ </div>
  </div>
  <script>$(document).mousemove(function(evt){$('.bensolo h1').css({"margin-left":evt.clientX/45+"px","transform":"perspective(600px) rotateY("+evt.clientX/3+"deg) rotateX("+evt.clientY/-1+"deg)"})})</script>
 

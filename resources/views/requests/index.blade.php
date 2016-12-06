@@ -11,10 +11,10 @@
   <div class="links content">
     <div class="bensolo">
       {{-- <h1>&#127825;</h1>
-      <h1>&#127814;</h1> --}}
+      <h1>&#127814;</h1>
       <h1>&#127829;</h1>
       <h1>&#127839;</h1>
-      <h1>&#127828;</h1>
+      <h1>&#127828;</h1> --}}
     </div>
     {{-- <button type="button" class="btn btn-primary btn-gradient pull-right" data-modal-url="{{ URL::route('request.create') }}" data-modal-id='createEos'>New Request</button> --}}
   </div>
@@ -23,7 +23,7 @@
       <br>
       <br>
       <div class="indent-padding width-limited-1200">
-        <a class="pull-right btn btn-primary btn-gradient" href="/requests/create">New Request</a>
+        <a class="pull-right btn btn-primary btn-gradient" href="/requests/create">New Request</a><br><br>
         <div class="table-header">
           <p class="table-title">EOS Requests</p>
           <p class="table-sub-title">The list of current EOS requests.</p>
@@ -133,11 +133,13 @@
                   @endif
                 </td>
                 <td>
+                  @if($eos->status == 0)
                   {!! Form::open(['method' => 'POST', 'url' => 'reject/' . $eos->id ]) !!}
                   <button type="submit" class="btn btn-danger btn-gradient" name="reject">
                     Reject
                   </button>
                   {!! Form::close() !!}
+                  @endif
                 </td>
                   <td align='center'>
                     @if($eos->status === 0 || $eos->status === 3)

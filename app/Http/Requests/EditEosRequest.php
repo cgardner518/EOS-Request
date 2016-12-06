@@ -15,6 +15,7 @@ class EditEosRequest extends FormRequest
     public function authorize()
     {
       // if (Auth::User()->can('eosAdmin')) {
+        // dd('Hi mom');
         return true;
       // }
       \App::abort(403, 'Sup');

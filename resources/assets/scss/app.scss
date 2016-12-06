@@ -8,98 +8,105 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-.form-section-div{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-#form{
-  width: 60em;
-  padding: 0;
-  outline: 1px solid aqua;
-}
-
 .words {
-  width: 60em;
-  margin: 5%;
+  text-align: left;
+
 }
 
-.dimensions{
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  // width: 20%;
-  // outline: 2px solid blue;
-}
-
-.dimensions input{
-  width: 60px;
-}
-
-.dims{
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-  width: 80%;
+.form-section-div {
+  display: block;
+  // outline: 1px solid lime;
+  margin: 5em;
 }
 
 .nameField{
-  outline: 1px solid purple;
-  display: flex;
-  align-items: flex-start;
-  padding: 0;
-  margin-bottom: 0;
+  display: block;
+  width: 100%;
+  margin-top: 1em;
+  // outline: 1px solid aqua;
+  .inputWrapper{
+    width: 65%;
+    display: inline-block;
+  }
+  label {
+    display: inline-block;
+  }
 }
 
-.chckbx{
-  display: flex;
-  flex-direction: column;
+.dims {
+  display: block;
+  width: 100%;
+  padding-left: 1em;
+  .dimensions {
+    display: inline-block;
+    input{
+      width: 4em;
+      max-width: 50%;
+    }
+    label, input, span {
+      display: inline-block;
+      margin: .2em;
+    }
+  }
 }
 
-.chckbx div{
-  margin-left: 2em;
-}
-.project{
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  margin-top: -10px;
-  padding: 0;
-  outline: 1px solid blue;
-  // height: 5%;
+.project {
+  display: block;
+  margin-top: -30px;
+  // outline: 1px solid red;
+  width: 100%;
+  label, * {
+    display: inline-block;
+  }
+  select{
+    margin-left: -5px;
+    width: 25em;
+  }
 }
 
-.project select{
-  margin-left: -.5em;
-  width: 30em;
+.chckbx {
+  margin-left: 35px;
 }
 
 .dayPicker{
-  display: flex;
-  outline: 1px solid orange;
-  padding: 0;
-  margin-bottom: -20px;
-}
+  display: block;
+  // outline: 1px solid blue;
+  margin-bottom: -10px;
+  label{
+    display: inline-block;
+  }
+  label+span{
+    display: inline-block;
+    padding: 0;
+    margin-bottom: -10px;
+  }
 
-.stlFile{
-  display: flex;
-  align-items: center;
-  margin-top: 1em;
-}
-
-.stlFile span{
-  margin-left: -8em;
 }
 
 .parts{
-  display: flex;
-  align-items: flex-start;
-  outline: 1px solid red;
+  display: block;
+  input{
+    width: 4em;
+  }
+  *{
+    display: inline-block;
+  }
 }
 
-.parts input{
-  width: 4em;
-  margin-right: .7em
+.price{
+  display: block;
+  input{
+    width: 4em;
+  }
+  *{
+    display: inline-block;
+  }
+}
+
+.stlFile{
+  display: block;
+  // outline: 1px solid yellow;
+   *{
+    display: inline-block !important;
+  }
 }
