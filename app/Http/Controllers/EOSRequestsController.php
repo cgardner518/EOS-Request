@@ -154,11 +154,15 @@ class EOSRequestsController extends Controller
     public function loggery()
     {
       // Auth::loginUsingId('855bf786-c83c-11e5-a306-08002777c33d');  // Donny Developer
-      //  Auth::loginUsingId('9a2fe30b-bbc7-11e6-8fb9-0aad45e20ffe');  // Ben Solo
   	  //  Auth::loginUsingId('c5ad9b2d-b59e-11e6-8fb9-0aad45e20ffe');  // Sampson
-  		 Auth::loginUsingId('48356e60-b576-11e6-8fb9-0aad45e20ffe');  // Michael Jackson
       	// Auth::loginUsingId('5f23d3c6-b1b3-11e6-8fb9-0aad45e20ffe'); // CTG
+        Auth::loginUsingId('48356e60-b576-11e6-8fb9-0aad45e20ffe');  // Michael Jackson
 
+      return $this->index();
+    }
+
+    public function solo(){
+       Auth::loginUsingId('9a2fe30b-bbc7-11e6-8fb9-0aad45e20ffe');  // Ben Solo
       return $this->index();
     }
 
