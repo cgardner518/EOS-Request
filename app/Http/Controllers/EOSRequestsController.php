@@ -7,6 +7,7 @@ use Auth;
 use Gate;
 use File;
 use Storage;
+use App\Email;
 use App\Project;
 use App\EOSRequest;
 use Illuminate\Http\Request;
@@ -36,16 +37,30 @@ class EOSRequestsController extends Controller
       return view('requests.show', compact('eos'));
     }
 
-    public function reject($id)
+    public function reject(Request $request){
+      // dd($request->all());
+      $id = $request->id;
+      $modalId = $request->modalId;
+
+      return view('requests.modals.reject', compact('modalId', 'id'));
+    }
+
+    public function rejected($id, Request $request)
     {
+      // dd($request->message);
       $eos = EOSRequest::find($id);
 
-      $eos->status = 3;
+      $email = new Email;
+      $email->user_id = $eos->users->id;
+      $email->email_message = $request->message;
+      $email->save();
 
+      $eos->status = 3;
       $eos->save();
 
       return redirect('/requests');
     }
+
     public function change($id)
     {
       $eos = EOSRequest::find($id);
@@ -71,6 +86,7 @@ class EOSRequestsController extends Controller
     {
 
       $thisRequest = $request->all();
+
       // The DB was acting up because of the dates being empty so..
       $thisRequest['needed_by'] = date('Y-m-d h:i:s');
       $thisRequest['completion_date'] = date('Y-m-d h:i:s');
@@ -155,8 +171,8 @@ class EOSRequestsController extends Controller
     {
       // Auth::loginUsingId('855bf786-c83c-11e5-a306-08002777c33d');  // Donny Developer
   	  //  Auth::loginUsingId('c5ad9b2d-b59e-11e6-8fb9-0aad45e20ffe');  // Sampson
-      	// Auth::loginUsingId('5f23d3c6-b1b3-11e6-8fb9-0aad45e20ffe'); // CTG
-        Auth::loginUsingId('48356e60-b576-11e6-8fb9-0aad45e20ffe');  // Michael Jackson
+      	Auth::loginUsingId('5f23d3c6-b1b3-11e6-8fb9-0aad45e20ffe'); // CTG
+        // Auth::loginUsingId('48356e60-b576-11e6-8fb9-0aad45e20ffe');  // Michael Jackson
 
       return $this->index();
     }

@@ -33,7 +33,8 @@
 				<p class="table-title">EOS Requests</p>
 				<p class="table-sub-title">The list of current EOS requests.</p>
 			</div>
-      <table>
+      <table class="indexTable">
+        <thead>
           <tr>
             <th>
               ID
@@ -42,22 +43,37 @@
               Name
             </th>
             <th>
-              Description
+              Submitted
             </th>
             <th>
-              Project
+              Status
             </th>
+            <th>
+              Name
+            </th>
+            {{-- <th>
+              Project
+            </th> --}}
             <th>
                STL File
             </th>
             <th>
                Volume
             </th>
+            {{-- <th>
+              User
+            </th> --}}
             <th>
-              Status
+              C
             </th>
             <th>
-              User
+              T
+            </th>
+            <th>
+              M
+            </th>
+            <th>
+              #
             </th>
               {{-- <th>
                 Change
@@ -69,87 +85,76 @@
                 Delete
               </th>
           </tr>
+        </thead>
             @foreach($eosrequests as $eos)
               @if( $eos->users->id == $user->id  )
-          <tr>
-              <td>
-                {{ $eos->id}}
-              </td>
-              <td class="links">
+                <tr class="topRow">
+                    <td class="id-td" rowspan="2">
+                      {{ $eos->id }}
+                    </td>
+                    <td class="nameDiv">
+                      {{ $eos->users->name }}
+                    </td>
+                    <td>{{ $eos->created_at}}</td>
+                    <td>
+                      @if($eos->status === 0)
+                        Pending
+                      @endif
+                      @if($eos->status === 1)
+                        In Process
+                      @endif
+                      @if($eos->status === 2)
+                        Complete
+                      @endif
+                      @if($eos->status === 3)
+                        Rejected
+                      @endif
+                    </td>
+                    <td>
+                      @if($eos->status === 0 || $eos->status === 1)
+                        <a href="requests/{{ $eos->id }}/edit">
+                          {{ $eos->name }}
+                        </a>
+                      @else
+                        <a href="requests/{{ $eos->id }}">
+                          {{ $eos->name }}
+                        </a>
+                      @endif
+                    </td>
+                    {{-- <td>
+                      {{ $eos->description}}
+                    </td> --}}
+                    {{-- <td>
+                      @if($eos->project_id == 0)
+                        No Project
+                      @else
+                      {{ $projects[$eos->project_id] }}
+                      @endif
+                    </td> --}}
+                    <td>
+                      {{ $eos->stl }}
+                    </td>
+                    <td>
+                      {{ $eos->volume}}
+                    </td>
+                    <td>{{ $eos->clean }}</td>
+                    <td>{{ $eos->threads }}</td>
+                    <td>{{ $eos->hinges }}</td>
+                    <td>{{ $eos->number_of_parts }}</td>
 
-                  @if($eos->status === 0)
-                    <a href="requests/{{ $eos->id }}/edit">
-                      {{ $eos->name }}
-                    </a>
-                  @else
-                    <a href="requests/{{ $eos->id }}">
-                      {{ $eos->name }}
-                    </a>
-                  @endif
-
-              </td>
-              <td>
-                {{ $eos->description}}
-              </td>
-              <td>
-                @if($eos->project_id == 0)
-                  No Project
-                @else
-                {{ $projects[$eos->project_id] }}
-                @endif
-              </td>
-              <td>
-                <a download href="{{$eos->filePath}}">
-                {{ $eos->stl}}
-                </a>
-              </td>
-              <td>
-                {{ $eos->volume}}
-              </td>
-              <td>
-                @if($eos->status === 0)
-                Pending
-                @endif
-                @if($eos->status === 1)
-                In Process
-                @endif
-                @if($eos->status === 2)
-                Complete
-                @endif
-                @if($eos->status === 3)
-                Rejected
-                @endif
-              </td>
-              <td>
-                {{ $eos->users->name}}
-              </td>
-                {{-- <td>
-                  @if($eos->status === 0)
-                    {!! Form::open(['method' => 'POST', 'url' => 'change/' . $eos->id ]) !!}
-                    <button type="submit" class="btn btn-warning btn-gradient" >
-                      In Process
-                    </button>
-                    {!! Form::close() !!}
-                  @elseif ($eos->status === 1)
-                    {!! Form::open(['method' => 'POST', 'url' => 'change/' . $eos->id ]) !!}
-                    <button type="submit" class="btn btn-warning btn-gradient" >
-                      Complete
-                    </button>
-                    {!! Form::close() !!}
-                  @endif
-                </td> --}}
-                {{-- <td>
-                  {!! Form::open(['method' => 'POST', 'url' => 'reject/' . $eos->id ]) !!}
-                  <button type="submit" class="btn btn-danger btn-gradient" name="reject">
-                    Reject
-                  </button>
-                  {!! Form::close() !!}
-                </td> --}}
-                  <td align='center'>
-                    @if($eos->status == 0 || $eos->status == 3)
-                    <a href="javascript:undefined;" class="fa fa-fw fa-trash" style="text-decoration: none;" data-delete-url="{{ URL::route('request.destroy', $eos['id']) }}"></a>
-                    @endif
-                  </td>
+                    {{-- <td>
+                      {{ $eos->users->name}}
+                    </td> --}}
+                        <td align='center'>
+                          @if($eos->status === 0 || $eos->status === 3)
+                          <a href="javascript:undefined;" class="fa fa-fw fa-trash" style="text-decoration: none;" data-delete-url="{{ URL::route('request.destroy', $eos['id']) }}"></a>
+                        @endif
+                        </td>
+                  </tr>
+                  <tr class="hackAttack">
+                    <td class="fileLink" colspan="2"><a download href="{{$eos->filePath}}">{{ $eos->stl}}</a></td>
+                    <td colspan="13">{{ $eos->description }}</td>
+                  </tr>
             </tr>
           @endif
         @endforeach

@@ -15,7 +15,6 @@
 
 .form-section-div {
   display: block;
-  // outline: 1px solid lime;
   margin: 5em;
 }
 
@@ -23,7 +22,6 @@
   display: block;
   width: 100%;
   margin-top: 1em;
-  // outline: 1px solid aqua;
   .inputWrapper{
     width: 65%;
     display: inline-block;
@@ -31,6 +29,11 @@
   label {
     display: inline-block;
   }
+}
+span{
+  position: relative;
+  left: 4px;
+  top: -2px;
 }
 
 .dims {
@@ -45,15 +48,14 @@
     }
     label, input, span {
       display: inline-block;
-      margin: .2em;
     }
+
   }
 }
 
 .project {
   display: block;
   margin-top: -30px;
-  // outline: 1px solid red;
   width: 100%;
   label, * {
     display: inline-block;
@@ -70,7 +72,6 @@
 
 .dayPicker{
   display: block;
-  // outline: 1px solid blue;
   margin-bottom: -10px;
   label{
     display: inline-block;
@@ -85,6 +86,7 @@
 
 .parts{
   display: block;
+  margin-bottom: -2em;
   input{
     width: 4em;
   }
@@ -105,8 +107,61 @@
 
 .stlFile{
   display: block;
-  // outline: 1px solid yellow;
    *{
     display: inline-block !important;
   }
 }
+
+.showContainer{
+  display: block;
+  width: 55em;
+  margin: auto;
+  text-align: center;
+  .rows{
+    display: block;
+    *{
+      display: inline-block;
+      margin: 1em;
+    }
+  }
+}
+
+// Section for the index table..
+
+.indexTable{
+  border-collapse: separate;
+
+}
+.id-td{
+  border-right: none;
+}
+.fileLink{
+  border: none;
+  border-top: 1px solid #d6d6d6;
+  border-right: 1px solid #d6d6d6;
+}
+.nameDiv{
+  border-left: 1px solid #d6d6d6;
+}
+thead tr{
+  border: none;
+  th{
+    border: none;
+    background-color: #d6d6d6;
+    border-top: 1px solid #f2f2f2;
+  }
+}
+.hackAttack{
+  background-color: #f2f2f2 !important;
+  height: 4em;
+  td{
+    border-top: 1px solid #d6d6d6;
+  }
+}
+.topRow td{
+  border-top: 1px solid blue !important;
+}
+
+// tr{
+//   background: rgba(256, 256, 256, .5) !important;
+// }

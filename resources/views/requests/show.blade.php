@@ -6,33 +6,57 @@
   <a href="/requests">Back</a>
 </div> --}}
 <div class="indent-padding width-limited-1200">
-  <div class="content">
-       <h5>Name:</h5><p>{{$eos->name}}</p>
-       <h5>Description:</h5><p>{{$eos->description}}</p>
-       <h5>Dimensions (X,Y,Z):</h5><p>{{$eos->dimX}}, {{$eos->dimY}}, {{$eos->dimZ}}</p>
-       <h5>Volume:</h5><p>{{$eos->volume}}</p>
-       <h5>Cost:</h5><p>$ {{$eos->cost}}</p>
-       <h5>Should item be cleaned?:</h5>
+  <div class="showContainer">
+    <div class="rows">
+       <label>Name:</label><p>{{$eos->name}}</p>
+     </div>
+     <div class="rows">
+       <label>Description:</label><p>{{$eos->description}}</p>
+     </div>
+     <div class="rows">
+       <label>File:</label><p>{{$eos->stl}}</p>
+     </div>
+    <div class="rows">
+     <label>Dimensions (X,Y,Z):</label><p>{{$eos->dimX}}, {{$eos->dimY}}, {{$eos->dimZ}}</p>
+    </div>
+    <div class="rows">
+     <label>Cost:</label><p>$ {{$eos->cost}}</p>
+   </div>
+    <div class="rows">
+      <label>Volume:</label><p>{{$eos->volume}}</p>
+    </div>
+   <div class="rows">
+       <label>Should item be cleaned?:</label>
        @if($eos->clean)
         <p>YES</p>
       @else
         <p>NO</p>
       @endif
-       <h5>Does item have hinges?:</h5>
+      </div>
+      <div class="rows">
+       <label>Does item have hinges?:</label>
        @if($eos->hinges)
         <p>YES</p>
       @else
         <p>NO</p>
       @endif
-       <h5>Does item have threads?:</h5>
+      </div>
+      <div class="rows">
+       <label>Does item have threads?:</label>
        @if($eos->threads)
         <p>YES</p>
       @else
         <p>NO</p>
       @endif
-      <h5>Needed by:</h5><p>{{$eos->needed_by}}</p>
-      <h5>Number of parts:</h5><p>{{$eos->number_of_parts}}</p>
-      <h5>Status:</h5>
+    </div>
+    <div class="rows">
+      <label>Needed by:</label><p>{{$eos->needed_by}}</p>
+    </div>
+    <div class="rows">
+      <label>Number of parts:</label><p>{{$eos->number_of_parts}}</p>
+    </div>
+    <div class="rows">
+      <label>Status:</label>
        @if($eos->status === 0)
          <p>Pending</p>
        @endif
@@ -45,7 +69,10 @@
        @if($eos->status === 3)
         <p>Rejected</p>
        @endif
-       <h5>Admin Notes:</h5><p>{{$eos->admin_notes}}</p>
+     </div>
+     <div class="rows">
+       <label>Admin Notes:</label><p>{{$eos->admin_notes}}</p>
+     </div>
 
        <br><br><hr>
     </div>
