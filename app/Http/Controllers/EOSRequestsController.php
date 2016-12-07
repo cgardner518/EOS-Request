@@ -84,6 +84,7 @@ class EOSRequestsController extends Controller
 
     public function store(CreateEosRequest $request)
     {
+      Auth::user()->notify(new \FlashSuccess("Your request has been submitted."));
 
       $thisRequest = $request->all();
 
@@ -134,6 +135,7 @@ class EOSRequestsController extends Controller
 
     public function update(EditEosRequest $request, $id)
     {
+      // dd($request->all());
 
       $eos = EOSRequest::findOrFail($id);
 

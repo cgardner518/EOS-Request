@@ -21,6 +21,7 @@ class EOSRequest extends Model
     'needed_by',
     'number_of_parts',
     'status',
+    'cost',
     'admin_notes',
     'project_id',
     'user_id',

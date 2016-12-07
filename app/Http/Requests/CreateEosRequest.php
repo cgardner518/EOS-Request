@@ -48,4 +48,16 @@ class CreateEosRequest extends FormRequest
           'stl'=> 'required'
         ];
     }
+
+    public function messages(){
+      return [
+        'name.required' => 'Name is a required field',
+        'description.required' => 'Description is a required field',
+        'dimX.required' => 'All three(3) dimensions are required, X is not filled',
+        'dimY.required' => 'All three(3) dimensions are required, Y is not filled',
+        'dimZ.required' => 'All three(3) dimensions are required, Z is not filled',
+        'number_of_parts.required' => 'Number of Parts is a required field',
+        'stl.required' => 'No STL file specified'
+      ];
+    }
 }

@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddDataColumnToUiStates' => $baseDir . '/database/migrations/2016_04_28_122942_add_data_column_to_ui_states.php',
+    'AddDefaultToCost' => $baseDir . '/database/migrations/2016_12_07_204805_add_default_to_cost.php',
     'AddDomIdToMenuItems' => $baseDir . '/database/migrations/2016_04_26_183121_add_dom-id_to_menu_items.php',
     'AddEosMenuItem' => $baseDir . '/database/migrations/2016_11_29_151014_add_eos_menu_item.php',
     'AddEosRolesAndPermissions' => $baseDir . '/database/migrations/2016_11_29_145704_add_eos_roles_and_permissions.php',
@@ -18,6 +19,7 @@ return array(
     'AddNullableToEosMigrationFile' => $baseDir . '/database/migrations/2016_12_01_213429_add_nullable_to_eos_migration_file.php',
     'AddRolePermissionTable' => $baseDir . '/database/migrations/2016_06_22_174538_add_role_permission_table.php',
     'AdjustUsersTable' => $baseDir . '/database/migrations/2015_01_31_000001_adjust_users_table.php',
+    'ChangeCostBackToDecimal' => $baseDir . '/database/migrations/2016_12_07_205317_change_cost_back_to_decimal.php',
     'ChangeRouteToLogout' => $baseDir . '/database/migrations/2016_11_18_183044_change_route_to_logout.php',
     'CreateBadgesTable' => $baseDir . '/database/migrations/2015_07_30_220002_create_badges_table.php',
     'CreateEOSRequestsTable' => $baseDir . '/database/migrations/2016_11_16_145445_create_e_o_s_requests_table.php',

@@ -21,6 +21,7 @@
   <div class="form-section-div">
     <div class="words">
       <p>All parts must be submitted as binary STL in millimeters (0.1mm tolerance & 1 degree angular resolution). Parts in any other units will be rejected outright.</p>
+      <br>
       {{-- <br>
       <em>We are now accepting items into the queue.</em>
       <br>
@@ -93,7 +94,7 @@
       {!! Form::label('needed_by', 'Date Needed By:') !!}
       {!! Form::dateField() !!}
       <p>Note: It is preferable that you do not give a deadline. Because parts are built as space is available, a deadline that is very soon will not be achievable in many cases. Please allow time to get into the queue.</p>
-
+      <br>
     </div><br>
 
     <div class="form-row stlFile">

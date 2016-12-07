@@ -363,6 +363,7 @@ class ComposerStaticInit80a1f6abee946d53a4add3072860941d
 
     public static $classMap = array (
         'AddDataColumnToUiStates' => __DIR__ . '/../..' . '/database/migrations/2016_04_28_122942_add_data_column_to_ui_states.php',
+        'AddDefaultToCost' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_204805_add_default_to_cost.php',
         'AddDomIdToMenuItems' => __DIR__ . '/../..' . '/database/migrations/2016_04_26_183121_add_dom-id_to_menu_items.php',
         'AddEosMenuItem' => __DIR__ . '/../..' . '/database/migrations/2016_11_29_151014_add_eos_menu_item.php',
         'AddEosRolesAndPermissions' => __DIR__ . '/../..' . '/database/migrations/2016_11_29_145704_add_eos_roles_and_permissions.php',
@@ -374,6 +375,7 @@ class ComposerStaticInit80a1f6abee946d53a4add3072860941d
         'AddNullableToEosMigrationFile' => __DIR__ . '/../..' . '/database/migrations/2016_12_01_213429_add_nullable_to_eos_migration_file.php',
         'AddRolePermissionTable' => __DIR__ . '/../..' . '/database/migrations/2016_06_22_174538_add_role_permission_table.php',
         'AdjustUsersTable' => __DIR__ . '/../..' . '/database/migrations/2015_01_31_000001_adjust_users_table.php',
+        'ChangeCostBackToDecimal' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_205317_change_cost_back_to_decimal.php',
         'ChangeRouteToLogout' => __DIR__ . '/../..' . '/database/migrations/2016_11_18_183044_change_route_to_logout.php',
         'CreateBadgesTable' => __DIR__ . '/../..' . '/database/migrations/2015_07_30_220002_create_badges_table.php',
         'CreateEOSRequestsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_16_145445_create_e_o_s_requests_table.php',

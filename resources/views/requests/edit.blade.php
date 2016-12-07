@@ -5,10 +5,10 @@
 @section('main-content')
 
   {{
-    Form::macro('dateField', function(){
+    Form::macro('dateField', function($by){
       return '<span class="inline-left">
                   <div class="input-group narrow left">
-                    <input class="form-control" name="date" type="text" id="date-input">
+                    <input class="form-control" value="'.$by.'"  name="date" type="text" id="date-input">
                     <span class="input-group-addon clickable">
                       <i class="fa fa-calendar" data-calid="date-input"></i>
                     </span>
@@ -65,19 +65,24 @@
     <div class="form-group">
       {!! Form::label('', 'Additional Information') !!}
       <div class="chckbx">
-          <div>{!! Form::checkbox('clean', 1 ,$eos->clean) !!} Perfom post building cleaning.</div>
           <div>
-            {!! Form::checkbox('hinges', 1 ,$eos->hinges) !!} Has hinges or other moving parts.
+            {!! Form::hidden('clean', 0) !!}
+            {!! Form::checkbox('clean', 1, $eos->clean) !!} Perfom post building cleaning.
           </div>
           <div>
-            {!! Form::checkbox('threads', 1 ,$eos->threads)!!} Has threads
+            {!! Form::hidden('hinges', 0) !!}
+            {!! Form::checkbox('hinges', 1, $eos->hinges) !!} Has hinges or other moving parts.
+          </div>
+          <div>
+            {!! Form::hidden('threads', 0) !!}
+            {!! Form::checkbox('threads', 1, $eos->threads)!!} Has threads
           </div>
         </div>
     </div><br>
 
     <div class="form-row dayPicker">
       {!! Form::label('needed_by', 'Date Needed By:') !!}
-      {!! Form::dateField() !!}
+      {!! Form::dateField($eos->needed_by) !!}
       <p>Note: It is preferable that you do not give a deadline. Because parts are built as space is available, a deadline that is very soon will not be achievable in many cases. Please allow time to get into the queue.</p>
     </div><br>
 

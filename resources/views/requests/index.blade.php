@@ -131,9 +131,27 @@
               <td>
                 {{ $eos->volume}}
               </td>
-              <td>{{ $eos->clean }}</td>
-              <td>{{ $eos->threads }}</td>
-              <td>{{ $eos->hinges }}</td>
+              <td>
+                @if( $eos->clean === 1 )
+                  Y
+                @else
+                  N
+                @endif
+              </td>
+              <td>
+                @if($eos->threads === 1)
+                  Y
+                @else
+                  N
+                @endif
+              </td>
+              <td>
+                @if($eos->hinges === 1)
+                  Y
+                @else
+                  N
+                @endif
+              </td>
               <td>{{ $eos->number_of_parts }}</td>
 
               {{-- <td>
