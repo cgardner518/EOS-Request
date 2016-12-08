@@ -3,28 +3,14 @@
   EOS Requests
 @endsection
 @section('main-content')
-  <style>
-    .bensolo{
-      display: flex;
-    }
-  </style>
-  <div class="links content">
-    <div class="bensolo">
-      {{-- <h1>&#127825;</h1>
-      <h1>&#127814;</h1>
-      <h1>&#127829;</h1>
-      <h1>&#127839;</h1>
-      <h1>&#127828;</h1> --}}
-    </div>
-    {{-- <button type="button" class="btn btn-primary btn-gradient pull-right" data-modal-url="{{ URL::route('request.create') }}" data-modal-id='createEos'>New Request</button> --}}
-  </div>
+
   <div class="content">
     <div>
       <br>
       <br>
       <div class="indent-padding width-limited-1200">
         <a class="pull-right btn btn-primary btn-gradient" href="/requests/create">New Request</a><br><br>
-        <div class="table-header">
+        <div class="table-header eos">
           <p class="table-title">EOS Requests</p>
           <p class="table-sub-title">The list of current EOS requests.</p>
         </div>
@@ -55,9 +41,9 @@
             <th>
                Volume
             </th>
-            {{-- <th>
-              User
-            </th> --}}
+            <th>
+              P
+            </th>
             <th>
               C
             </th>
@@ -87,10 +73,13 @@
                 {{ $eos->id }}
               </td>
               <td class="nameDiv">
-                {{ $eos->users->name }}
+                <span title="{{ $eos->users->name }}">
+                {{ str_limit($eos->users->name, 7) }}
+                </span>
               </td>
               <td>{{ $eos->created_at}}</td>
               <td>
+                <span title="Current Status">
                 @if($eos->status === 0)
                   Pending
                 @endif
@@ -103,60 +92,78 @@
                 @if($eos->status === 3)
                   Rejected
                 @endif
+              </span>
               </td>
               <td>
-                @if($eos->status === 0 || $eos->status === 1)
-                  <a href="requests/{{ $eos->id }}/edit">
+                @if($eos->status === 0 || $eos->status === 1 || $eos->status === 3)
+                  <a href="requests/{{ $eos->id }}/edit" title="Edit this request">
                     {{ $eos->name }}
                   </a>
                 @else
-                  <a href="requests/{{ $eos->id }}">
+                  <a href="requests/{{ $eos->id }}" title="View this request">
                     {{ $eos->name }}
                   </a>
                 @endif
               </td>
-              {{-- <td>
-                {{ $eos->description}}
-              </td> --}}
-              {{-- <td>
+              <td>
+                <span title="{{$eos->stl}}">
+                  {{ str_limit($eos->stl, 7) }}
+                </span>
+              </td>
+              <td>
+                <span title="{{$eos->dimX}} x {{$eos->dimY}} x {{$eos->dimZ}}">
+                  {{ $eos->volume}}
+                </span>
+              </td>
+              <td>
                 @if($eos->project_id == 0)
-                  No Project
+                <span title="No project">
+                  N
+                </span>
                 @else
-                {{ $projects[$eos->project_id] }}
+                <span title="{{$projects[$eos->project_id]}}">
+                  Y
+                </span>
                 @endif
-              </td> --}}
-              <td>
-                {{ $eos->stl }}
-              </td>
-              <td>
-                {{ $eos->volume}}
               </td>
               <td>
                 @if( $eos->clean === 1 )
-                  Y
+                  <span title="Perfom post building cleaning">
+                    Y
+                  </span>
                 @else
-                  N
+                  <span title="NO post build cleaning">
+                    N
+                  </span>
                 @endif
               </td>
               <td>
                 @if($eos->threads === 1)
-                  Y
+                  <span title="Has threads">
+                    Y
+                  </span>
                 @else
-                  N
+                  <span title="NO threads">
+                    N
+                  </span>
                 @endif
               </td>
               <td>
                 @if($eos->hinges === 1)
-                  Y
+                  <span title="Has hinges or other moving parts">
+                    Y
+                  </span>
                 @else
-                  N
+                  <span title="NO hinges or other moving parts">
+                    N
+                  </span>
                 @endif
               </td>
-              <td>{{ $eos->number_of_parts }}</td>
-
-              {{-- <td>
-                {{ $eos->users->name}}
-              </td> --}}
+              <td>
+                <span title="{{ $eos->number_of_parts }} part(s)">
+                  {{ $eos->number_of_parts }}
+                </span>
+              </td>
                 <td>
                   @if($eos->status === 0)
                     {!! Form::open(['method' => 'POST', 'url' => 'change/' . $eos->id ]) !!}
@@ -183,26 +190,25 @@
                   @endif
                 </td>
                   <td align='center'>
-                    @if($eos->status === 0 || $eos->status === 3)
+                  @if($eos->status === 0 || $eos->status === 3)
                     <a href="javascript:undefined;" class="fa fa-fw fa-trash" style="text-decoration: none;" data-delete-url="{{ URL::route('request.destroy', $eos['id']) }}"></a>
                   @endif
                   </td>
             </tr>
             <tr class="hackAttack">
-              <td class="fileLink" colspan="2"><a download href="{{$eos->filePath}}">{{ $eos->stl}}</a></td>
-              <td colspan="13">{{ $eos->description }}</td>
+              <td class="fileLink" colspan="2"><a download title="Download .STL file" href="{{$eos->filePath}}">{{ $eos->stl}}</a></td>
+              <td colspan="13"><span title="{{$eos->description}}">{{ str_limit($eos->description, 10) }}</span></td>
             </tr>
         @endforeach
      </table>
    </div>
- {{-- <h2>No Pending Requests</h2> --}}
    </div>
 
  </div>
- {{-- <script>$(document).mousemove(function(evt){$('.bensolo h1').css({"margin-left":evt.clientX/45+"px","transform":"perspective(600px) rotateY("+evt.clientX/3+"deg) rotateX("+evt.clientY/-1+"deg)"})})</script> --}}
+ <script>
+  
+ </script>
 @stop
-
-
 {{-- <button type="submit" data-modal-url="{{ URL::route('request.changeStatus', ['id' => $eos->id]) }}" class="btn btn-warning btn-gradient" data-modal-id="changeStatus-{{ $eos->id }}" >
 Change   ****->default(0);
 </button> --}}

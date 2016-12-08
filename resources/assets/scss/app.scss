@@ -30,10 +30,10 @@
     display: inline-block;
   }
 }
-span{
-  position: relative;
-  left: 4px;
-  top: -2px;
+.badge.red{
+  position: relative !important;
+  left: 4px !important;
+  top: -2px !important;
 }
 
 .dims {
@@ -117,20 +117,46 @@ span{
   width: 55em;
   margin: auto;
   text-align: center;
-  .rows{
-    display: block;
     *{
-      display: inline-block;
-      margin: 1em;
+      display: inline;
+      margin-right: .5em;
     }
+  }
+
+.labels{
+  width: 20vw;
+  position: relative;
+  float: left;
+  text-align: right;
+  margin-top: 19px;
+  display: inline;
+  label{
+    display: block;
+    padding: 0;
+  }
+}
+.pees{
+  position: relative;
+  text-align: left;
+  display: inline;
+  p {
+    display: block;
+    padding: 0;
+    padding-bottom: 10px;
+    margin: 0;
   }
 }
 
+// **** //
 // Section for the index table..
+// **** //
 
 .indexTable{
   border-collapse: separate;
-
+  width: 1152px;
+}
+.table-header.eos{
+  width: 1152px;
 }
 .id-td{
   border-right: none;
@@ -161,7 +187,3 @@ thead tr{
 .topRow td{
   border-top: 1px solid blue !important;
 }
-
-// tr{
-//   background: rgba(256, 256, 256, .5) !important;
-// }

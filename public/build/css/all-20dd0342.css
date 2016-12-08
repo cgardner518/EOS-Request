@@ -12964,10 +12964,10 @@ body.secure-marking #main-page-wrapper {
   .nameField label {
     display: inline-block; }
 
-span {
-  position: relative;
-  left: 4px;
-  top: -2px; }
+.badge.red {
+  position: relative !important;
+  left: 4px !important;
+  top: -2px !important; }
 
 .dims {
   display: block;
@@ -13029,14 +13029,37 @@ span {
   width: 55em;
   margin: auto;
   text-align: center; }
-  .showContainer .rows {
-    display: block; }
-    .showContainer .rows * {
-      display: inline-block;
-      margin: 1em; }
+  .showContainer * {
+    display: inline;
+    margin-right: 0.5em; }
+
+.labels {
+  width: 20vw;
+  position: relative;
+  float: left;
+  text-align: right;
+  margin-top: 19px;
+  display: inline; }
+  .labels label {
+    display: block;
+    padding: 0; }
+
+.pees {
+  position: relative;
+  text-align: left;
+  display: inline; }
+  .pees p {
+    display: block;
+    padding: 0;
+    padding-bottom: 10px;
+    margin: 0; }
 
 .indexTable {
-  border-collapse: separate; }
+  border-collapse: separate;
+  width: 1152px; }
+
+.table-header.eos {
+  width: 1152px; }
 
 .id-td {
   border-right: none; }
@@ -13065,4 +13088,4 @@ thead tr {
 .topRow td {
   border-top: 1px solid blue !important; }
 
-/*# sourceMappingURL=/build/css/all-490fa03e.css.map */
+/*# sourceMappingURL=/build/css/all-20dd0342.css.map */

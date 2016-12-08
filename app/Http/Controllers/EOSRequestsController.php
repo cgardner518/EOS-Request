@@ -64,9 +64,9 @@ class EOSRequestsController extends Controller
     public function change($id)
     {
       $eos = EOSRequest::find($id);
-
       $eos->status ++;
       $eos->save();
+      Auth::user()->notify(new \FlashWarning("The status has been changed for ".$eos->name));
 
       return redirect('/requests');
     }
@@ -87,10 +87,6 @@ class EOSRequestsController extends Controller
       Auth::user()->notify(new \FlashSuccess("Your request has been submitted."));
 
       $thisRequest = $request->all();
-
-      // The DB was acting up because of the dates being empty so..
-      $thisRequest['needed_by'] = date('Y-m-d h:i:s');
-      $thisRequest['completion_date'] = date('Y-m-d h:i:s');
 
       // Get uploaded file info
       $fileName = time() . '-' . $request->file('stl')->getClientOriginalName();
@@ -136,6 +132,7 @@ class EOSRequestsController extends Controller
     public function update(EditEosRequest $request, $id)
     {
       // dd($request->all());
+      Auth::user()->notify(new \FlashSuccess($request->name ." has been updated."));
 
       $eos = EOSRequest::findOrFail($id);
 
@@ -165,6 +162,8 @@ class EOSRequestsController extends Controller
 
     public function destroy($id)
     {
+      Auth::user()->notify(new \FlashError("Your request has been submitted."));
+
       EOSRequest::destroy($id);
 
       return redirect('/requests');
