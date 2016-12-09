@@ -67,8 +67,8 @@ class EOSRequestsController extends Controller
       $eos->status ++;
       $eos->save();
       Auth::user()->notify(new \FlashWarning("The status has been changed for ".$eos->name));
-
-      return redirect('/requests');
+      $res = ['Pending', 'In Process', 'Complete', 'Rejected'];
+      return $res[$eos->status];
     }
 
     public function create(Request $request)
@@ -132,30 +132,13 @@ class EOSRequestsController extends Controller
     public function update(EditEosRequest $request, $id)
     {
       // dd($request->all());
-      Auth::user()->notify(new \FlashSuccess($request->name ." has been updated."));
-
+      // Auth::user()->notify(new \FlashSuccess($request->name ." has been updated."));
       $eos = EOSRequest::findOrFail($id);
 
-      // Change status from string to integer
-      switch ($request->status){
-        case 'pending':
-          $request->status = 0;
-          break;
-        case 'in-process':
-          $request->status = 1;
-          break;
-        case 'complete':
-          $request->status = 2;
-          break;
-        default:
-          $request->status = $eos->status;
-      }
-      // I set the status in the switch stateent so I'll leave it out in the update method
-      $collection = collect($request->all());
-      $eos->update($collection->forget('status','stl')->toArray());
 
-      $eos->status = $request->status;
-      $eos->save();
+      // I set the status in the switch stateent so I'll leave it out in the update method
+      $collection = $request->except('stl');
+      $eos->update($collection);
 
        return redirect('/requests');
     }

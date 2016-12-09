@@ -45,7 +45,7 @@
           Status
         </th>
         <th>
-          Name
+          Part Name
         </th>
         {{-- <th>
           Project

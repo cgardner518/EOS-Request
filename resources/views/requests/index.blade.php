@@ -6,8 +6,6 @@
 
   <div class="content">
     <div>
-      <br>
-      <br>
       <div class="indent-padding width-limited-1200">
         <a class="pull-right btn btn-primary btn-gradient" href="/requests/create">New Request</a><br><br>
         <div class="table-header eos">
@@ -30,7 +28,7 @@
               Status
             </th>
             <th>
-              Name
+              Part Name
             </th>
             {{-- <th>
               Project
@@ -80,18 +78,20 @@
               <td>{{ $eos->created_at}}</td>
               <td>
                 <span title="Current Status">
-                @if($eos->status === 0)
-                  Pending
-                @endif
-                @if($eos->status === 1)
-                  In Process
-                @endif
-                @if($eos->status === 2)
-                  Complete
-                @endif
-                @if($eos->status === 3)
-                  Rejected
-                @endif
+                  <div class="status-td">
+                    @if($eos->status === 0)
+                      Pending
+                    @endif
+                    @if($eos->status === 1)
+                      In Process
+                    @endif
+                    @if($eos->status === 2)
+                      Complete
+                    @endif
+                    @if($eos->status === 3)
+                      Rejected
+                    @endif
+                  </div>
               </span>
               </td>
               <td>
@@ -167,13 +167,13 @@
                 <td>
                   @if($eos->status === 0)
                     {!! Form::open(['method' => 'POST', 'url' => 'change/' . $eos->id ]) !!}
-                    <button type="submit" class="btn btn-warning btn-gradient" >
+                    <button type="submit" class="changer btn btn-default btn-gradient" >
                       In Process
                     </button>
                     {!! Form::close() !!}
                   @elseif ($eos->status === 1)
                     {!! Form::open(['method' => 'POST', 'url' => 'change/' . $eos->id ]) !!}
-                    <button type="submit" class="btn btn-warning btn-gradient" >
+                    <button type="submit" class=" changer btn btn-default btn-gradient" >
                       Complete
                     </button>
                     {!! Form::close() !!}
@@ -206,9 +206,36 @@
 
  </div>
  <script>
-  
+ $('.changer').click(function(e){
+   e.preventDefault();
+
+   $status = $(this).parent().parent().parent().find('.status-td');
+   $button = $(this);
+   $token = $(this).parent().find('input').attr('value');
+   $id = parseInt($(this).parent().parent().parent().find('.id-td').text());
+   $data = {'_token': $token}
+
+
+   $.ajax({
+     url: 'http://chris.zurka.com/change/'+$id,
+     method: 'POST',
+     data: $data
+   }).then(function(res){
+     $status.text(res);
+     if(res == 'In Process'){
+       $button.text('Complete');
+     }else if(res == 'Complete') {
+       $button.hide()
+     }
+    //  console.log(res[1])
+    // if($status.text() === "Pending"){
+    //   $button.text('Complete')
+    //   $status.text('In Process')
+    // }else{
+    //   console.log($status.text())
+      // $status.text('Complete')
+    // }
+   })
+ })
  </script>
 @stop
-{{-- <button type="submit" data-modal-url="{{ URL::route('request.changeStatus', ['id' => $eos->id]) }}" class="btn btn-warning btn-gradient" data-modal-id="changeStatus-{{ $eos->id }}" >
-Change   ****->default(0);
-</button> --}}

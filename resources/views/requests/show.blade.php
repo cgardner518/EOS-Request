@@ -6,63 +6,110 @@
   <a href="/requests">Back</a>
 </div> --}}
 <div class="indent-padding width-limited-1200">
-  <div class="showContainer">
-    <div class="labels">
-       <label>Name:</label>
-       <label>Description:</label>
-       <label>File:</label>
-       <label>Dimensions (X,Y,Z):</label>
-       <label>Cost:</label>
-       <label>Volume:</label>
-       <label>Should item be cleaned?:</label>
-       <label>Does item have hinges?:</label>
-       <label>Does item have threads?:</label>
-       <label>Needed by:</label>
-       <label>Number of parts:</label>
-       <label>Status:</label>
-       <label>Admin Notes:</label>
-     </div>
-
-     <div class="pees">
-       <p>{{$eos->name}}</p>
-       <p>{{$eos->description}}</p>
-       <p>{{$eos->stl}}</p>
-     <p>{{$eos->dimX}}, {{$eos->dimY}}, {{$eos->dimZ}}</p>
-     <p>$ {{$eos->cost}}</p>
-      <p>{{$eos->volume}}</p>
-       @if($eos->clean)
-        <p>YES</p>
-      @else
-        <p>NO</p>
-      @endif
-       @if($eos->hinges)
-        <p>YES</p>
-      @else
-        <p>NO</p>
-      @endif
-       @if($eos->threads)
-        <p>YES</p>
-      @else
-        <p>NO</p>
-      @endif
-      <p>{{$eos->needed_by}}</p>
-      <p>{{$eos->number_of_parts}}</p>
-       @if($eos->status === 0)
-         <p>Pending</p>
-       @endif
-       @if($eos->status === 1)
-        <p>In Progress</p>
-       @endif
-       @if($eos->status === 2)
-        <p>Complete</p>
-       @endif
-       @if($eos->status === 3)
-        <p>Rejected</p>
-       @endif
-       <p>{{$eos->admin_notes}}</p>
-     </div>
-
-       <br><br><hr>
-    </div>
+    <table class="showTable">
+      <tbody>
+        <tr>
+          <td>
+            <label>Name:</label>
+          </td>
+            <td>{{$eos->name}}</td>
+        </tr>
+        <tr>
+          <td>
+            <label>Description:</label>
+          </td>
+            <td>{{$eos->description}}</td>
+        </tr>
+        <tr>
+          <td>
+            <label>File:</label>
+          </td>
+          <td>{{$eos->stl}}</td>
+        </tr>
+        <tr>
+          <td>
+            <label>Dimensions (X,Y,Z):</label>
+          </td>
+          <td>{{$eos->dimX}}, {{$eos->dimY}}, {{$eos->dimZ}}</td>
+        </tr>
+        <tr>
+          <td>
+            <label>Cost:</label>
+          </td>
+          <td>$ {{$eos->cost}}</td>
+        </tr>
+        <tr>
+          <td>
+            <label>Volume:</label>
+          </td>
+          <td>{{$eos->volume}}</td>
+        </tr>
+        <tr>
+          <td>
+            <label>Should item be cleaned?:</label>
+          </td>
+          @if($eos->clean)
+            <td>YES</td>
+          @else
+            <td>NO</td>
+          @endif
+        </tr>
+        <tr>
+          <td>
+            <label>Does item have hinges?:</label>
+          </td>
+          @if($eos->hinges)
+            <td>YES</td>
+          @else
+            <td>NO</td>
+          @endif
+        </tr>
+        <tr>
+          <td>
+            <label>Does item have threads?:</label>
+          </td>
+          @if($eos->threads)
+            <td>YES</td>
+          @else
+            <td>NO</td>
+          @endif
+        </tr>
+        <tr>
+          <td>
+            <label>Needed by:</label>
+          </td>
+          <td>{{$eos->needed_by}}</td>
+        </tr>
+        <tr>
+          <td>
+            <label>Number of parts:</label>
+          </td>
+          <td>{{$eos->number_of_parts}}</td>
+        </tr>
+        <tr>
+          <td>
+            <label>Status:</label>
+          </td>
+          @if($eos->status === 0)
+            <td>Pending</td>
+          @endif
+          @if($eos->status === 1)
+            <td>In Progress</td>
+          @endif
+          @if($eos->status === 2)
+            <td>Complete</td>
+          @endif
+          @if($eos->status === 3)
+            <td>Rejected</td>
+          @endif
+        </tr>
+        <tr>
+          <td>
+            <label>Admin Notes:</label>
+          </td>
+          <td>{{$eos->admin_notes}}</td>
+        </tr>
+   </tbody>
+ </table>
 </div>
 @stop

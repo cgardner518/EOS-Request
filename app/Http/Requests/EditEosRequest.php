@@ -57,6 +57,10 @@ class EditEosRequest extends FormRequest
         'dimY.required' => 'All three(3) dimensions are required, Y is not filled',
         'dimZ.required' => 'All three(3) dimensions are required, Z is not filled',
         'number_of_parts.required' => 'Number of Parts is a required field',
+        'dimX.numeric' => 'Each dimension should be entered as a numeric value. X is not a number',
+        'dimY.numeric' => 'Each dimension should be entered as a numeric value. Y is not a number',
+        'dimZ.numeric' => 'Each dimension should be entered as a numeric value. Z is not a number',
+        'number_of_parts.numeric' => 'Number of Parts should be entered aas a numeric value',
       ];
     }
 }
