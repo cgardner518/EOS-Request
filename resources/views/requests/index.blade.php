@@ -65,7 +65,7 @@
               </th>
             </tr>
           </thead>
-            @foreach($eosrequests as $eos)
+            @foreach($eosrequests->reverse() as $eos)
           <tr class="topRow">
               <td class="id-td" rowspan="2">
                 {{ $eos->id }}
@@ -215,26 +215,17 @@
    $id = parseInt($(this).parent().parent().parent().find('.id-td').text());
    $data = {'_token': $token}
 
-
    $.ajax({
      url: 'http://chris.zurka.com/change/'+$id,
      method: 'POST',
      data: $data
-   }).then(function(res){
+    }).then(function(res){
      $status.text(res);
      if(res == 'In Process'){
        $button.text('Complete');
      }else if(res == 'Complete') {
        $button.hide()
      }
-    //  console.log(res[1])
-    // if($status.text() === "Pending"){
-    //   $button.text('Complete')
-    //   $status.text('In Process')
-    // }else{
-    //   console.log($status.text())
-      // $status.text('Complete')
-    // }
    })
  })
  </script>

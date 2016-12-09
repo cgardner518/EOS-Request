@@ -66,7 +66,7 @@ class EOSRequestsController extends Controller
       $eos = EOSRequest::find($id);
       $eos->status ++;
       $eos->save();
-      Auth::user()->notify(new \FlashWarning("The status has been changed for ".$eos->name));
+      // Auth::user()->notify(new \FlashWarning("The status has been changed for ".$eos->name));
       $res = ['Pending', 'In Process', 'Complete', 'Rejected'];
       return $res[$eos->status];
     }

@@ -10,12 +10,15 @@
 
 .words {
   text-align: left;
-
+  margin: none;
+  padding: none;
 }
 
 .form-section-div {
   display: block;
   margin: 5em;
+  margin-top: -2px;
+  padding-top: none;
 }
 
 .nameField{
