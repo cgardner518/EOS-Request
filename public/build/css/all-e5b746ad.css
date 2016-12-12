@@ -13034,9 +13034,11 @@ body.secure-marking #main-page-wrapper {
   .showTable * {
     background: none !important;
     border: none;
+    width: 200px;
     padding: none; }
     .showTable * label {
-      float: right; }
+      float: right;
+      text-align: right; }
 
 .indexTable {
   border-collapse: separate;
@@ -13066,4 +13068,4 @@ thead tr {
 .topRow td {
   border-top: 4px solid #d6d6d6 !important; }
 
-/*# sourceMappingURL=/build/css/all-72888d86.css.map */
+/*# sourceMappingURL=/build/css/all-e5b746ad.css.map */

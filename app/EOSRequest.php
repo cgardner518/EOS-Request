@@ -35,7 +35,7 @@ class EOSRequest extends Model
 
   public function getFilePathAttribute()
   {
-    return '/download/'.$this->stl;
+    return '/download/'.$this->id.'/'.$this->stl;
   }
 
   public function users(){

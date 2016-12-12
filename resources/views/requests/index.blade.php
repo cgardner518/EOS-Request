@@ -24,20 +24,23 @@
             <th>
               Submitted
             </th>
-            <th>
+            {{-- <th>
               Status
-            </th>
+            </th> --}}
             <th>
               Part Name
             </th>
             {{-- <th>
               Project
             </th> --}}
-            <th>
+            {{-- <th>
                STL File
-            </th>
+            </th> --}}
             <th>
                Volume
+            </th>
+            <th>
+               Cost
             </th>
             <th>
               P
@@ -76,7 +79,7 @@
                 </span>
               </td>
               <td>{{ $eos->created_at}}</td>
-              <td>
+              {{-- <td>
                 <span title="Current Status">
                   <div class="status-td">
                     @if($eos->status === 0)
@@ -93,7 +96,7 @@
                     @endif
                   </div>
               </span>
-              </td>
+              </td> --}}
               <td>
                 @if($eos->status === 0 || $eos->status === 1 || $eos->status === 3)
                   <a href="requests/{{ $eos->id }}/edit" title="Edit this request">
@@ -105,14 +108,19 @@
                   </a>
                 @endif
               </td>
-              <td>
+              {{-- <td>
                 <span title="{{$eos->stl}}">
                   {{ str_limit($eos->stl, 7) }}
                 </span>
-              </td>
+              </td> --}}
               <td>
                 <span title="{{$eos->dimX}} x {{$eos->dimY}} x {{$eos->dimZ}}">
                   {{ $eos->volume}}
+                </span>
+              </td>
+              <td>
+                <span title="Cost for print">
+                  {{ $eos->cost }}
                 </span>
               </td>
               <td>
@@ -177,6 +185,14 @@
                       Complete
                     </button>
                     {!! Form::close() !!}
+                  @elseif( $eos->status === 2)
+                    <span>
+                      COMPLETE
+                    </span>
+                  @elseif( $eos->status === 3)
+                    <span>
+                      REJECTED
+                    </span>
                   @endif
                 </td>
                 <td>
@@ -186,7 +202,7 @@
                     Reject
                   </button>
                   {!! Form::close() !!} --}}
-                  <button type="submit" data-modal-url="{{ URL::route('request.reject', ['id' => $eos->id]) }}" class="btn btn-danger btn-gradient" data-modal-id="reject-{{ $eos->id }}" >Reject</button>
+                  <button type="submit" data-modal-url="{{ URL::route('request.reject', ['id' => $eos->id]) }}" class="btn btn-danger btn-gradient rejecter" data-modal-id="reject-{{ $eos->id }}" >Reject</button>
                   @endif
                 </td>
                   <td align='center'>
@@ -197,7 +213,7 @@
             </tr>
             <tr class="hackAttack">
               <td class="fileLink" colspan="2"><a download title="Download .STL file" href="{{$eos->filePath}}">{{ $eos->stl}}</a></td>
-              <td colspan="13"><span title="{{$eos->description}}">{{ str_limit($eos->description, 10) }}</span></td>
+              <td colspan="13"><span title="{{$eos->description}}">{{ str_limit($eos->description, 15) }}</span></td>
             </tr>
         @endforeach
      </table>
@@ -209,8 +225,10 @@
  $('.changer').click(function(e){
    e.preventDefault();
 
-   $status = $(this).parent().parent().parent().find('.status-td');
+  //  $status = $(this).parent().parent().parent().find('.status-td');
    $button = $(this);
+   $reject = $(this).parent().parent().parent().find('.rejecter');
+   $td = $(this).parent().parent();
    $token = $(this).parent().find('input').attr('value');
    $id = parseInt($(this).parent().parent().parent().find('.id-td').text());
    $data = {'_token': $token}
@@ -220,11 +238,13 @@
      method: 'POST',
      data: $data
     }).then(function(res){
-     $status.text(res);
+    //  $status.text(res);
      if(res == 'In Process'){
        $button.text('Complete');
      }else if(res == 'Complete') {
        $button.hide()
+       $reject.hide()
+       $td.text(res.toUpperCase())
      }
    })
  })

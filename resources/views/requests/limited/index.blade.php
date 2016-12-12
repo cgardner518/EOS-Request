@@ -50,11 +50,14 @@
         {{-- <th>
           Project
         </th> --}}
-        <th>
+        {{-- <th>
            STL File
-        </th>
+        </th> --}}
         <th>
            Volume
+        </th>
+        <th>
+           Cost
         </th>
         <th>
           P
@@ -82,7 +85,7 @@
           </th>
         </tr>
       </thead>
-        @foreach($eosrequests as $eos)
+        @foreach($eosrequests->reverse() as $eos)
           @if($eos->user_id == $user->id)
       <tr class="topRow">
           <td class="id-td" rowspan="2">
@@ -111,7 +114,7 @@
           </span>
           </td>
           <td>
-            @if($eos->status === 0 || $eos->status === 1)
+            @if($eos->status === 0 )
               <a href="requests/{{ $eos->id }}/edit" title="Edit this request">
                 {{ $eos->name }}
               </a>
@@ -121,14 +124,19 @@
               </a>
             @endif
           </td>
-          <td>
+          {{-- <td>
             <span title="{{$eos->stl}}">
               {{ str_limit($eos->stl, 7) }}
             </span>
-          </td>
+          </td> --}}
           <td>
             <span title="{{$eos->dimX}} x {{$eos->dimY}} x {{$eos->dimZ}}">
               {{ $eos->volume}}
+            </span>
+          </td>
+          <td>
+            <span title="Cost for print">
+              {{ $eos->cost }}
             </span>
           </td>
           <td>
@@ -213,7 +221,7 @@
         </tr>
         <tr class="hackAttack">
           <td class="fileLink" colspan="2"><a download title="Download .STL file" href="{{$eos->filePath}}">{{ $eos->stl}}</a></td>
-          <td colspan="13"><span title="{{$eos->description}}">{{ str_limit($eos->description, 10) }}</span></td>
+          <td colspan="13"><span title="{{$eos->description}}">{{ str_limit($eos->description, 15) }}</span></td>
         </tr>
       @endif
     @endforeach

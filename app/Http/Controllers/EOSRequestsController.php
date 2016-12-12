@@ -89,21 +89,22 @@ class EOSRequestsController extends Controller
       $thisRequest = $request->all();
 
       // Get uploaded file info
-      $fileName = time() . '-' . $request->file('stl')->getClientOriginalName();
-      $request->file('stl')->storeAs('stlFiles', $fileName);
+      $fileName = $request->file('stl')->getClientOriginalName();
       $thisRequest['stl'] = $fileName;
 
       // Save the EOS Request, save the world
       $eos = EOSRequest::create($thisRequest);
       $eos->user_id = Auth::user()->id;
+      $request->file('stl')->storeAs('stlFiles/'.$eos->id, $fileName);
       $eos->save();
 
       return redirect('/requests');
     }
 
-    public function download($file_name)
+    public function download($id,$file_name)
     {
-      $file = '../storage/app/stlFiles/'. $file_name;
+      // dd($id);
+      $file = '../storage/app/stlFiles/'.$id.'/'. $file_name;
       if (file_exists($file)) {
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');

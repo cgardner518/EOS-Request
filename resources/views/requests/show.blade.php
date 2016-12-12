@@ -1,5 +1,7 @@
 @extends('Labcoat::layouts/standard')
-
+@section('page-title')
+  <a href="/requests" style="color:white">EOS Requests</a> / {{$eos->name}}
+@endsection
 @section('main-content')
 {{-- <div class="links content">
   <a href="/">Home</a>

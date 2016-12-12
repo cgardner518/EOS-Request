@@ -125,9 +125,11 @@
   *{
     background: none !important;
     border: none;
+    width: 200px;
     padding: none;
     label{
       float: right;
+      text-align: right;
     }
   }
 }
