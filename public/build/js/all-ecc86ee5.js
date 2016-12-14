@@ -32546,376 +32546,415 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 })(jQuery);
 
 $(function() {
-	function uiShim(){
-		//This function is nested b/c we have some variables that need to be in scope.
-		//This bit does the actual work.
-		function uiShimWork(){
-			var targetOffsetPage = 0,
-				targetOffsetSite = 0;
+    function uiShim(){
+        //This function is nested b/c we have some variables that need to be in scope.
+        //This bit does the actual work.
+        function uiShimWork(){
+            var targetOffsetPage = 0,
+                targetOffsetSite = 0;
 
-			var lockBottomPage,
-				currentOffsetPage,
-				effectiveMenuHeightPage,
-				lockBottomSite,
-				currentOffsetSite,
-				effectiveMenuHeightSite;
+            var lockBottomPage,
+                currentOffsetPage,
+                effectiveMenuHeightPage,
+                lockBottomSite,
+                currentOffsetSite,
+                effectiveMenuHeightSite;
 
-			// If we detect a horizontal scrollbar, reset the menus. We can fix this by refactoring to not use the postition:fixed
-			// CSS style, but for now we are punting. Will revisit when proper responsiveness is done.
-			var root= document.compatMode=='BackCompat'? document.body : document.documentElement;
-			var isHorizontalScrollbar= root.scrollWidth>root.clientWidth;
-			if (!isHorizontalScrollbar){
+            // If we detect a horizontal scrollbar, reset the menus. We can fix this by refactoring to not use the postition:fixed
+            // CSS style, but for now we are punting. Will revisit when proper responsiveness is done.
+            var root= document.compatMode=='BackCompat'? document.body : document.documentElement;
+            var isHorizontalScrollbar= root.scrollWidth>root.clientWidth;
+            if (!isHorizontalScrollbar){
 
-				// If the menu is taller than the viewport, we need to instigate shenannigans to make sure the menu is always visible
-				// and to scroll it up & down properly when the user changes scroll direction.
-				// We want to treat a non-scroll event like an up scroll so the menu is reset when re-sizing the window.
-				if (siteMenuLocked){
-					lockBottomSite = menuHeightSite + siteHeaderHeight - viewportHeight;
-					currentOffsetSite = $(targetDivSite).offset().top;
-					$(targetDivSite).removeClass('affix');
-					effectiveMenuHeightSite = (menuHeightSite + siteHeaderHeight + 40) - lockTopSite;
+                // If the menu is taller than the viewport, we need to instigate shenannigans to make sure the menu is always visible
+                // and to scroll it up & down properly when the user changes scroll direction.
+                // We want to treat a non-scroll event like an up scroll so the menu is reset when re-sizing the window.
+                if (siteMenuLocked){
+                    lockBottomSite = menuHeightSite + siteHeaderHeight - viewportHeight;
+                    currentOffsetSite = $(targetDivSite).offset().top;
+                    $(targetDivSite).removeClass('affix');
+                    effectiveMenuHeightSite = (menuHeightSite + siteHeaderHeight + 40) - lockTopSite;
 
-					if ((viewportHeight >= effectiveMenuHeightSite) && (viewportHeight >= mainWrapperHeight)){
-						//Viewport Tallest. Set to Default. No Scrolling.
-						if (pageTop > lockTopSite) {
-							$(targetDivSite).removeClass('custom-scroll').addClass('affix').css('top', '');
-						}
-						else {
-							$(targetDivSite).removeClass('affix custom-scroll');
-						}
-					}
-					else if ((mainWrapperHeight >= viewportHeight) && (mainWrapperHeight >= effectiveMenuHeightSite)){
-						//Content Tallest...'
-						if ((viewportHeight >= effectiveMenuHeightSite)){
-							//Viewport taller than menu. Lock Top. Menu is always available.
-							if (pageTop > lockTopSite) {
-								$(targetDivSite).removeClass('custom-scroll').addClass('affix').css('top', '');
-							}
-							else {
-								$(targetDivSite).removeClass('affix custom-scroll');
-							}
-						}
-						else {
-							//Menu taller than viewport. Lock Top or Bottom, scroll menu on transition. This is the tricky bit...
-							if (scrollDiff >= 0){
-								//scrolling up
-								if (pageTop <= lockTopSite){
-									$(targetDivSite).addClass('custom-scroll').css('top', '');
-								}
-								else {
-									if (!(currentOffsetSite < (pageTop - siteHeaderHeight))){
-										//lock it to the top
-										$(targetDivSite).addClass('custom-scroll').css('top', (pageTop - lockTopSite));
-									}
-									// else Leave the top setting alone. It will scroll normally.
-								}
-							}
-							else if (scrollDiff < 0) {
-								//scrolling down
-								if (pageTop == (-1 * scrollDiff) && (pageTop > lockBottomSite)){
-									//lock it to the bottom. This is to fix it on a reload event
-									$(targetDivSite).addClass('custom-scroll').css('top', (pageTop - lockBottomSite));
-								}
-								else if (pageTop <= lockBottomSite){
-									$(targetDivSite).addClass('custom-scroll').css('top', '');
-								}
-								else {
-									if (!((currentOffsetSite + (menuHeightSite - viewportHeight)) > (pageTop))){
-										//lock it to the bottom
-										$(targetDivSite).addClass('custom-scroll').css('top', (pageTop - lockBottomSite));
-									}
-									// else Leave the top setting alone. It will scroll normally.
-								}
-							}
+                    if ((viewportHeight >= effectiveMenuHeightSite) && (viewportHeight >= mainWrapperHeight)){
+                        //Viewport Tallest. Set to Default. No Scrolling.
+                        if (pageTop > lockTopSite) {
+                            $(targetDivSite).removeClass('custom-scroll').addClass('affix').css('top', '');
+                        }
+                        else {
+                            $(targetDivSite).removeClass('affix custom-scroll');
+                        }
+                    }
+                    else if ((mainWrapperHeight >= viewportHeight) && (mainWrapperHeight >= effectiveMenuHeightSite)){
+                        //Content Tallest...'
+                        if ((viewportHeight >= effectiveMenuHeightSite)){
+                            //Viewport taller than menu. Lock Top. Menu is always available.
+                            if (pageTop > lockTopSite) {
+                                $(targetDivSite).removeClass('custom-scroll').addClass('affix').css('top', '');
+                            }
+                            else {
+                                $(targetDivSite).removeClass('affix custom-scroll');
+                            }
+                        }
+                        else {
+                            //Menu taller than viewport. Lock Top or Bottom, scroll menu on transition. This is the tricky bit...
+                            if (scrollDiff >= 0){
+                                //scrolling up
+                                if (pageTop <= lockTopSite){
+                                    $(targetDivSite).addClass('custom-scroll').css('top', '');
+                                }
+                                else {
+                                    if (!(currentOffsetSite < (pageTop - siteHeaderHeight))){
+                                        //lock it to the top
+                                        $(targetDivSite).addClass('custom-scroll').css('top', (pageTop - lockTopSite));
+                                    }
+                                    // else Leave the top setting alone. It will scroll normally.
+                                }
+                            }
+                            else if (scrollDiff < 0) {
+                                //scrolling down
+                                if (pageTop == (-1 * scrollDiff) && (pageTop > lockBottomSite)){
+                                    //lock it to the bottom. This is to fix it on a reload event
+                                    $(targetDivSite).addClass('custom-scroll').css('top', (pageTop - lockBottomSite));
+                                }
+                                else if (pageTop <= lockBottomSite){
+                                    $(targetDivSite).addClass('custom-scroll').css('top', '');
+                                }
+                                else {
+                                    if (!((currentOffsetSite + (menuHeightSite - viewportHeight)) > (pageTop))){
+                                        //lock it to the bottom
+                                        $(targetDivSite).addClass('custom-scroll').css('top', (pageTop - lockBottomSite));
+                                    }
+                                    // else Leave the top setting alone. It will scroll normally.
+                                }
+                            }
 
-						}
-					}
-					else {
-						// Menu Tallest. Set to Default. Scrolling controlled by Menu, if it is the larger of the two.
-						if (menuHeightSite > menuHeightPage){
-							$(targetDivSite).removeClass('affix custom-scroll');
-						}
-						else {
-							if (pageTop > lockTopSite) {
-								$(targetDivSite).removeClass('custom-scroll').addClass('affix').css('top', '');
-							}
-							else {
-								$(targetDivSite).removeClass('affix custom-scroll');
-							}
-						}
-					}
-				}
+                        }
+                    }
+                    else {
+                        // Menu Tallest. Set to Default. Scrolling controlled by Menu, if it is the larger of the two.
+                        if (menuHeightSite > menuHeightPage){
+                            $(targetDivSite).removeClass('affix custom-scroll');
+                        }
+                        else {
+                            if (pageTop > lockTopSite) {
+                                $(targetDivSite).removeClass('custom-scroll').addClass('affix').css('top', '');
+                            }
+                            else {
+                                $(targetDivSite).removeClass('affix custom-scroll');
+                            }
+                        }
+                    }
+                }
 
-				if (pageMenuLocked){
-					lockBottomPage = menuHeightPage + pageHeaderHeight + siteHeaderHeight - viewportHeight;
-					currentOffsetPage = $(targetDivPage).offset().top;
-					$(targetDivPage).removeClass('affix');
-					effectiveMenuHeightPage = (menuHeightPage + siteHeaderHeight + 40) - lockTopPage;
+                if (pageMenuLocked){
+                    lockBottomPage = menuHeightPage + pageHeaderHeight + siteHeaderHeight - viewportHeight;
+                    currentOffsetPage = $(targetDivPage).offset().top;
+                    $(targetDivPage).removeClass('affix');
+                    effectiveMenuHeightPage = (menuHeightPage + siteHeaderHeight + 40) - lockTopPage;
 
-					if ((viewportHeight >= effectiveMenuHeightPage) && (viewportHeight >= mainWrapperHeight)){
-						if (pageTop > lockTopPage) {
-							$(targetDivPage).removeClass('custom-scroll').addClass('affix').css('top', '');
-						}
-						else {
-							$(targetDivPage).removeClass('affix custom-scroll').css('top', '');;
-						}
-					}
-					else if ((mainWrapperHeight >= viewportHeight) && (mainWrapperHeight >= effectiveMenuHeightPage)){
-						if ((viewportHeight >= effectiveMenuHeightPage)){
-							if (pageTop > lockTopPage) {
-								$(targetDivPage).removeClass('custom-scroll').addClass('affix').css('top', '');
-							}
-							else {
-								$(targetDivPage).removeClass('affix custom-scroll').css('top', '');;
-							}
-						}
-						else {
-							if (scrollDiff >= 0){
-								if (pageTop <= lockTopPage){
-									$(targetDivPage).addClass('custom-scroll').css('top', '');
-								}
-								else {
-									if (!(currentOffsetPage < (pageTop - siteHeaderHeight - pageHeaderHeight))){
-										// Lock it to the top.
-										$(targetDivPage).addClass('custom-scroll').css('top', (pageTop - lockTopPage));
-									}
-									//else Leave the top setting alone. It will scroll normally.
-								}
-							}
-							else if (scrollDiff < 0) {
-								//scrolling down
-								if (pageTop == (-1 * scrollDiff) && (pageTop > lockBottomPage)){
-									//lock it to the bottom. This is to fix it on a reload event
-									$(targetDivPage).addClass('custom-scroll').css('top', (pageTop - lockBottomPage));
-								}
-								else if (pageTop <= lockBottomPage){
-									$(targetDivPage).addClass('custom-scroll').css('top', '');
-								}
-								else {
-									if (!((currentOffsetPage + (menuHeightPage - viewportHeight)) > (pageTop))){
-										//lock it to the bottom
-										$(targetDivPage).addClass('custom-scroll').css('top', (pageTop - lockBottomPage));
-									}
-									//else Leave the top setting alone. It will scroll normally.
-								}
-							}
-						}
-					}
-					else {
-						// Menu Tallest. Set to Default. Scrolling controlled by Menu, if it is the larger of the two.
-						if (menuHeightPage > menuHeightSite){
-							$(targetDivPage).removeClass('affix custom-scroll').css('top', '');;
-						}
-						else {
-							if (pageTop > lockTopPage) {
-								$(targetDivPage).removeClass('custom-scroll').addClass('affix').css('top', '');
-							}
-							else {
-								$(targetDivPage).removeClass('affix custom-scroll').css('top', '');;
-							}
-						}
-					}
-				}
-				lastScrollTop = pageTop;
-			}
-			else {
-				$(targetDivPage).removeClass('affix custom-scroll').css('top', '');
-				$(targetDivSite).removeClass('affix custom-scroll').css('top', '');
-			}
-		}
+                    if ((viewportHeight >= effectiveMenuHeightPage) && (viewportHeight >= mainWrapperHeight)){
+                        if (pageTop > lockTopPage) {
+                            $(targetDivPage).removeClass('custom-scroll').addClass('affix').css('top', '');
+                        }
+                        else {
+                            $(targetDivPage).removeClass('affix custom-scroll').css('top', '');;
+                        }
+                    }
+                    else if ((mainWrapperHeight >= viewportHeight) && (mainWrapperHeight >= effectiveMenuHeightPage)){
+                        if ((viewportHeight >= effectiveMenuHeightPage)){
+                            if (pageTop > lockTopPage) {
+                                $(targetDivPage).removeClass('custom-scroll').addClass('affix').css('top', '');
+                            }
+                            else {
+                                $(targetDivPage).removeClass('affix custom-scroll').css('top', '');;
+                            }
+                        }
+                        else {
+                            if (scrollDiff >= 0){
+                                if (pageTop <= lockTopPage){
+                                    $(targetDivPage).addClass('custom-scroll').css('top', '');
+                                }
+                                else {
+                                    if (!(currentOffsetPage < (pageTop - siteHeaderHeight - pageHeaderHeight))){
+                                        // Lock it to the top.
+                                        $(targetDivPage).addClass('custom-scroll').css('top', (pageTop - lockTopPage));
+                                    }
+                                    //else Leave the top setting alone. It will scroll normally.
+                                }
+                            }
+                            else if (scrollDiff < 0) {
+                                //scrolling down
+                                if (pageTop == (-1 * scrollDiff) && (pageTop > lockBottomPage)){
+                                    //lock it to the bottom. This is to fix it on a reload event
+                                    $(targetDivPage).addClass('custom-scroll').css('top', (pageTop - lockBottomPage));
+                                }
+                                else if (pageTop <= lockBottomPage){
+                                    $(targetDivPage).addClass('custom-scroll').css('top', '');
+                                }
+                                else {
+                                    if (!((currentOffsetPage + (menuHeightPage - viewportHeight)) > (pageTop))){
+                                        //lock it to the bottom
+                                        $(targetDivPage).addClass('custom-scroll').css('top', (pageTop - lockBottomPage));
+                                    }
+                                    //else Leave the top setting alone. It will scroll normally.
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        // Menu Tallest. Set to Default. Scrolling controlled by Menu, if it is the larger of the two.
+                        if (menuHeightPage > menuHeightSite){
+                            $(targetDivPage).removeClass('affix custom-scroll').css('top', '');;
+                        }
+                        else {
+                            if (pageTop > lockTopPage) {
+                                $(targetDivPage).removeClass('custom-scroll').addClass('affix').css('top', '');
+                            }
+                            else {
+                                $(targetDivPage).removeClass('affix custom-scroll').css('top', '');;
+                            }
+                        }
+                    }
+                }
+                lastScrollTop = pageTop;
+            }
+            else {
+                $(targetDivPage).removeClass('affix custom-scroll').css('top', '');
+                $(targetDivSite).removeClass('affix custom-scroll').css('top', '');
+            }
+        }
 
-		/* We are using some JS to help the layout of the sidebar columns to fill the full vertical hight. */
-		$('#site-sidebar-wrapper').css('min-height','0');
-		$('#page-sidebar-wrapper').css('min-height','0');
-		var mainWrapperHeight = $('#main-page-wrapper').innerHeight();
-		var secFooterHeight = $('footer.security-footer').innerHeight();
-		var offsetHeight = $('nav.navbar').innerHeight() + secFooterHeight + $('.security-topper').innerHeight();
+        /* We are using some JS to help the layout of the sidebar columns to fill the full vertical hight. */
+        $('#site-sidebar-wrapper').css('min-height','0');
+        $('#page-sidebar-wrapper').css('min-height','0');
+        var mainWrapperHeight = $('#main-page-wrapper').innerHeight();
+        var secFooterHeight = $('footer.security-footer').innerHeight();
+        var offsetHeight = $('nav.navbar').innerHeight() + secFooterHeight + $('.security-topper').innerHeight();
 
-		//These are also used in uiShim().
-		var targetDivSite = '#site-sidebar';
-		var menuHeightSite = $(targetDivSite).innerHeight();
-		var targetDivPage = '#page-sidebar';
-		var menuHeightPage = $(targetDivPage).innerHeight();
+        //These are also used in uiShim().
+        var targetDivSite = '#site-sidebar';
+        var menuHeightSite = $(targetDivSite).innerHeight();
+        var targetDivPage = '#page-sidebar';
+        var menuHeightPage = $(targetDivPage).innerHeight();
 
-		var newHeight = Math.max.apply(Math, [menuHeightSite, (menuHeightPage + secFooterHeight), (mainWrapperHeight - offsetHeight)])
+        var newHeight = Math.max.apply(Math, [menuHeightSite, (menuHeightPage + secFooterHeight), (mainWrapperHeight - offsetHeight)])
 
-		$('#site-sidebar-wrapper').css('min-height',newHeight);
-		$('#page-sidebar-wrapper').css('min-height',newHeight - secFooterHeight);
-		var pageHeaderHeight = $('#page-header').innerHeight(); //This is also used in uiShim().
-		if ($('#page-help-flyout')){
-			var newHelpHeight = newHeight - pageHeaderHeight;
-			$('#page-help-flyout').css('min-height',newHelpHeight);
-		}
+        $('#site-sidebar-wrapper').css('min-height',newHeight);
+        $('#page-sidebar-wrapper').css('min-height',newHeight - secFooterHeight);
+        var pageHeaderHeight = $('#page-header').innerHeight(); //This is also used in uiShim().
+        var newContentHeight = newHeight - pageHeaderHeight;
+        if ($('#page-help-flyout')){
+            $('#page-help-flyout').css('min-height',newContentHeight);
+        }
 
-		//Now we check the sidebars and do our best to keep them visible.
-		if (pageMenuLocked || siteMenuLocked){
-			var viewportHeight = $(window).height();
-			var contentHeight = $('#content-wrapper').height();
-			var mainWrapperHeight = $('#main-page-wrapper').innerHeight();
-			var siteHeaderHeight = $('nav.navbar').innerHeight() + $('.security-topper').innerHeight();
-			var pageTop = $(window).scrollTop();
-			var scrollDiff = lastScrollTop - pageTop;
+        // This sets the page footer up as sticky if the content size isn't scrolling
+        //console.log('Content Height: '+ $('#main-content').height());
+        //console.log('Window Height: '+ $(window).height());
+        var newPaddingHeight = $('#page-footer').height() + 49;
 
-			// For the OSX & iOS "rubberband" effect when you scroll up
-			if (pageTop < 0) {
-				pageTop = 0;
-			}
+        if ($('#main-content').height() < $(window).height() && $('#main-content') && $('#page-footer')) {
+            $('#main-content').css({'min-height':newContentHeight, 'padding-bottom':newPaddingHeight});
+            $('#page-footer').addClass('sticky');
+        }
+        else {
+            $('#main-content').css({'padding-bottom':0});
+            $('#page-footer').removeClass('sticky');
+        }
 
-			uiShimWork();
-		}
-	}
+        //Now we check the sidebars and do our best to keep them visible.
+        if (pageMenuLocked || siteMenuLocked){
+            var viewportHeight = $(window).height();
+            var contentHeight = $('#content-wrapper').height();
+            var mainWrapperHeight = $('#main-page-wrapper').innerHeight();
+            var siteHeaderHeight = $('nav.navbar').innerHeight() + $('.security-topper').innerHeight();
+            var pageTop = $(window).scrollTop();
+            var scrollDiff = lastScrollTop - pageTop;
 
-	var siteMenuLocked = false;
-	var pageMenuLocked = false;
+            // For the OSX & iOS "rubberband" effect when you scroll up
+            if (pageTop < 0) {
+                pageTop = 0;
+            }
 
-	// The freescroll class indicates that the sidebars should not be locked on scrolling.
-	// The numbers subtracted from the .top() value are to match it up when anchored via CSS
-	if (typeof $('#site-sidebar > ul.nav li:nth-of-type(2)').offset() != "undefined" && !$('#site-sidebar > ul').hasClass('freescroll')){
-		var lockTopSite = $('#site-sidebar ul.nav li:nth-of-type(2)').offset().top - 12;
-		siteMenuLocked = true;
-	}
-	if (typeof $('#page-sidebar > ul.nav li:nth-of-type(2)').offset() != "undefined" && !$('#page-sidebar > ul').hasClass('freescroll')){
-		var lockTopPage = $('#page-sidebar ul.nav li:nth-of-type(2)').offset().top - 13;
-		pageMenuLocked = true;
-	}
+            uiShimWork();
+        }
+    }
 
-	if (pageMenuLocked || siteMenuLocked){
-		var lastScrollTop = 0;
-	}
-	$(window).scroll(uiShim);
-	$(window).resize(uiShim);
-	uiShim();
+    var siteMenuLocked = false;
+    var pageMenuLocked = false;
 
-	$('a[href="#"], a[href=""]').on('click', function(e){
-		e.preventDefault();
-	});
+    // The freescroll class indicates that the sidebars should not be locked on scrolling.
+    // The numbers subtracted from the .top() value are to match it up when anchored via CSS
+    if (typeof $('#site-sidebar > ul.nav li:nth-of-type(2)').offset() != "undefined" && !$('#site-sidebar > ul').hasClass('freescroll')){
+        var lockTopSite = $('#site-sidebar ul.nav li:nth-of-type(2)').offset().top - 12;
+        siteMenuLocked = true;
+    }
+    if (typeof $('#page-sidebar > ul.nav li:nth-of-type(2)').offset() != "undefined" && !$('#page-sidebar > ul').hasClass('freescroll')){
+        var lockTopPage = $('#page-sidebar ul.nav li:nth-of-type(2)').offset().top - 13;
+        pageMenuLocked = true;
+    }
 
-	/* Header Menu actions */
-	$('li.menu-toggle > a').on('click',function(){
-		var that = this;
-		$('li.menu-toggle > a').each(function(){
-			if (this !== that) {
-				$(this).parent().removeClass('open');
-			}
-		});
-		$(that).parent().toggleClass('open');
-		return false;
-	});
+    if (pageMenuLocked || siteMenuLocked){
+        var lastScrollTop = 0;
+    }
+    $(window).scroll(uiShim);
+    $(window).resize(uiShim);
+    uiShim();
 
-	function sideMenuAction(target){
-		if($(target).hasClass('sidebar-toggler-wrapper')){
-			$('ul.nav-sidebar > li').removeClass('selected');
-		}
-		else {
-			if ($(target).hasClass('selected')){
-				$(target).removeClass('selected');
-			}
-			else if ($(target).hasClass('has-sub-menu')){
-				$(target).addClass('selected');
-			}
-			else {
-				$('ul.nav-sidebar > li').removeClass('selected');
-				$(target).addClass('selected');
-			}
-		}
-	}
+    $('a[href="#"], a[href=""]').on('click', function(e){
+        e.preventDefault();
+    });
 
-	/* Mobile Detection */
-	var md = new MobileDetect(window.navigator.userAgent);
-	if (md.mobile()) {
-		$('body').addClass('mobile');
-		$('ul.nav-sidebar > li i').on('touchstart', function(){
-			var target = $(this).parent();
-			sideMenuAction(target);
-		});
-		$('ul.sub-menu > li.has-sub-menu .title-wrapper').on('touchstart', function(){
-			var target = $(this).parent();
-			sideMenuAction(target);
-		});
-	}
+    /* Header Menu actions */
+    $('li.menu-toggle > a').on('click',function(){
+        var that = this;
+        $('li.menu-toggle > a').each(function(){
+            if (this !== that) {
+                $(this).parent().removeClass('open');
+            }
+        });
+        $(that).parent().toggleClass('open');
+        return false;
+    });
 
-	/* Sidebar Toggle Actions */
-	$('#site-sidebar li.sidebar-toggler-wrapper').on('click',function(){
-		$('body').toggleClass('site-sidebar-closed');
-		if (md.mobile()){
-			$('body').addClass('page-sidebar-closed');
-		}
-		return false;
-	});
-	$('#page-sidebar li.sidebar-toggler-wrapper').on('click',function(){
-		$('body').toggleClass('page-sidebar-closed');
-		if (md.mobile()){
-			$('body').addClass('site-sidebar-closed');
-		}
-		return false;
-	});
+    function sideMenuAction(target){
+        if($(target).hasClass('sidebar-toggler-wrapper')){
+            $('ul.nav-sidebar > li').removeClass('selected');
+        }
+        else {
+            if ($(target).hasClass('selected')){
+                $(target).removeClass('selected');
+            }
+            else if ($(target).hasClass('has-sub-menu')){
+                $(target).addClass('selected');
+            }
+            else {
+                $('ul.nav-sidebar > li').removeClass('selected');
+                $(target).addClass('selected');
+            }
+        }
+    }
 
-	/* Help Toggle */
-	$('#page-help a').on('click',function(){
-		$('#page-help').toggleClass('help-open');
-		$('#page-help-flyout').toggleClass('help-open');
-		return false;
-	});
+    /* Mobile Detection */
+    var md = new MobileDetect(window.navigator.userAgent);
+    if (md.mobile()) {
+        $('body').addClass('mobile');
+        $('ul.nav-sidebar > li i').on('touchstart', function(){
+            var target = $(this).parent();
+            sideMenuAction(target);
+        });
+        $('ul.sub-menu > li.has-sub-menu .title-wrapper').on('touchstart', function(){
+            var target = $(this).parent();
+            sideMenuAction(target);
+        });
+    }
 
-	// Bootstrap Tooltip & Popover demos
-	$('[data-toggle="tooltip"]').tooltip({
-		placement : 'top'
-	});
-	$('[data-toggle="popover"]').popover({
-		placement : 'top'
-	});
+    /* Sidebar Toggle Actions */
+    $('#site-sidebar li.sidebar-toggler-wrapper').on('click',function(){
+        $('body').toggleClass('site-sidebar-closed');
+        if (md.mobile()){
+            $('body').addClass('page-sidebar-closed');
+        }
+        return false;
+    });
+    $('#page-sidebar li.sidebar-toggler-wrapper').on('click',function(){
+        $('body').toggleClass('page-sidebar-closed');
+        if (md.mobile()){
+            $('body').addClass('site-sidebar-closed');
+        }
+        return false;
+    });
 
-	// Ajax button
-	$('button.ajax').on('click',function(){
-		if ($(this).hasClass('ajax-active')){
-			return false;
-		}
-		else {
-			$(this).addClass('ajax-active');
-		}
-	});
+    /* Help Toggle */
+    $('#page-help a').on('click',function(){
+        $('#page-help').toggleClass('help-open');
+        $('#page-help-flyout').toggleClass('help-open');
+        return false;
+    });
 
-	// Ajax DIV
-	$('.ajax-trigger').on('click', function(){
-		var target = '#'+$(this).data('ajax-target');
-		if ($(target).hasClass('ajax')){
-			$(target).addClass('ajax-active');
-		}
-	});
-	
-	function badgeMe(target){
-		var badgeOn = true;
-		var targetParent = $(target).closest('.form-row.badged');
-		if ($(target).attr('type') == 'radio' || $(target).attr('type') == 'checkbox'){
-			$(targetParent).find('input').each(function(){
-				if (badgeOn && $(this).is(':checked')){
-					badgeOn = false;
-				}
-			});
-		}
-		else if ($(target).val() != ''){
-			badgeOn = false;
-		}
+    // Bootstrap Tooltip & Popover demos
+    $('[data-toggle="tooltip"]').tooltip({
+        placement : 'top'
+    });
+    $('[data-toggle="popover"]').popover({
+        placement : 'top'
+    });
 
-		if (badgeOn){
-			$(target).removeClass('filled');
-			$(targetParent).find('.badge').fadeIn();
-		}
-		else {
-			$(target).addClass('filled');
-			$(targetParent).find('.badge').fadeOut();
-		}
-	}
-	
-	$('.form-row.badged input, .form-row.badged textarea, .form-row.badged select').keyup(function(){
-		var target = this;
-		badgeMe(target);
-	});
-	$('.form-row.badged input, .form-row.badged textarea, .form-row.badged select').change(function(){
-		var target = this;
-		badgeMe(target);
-	});
+    // Ajax button
+    $('button.ajax').on('click',function(){
+        if ($(this).hasClass('ajax-active')){
+            return false;
+        }
+        else {
+            $(this).addClass('ajax-active');
+        }
+    });
+
+    // Ajax DIV
+    $('.ajax-trigger').on('click', function(){
+        var target = '#'+$(this).data('ajax-target');
+        if ($(target).hasClass('ajax')){
+            $(target).addClass('ajax-active');
+        }
+    });
+
+    // Rotated Tables
+    $('.table-header-rotated tbody td').hover(function(){
+        // In function
+        var target = this;
+        var col = $(this).data('colid');
+        var row = $(this).data('rowid');
+        $('.table-header-rotated tbody tr[data-rowid="'+row+'"]').addClass('hover');
+        $('.table-header-rotated tbody td[data-colid="'+col+'"]').addClass('hover');
+        $('.table-header-rotated thead th[data-colid="'+col+'"]').addClass('hover');
+    }, function(){
+        // Out Function
+        var target = this;
+        var col = $(this).data('colid');
+        var row = $(this).data('rowid');
+        $('.table-header-rotated tbody tr[data-rowid="'+row+'"]').removeClass('hover');
+        $('.table-header-rotated tbody td[data-colid="'+col+'"]').removeClass('hover');
+        $('.table-header-rotated thead th[data-colid="'+col+'"]').removeClass('hover');
+    });
+
+    function badgeMe(target){
+        var badgeOn = true;
+        var targetParent = $(target).closest('.form-row.badged');
+        if ($(target).attr('type') == 'radio' || $(target).attr('type') == 'checkbox'){
+            $(targetParent).find('input').each(function(){
+                if (badgeOn && $(this).is(':checked')){
+                    badgeOn = false;
+                }
+            });
+        }
+        else if ($(target).val() != ''){
+            badgeOn = false;
+        }
+
+        if (badgeOn){
+            $(target).removeClass('filled');
+            $(targetParent).find('.badge').fadeIn();
+        }
+        else {
+            $(target).addClass('filled');
+            $(targetParent).find('.badge').fadeOut();
+        }
+    }
+
+    $('.form-row.badged input, .form-row.badged textarea, .form-row.badged select').keyup(function(){
+        var target = this;
+        badgeMe(target);
+    });
+    $('.form-row.badged input, .form-row.badged textarea, .form-row.badged select').change(function(){
+        var target = this;
+        badgeMe(target);
+    });
+    $('.form-row.badged input, .form-row.badged textarea, .form-row.badged select').each(function(){
+        var target = this;
+        badgeMe(target);
+    });
+
 });
+
 // OPTIONS (in an options object you can set the following)
 	// initurl - the URL to be used for getting the initial field data.
 	// submiturl - the URL to be used for submitting the search & returning formatted results from.
@@ -33467,4 +33506,4 @@ function displayErrorGritter(messages) {
 	displayGritter(messages);
 }
 
-//# sourceMappingURL=/build/js/all-60b2df91.js.map
+//# sourceMappingURL=/build/js/all-ecc86ee5.js.map

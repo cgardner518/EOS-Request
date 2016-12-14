@@ -120,7 +120,9 @@
               </td>
               <td>
                 <span title="Cost for print">
+                  @if($eos->cost > 0)
                   {{ $eos->cost }}
+                @endif
                 </span>
               </td>
               <td>
@@ -187,11 +189,11 @@
                     {!! Form::close() !!}
                   @elseif( $eos->status === 2)
                     <span>
-                      COMPLETE
+                      Complete
                     </span>
                   @elseif( $eos->status === 3)
                     <span>
-                      REJECTED
+                      Rejected
                     </span>
                   @endif
                 </td>
@@ -213,7 +215,7 @@
             </tr>
             <tr class="hackAttack">
               <td class="fileLink" colspan="2"><a download title="Download .STL file" href="{{$eos->filePath}}">{{ $eos->stl}}</a></td>
-              <td colspan="13"><span title="{{$eos->description}}">{{ str_limit($eos->description, 15) }}</span></td>
+              <td colspan="13"><span title="{{$eos->description}}">{{ str_limit($eos->description, 95) }}</span></td>
             </tr>
         @endforeach
      </table>

@@ -29,7 +29,7 @@
       <p>The EOS p396 is a selective laser sintering system for plastics. While there is a selection of materials available for the machine, most based on Nylon, we are currently using the Nylon 2200 material. Because of the complexity of the machine and the need for thorough cleaning after each use, we have a limited number of people allowed to operate the machine.</p> --}}
     </div>
     {!! Form::open(['url' => 'requests/'. $eos->id , 'method' => 'PATCH', 'files' => true]) !!}
-  <div class="form-group nameField">
+  <div class="form-group form-row badged nameField">
     {!! Form::label('name', 'Name:', ['class' => 'control-label']) !!}
     <div class="inputWrapper">
       {!! Form::text('name', $eos->name, ['class' => 'form-control']) !!}
@@ -44,24 +44,24 @@
     </div>
   </div><br>
 
-  {!! Form::label('description', 'Description') !!}<span class="badge red">Required</span>
-    <div class="form-group">
+    <div class="form-group form-row badged">
+      {!! Form::label('description', 'Description') !!}<span class="badge red">Required</span>
       {!! Form::textarea('description', $eos->description, ['class' => 'form-control']) !!}
     </div>
 
     {!! Form::label('', 'Approximate Dimensions in Millimeters') !!}
     <div class="form-row dims">
-      <div class="dimensions">
+      <div class="form-row badged dimensions">
         {!! Form::label('dimX', 'X: ', ['class' => ' control-label col-sm-1']) !!}
         {!! Form::text('dimX', $eos->dimX, ['class' => 'form-control']) !!}
         <span class="badge red">Required</span>
       </div>
-      <div class="dimensions">
+      <div class="form-row badged dimensions">
         {!! Form::label('dimY', 'Y: ', ['class' => ' control-label col-sm-1']) !!}
         {!! Form::text('dimY', $eos->dimY, ['class' => 'form-control']) !!}
         <span class="badge red">Required</span>
       </div>
-      <div class="dimensions">
+      <div class="form-row badged dimensions">
         {!! Form::label('dimZ', 'Z: ', ['class' => ' control-label col-sm-1']) !!}
         {!! Form::text('dimZ', $eos->dimZ, ['class' => 'form-control']) !!}
         <span class="badge red">Required</span>
@@ -97,7 +97,7 @@
       {{$eos->stl}}
     </div><br>
 
-    <div class="form-row parts">
+    <div class="form-row badged parts">
       {!! Form::label('number_of_parts', 'Number of Parts: ') !!}
       {!! Form::text('number_of_parts', $eos->number_of_parts, ['class' => 'form-control'])!!}
       <span class="badge red">Required</span>
@@ -110,7 +110,8 @@
         {!! Form::text('cost', $eos->cost, ['class' => 'form-control']) !!}
       </div><br>
 
-      {!! Form::label('status', 'Status', ['class' => 'form-row']) !!}  <span class="badge red">Required</span>
+      {!! Form::label('status', 'Status', ['class' => 'form-row']) !!}
+      {{-- <span class="badge red">Required</span> --}}
         <div class="form-row">
           <div class="col-md-4">
             {!! Form::label('statusa', 'Pending') !!}

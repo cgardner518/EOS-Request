@@ -8,7 +8,7 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:200,700" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
         <style>
@@ -16,7 +16,7 @@
                 background-color: #fff;
                 color: #636b6f;
                 font-family: 'Raleway', sans-serif;
-                font-weight: 100;
+                /*font-weight: 100;*/
                 height: 100vh;
                 margin: 0;
             }
@@ -60,7 +60,19 @@
             }
 
             .m-b-md {
-                margin-bottom: 30px;
+                margin-bottom: -30px;
+            }
+            /*http://38.media.tumblr.com/108fd2ce30625b793f302b7b1346e4a1/tumblr_nvi1z1zoVX1s1ey34o1_400.gif*/
+            /*https://68.media.tumblr.com/3b9427ad8ba6006f461fcd8b91cc6080/tumblr_obc8k4v3l01rctpomo1_400.gif*/
+            /*http://data.whicdn.com/images/64940340/original.gif*/
+            /*https://media.giphy.com/media/14hS1ZEmSfKdTW/giphy.gif*/
+            h3{
+              background: url('http://data.whicdn.com/images/64940340/original.gif') center;
+              background-size: cover;
+              -webkit-text-fill-color: transparent;
+              -webkit-background-clip: text;
+              font-weight: 100;
+              padding:0;
             }
         </style>
     </head>
@@ -75,7 +87,9 @@
 
             <div class="content">
                 <div class="title m-b-md">
+                  <h3>
                     Laravel
+                  </h3>
                 </div>
 
                 <div class="links">

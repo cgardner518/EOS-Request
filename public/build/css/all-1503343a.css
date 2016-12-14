@@ -12494,11 +12494,24 @@ div.align-me {
       background-color: #fff; }
     .labcoat-style .nav-tabs li ul.dropdown-menu, .labcoat-style .nav-tabs li ul.dropdown-menu li {
       background-color: #fff; }
-  .labcoat-style .nav-tabs i.fa {
-    margin-bottom: -1px;
-    vertical-align: bottom; }
-    .labcoat-style .nav-tabs i.fa.fa-lg {
-      font-size: 1.1em; }
+    .labcoat-style .nav-tabs li .badge {
+      line-height: 8px;
+      padding: 3px 4px;
+      margin: 0 0 0 5px; }
+    .labcoat-style .nav-tabs li i.fa {
+      margin-bottom: -1px;
+      vertical-align: bottom; }
+      .labcoat-style .nav-tabs li i.fa.fa-lg {
+        font-size: 1.1em; }
+    .labcoat-style .nav-tabs li.badged i.fa {
+      margin-bottom: 3px; }
+  .labcoat-style.centered .nav-tabs {
+    text-align: center; }
+    .labcoat-style.centered .nav-tabs li {
+      float: none;
+      display: inline-block; }
+      .labcoat-style.centered .nav-tabs li .dropdown-menu li {
+        display: block; }
   .labcoat-style .tab-content {
     background-color: #c6c6c6;
     padding: 0; }
@@ -13068,4 +13081,4 @@ thead tr {
 .topRow td {
   border-top: 4px solid #d6d6d6 !important; }
 
-/*# sourceMappingURL=/build/css/all-e5b746ad.css.map */
+/*# sourceMappingURL=/build/css/all-1503343a.css.map */

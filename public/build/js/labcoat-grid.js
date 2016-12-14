@@ -5,6 +5,9 @@
 labcoat_grid.pagination = { activeTab: "" };
 //labcoat_grid.search = {};
 $.each(labcoat_grid.tabs, function (index, value) {
+    if (typeof (value.label) === 'undefined') {
+        console.error("labcoat_grid[" + index + "] Grid: No grid label specified! Please define in your labcoat_grid configuration.");
+    }
     if (typeof (value.itemsPerPage) === 'undefined') {
         labcoat_grid.tabs[index].itemsPerPage = 10;
     }
@@ -62,16 +65,7 @@ $.each(labcoat_grid.tabs, function (index, value) {
 
 Vue.component('anchor-tag', {
     template: "{{{anchorLink}}}",
-    props: {
-        attributes: {
-            type: Object,
-            required: true
-        },
-        contents: {
-            type: String,
-            required: true
-        }
-    },
+    props: ['attributes', 'contents'],
     computed: {
         anchorLink: function(){
             if (this.attributes.do_not_link === true) {
@@ -90,12 +84,7 @@ Vue.component('anchor-tag', {
 });
 Vue.component('input-tag', {
     template: "{{{inputField}}}",
-    props: {
-        attributes: {
-            type: Object,
-            required: true
-        },
-    },
+    props: ['attributes'],
     computed: {
         inputField: function(){
             var input = "<input";
@@ -112,10 +101,60 @@ Vue.component('input-tag', {
         }
     }
 });
-
-var vm = new Vue({
-    el: '#tabbed-table',
-    data: labcoat_grid,
+Vue.component('grid-element', {
+    template: '<td v-if="show"><anchor-tag :attributes="value" v-if="anchor"></anchor-tag><input-tag :attributes="value" v-if="input"></input-tag><span v-if="!anchor && !input">{{ value | json }}</span></td>',
+    props: [ 'key', 'value' ],
+    computed: {
+        show: function () {
+            var include = [];
+            var exclude = [];
+            var pagination = this.$options.parent.$root.pagination;
+            $.each(this.$options.parent.$root.tabs, function (index, value) {
+                if (value.label == pagination.activeTab) {
+                    include = this.include;
+                    exclude = this.exclude;
+                }
+            });
+            if (include.length) {
+                return include.indexOf(this.key) > -1;
+            }
+            if (exclude.length) {
+                return exclude.indexOf(this.key) == -1;
+            }
+        },
+        anchor: function() {
+            return this.key.split('_').pop() == "a";
+        },
+        input: function() {
+            return this.key.split('_').pop() == "input";
+        },
+    }
+});
+Vue.component('grid-row', {
+    template: '<tr class="{{row.class}}" data-row-id="{{row.id}}"><td is="grid-element" v-for="(key, value) in row " :key="key" :value="value"></td></tr>',
+    props: ['row'],
+});
+Vue.component('grid-loading', {
+    props: ['tab'],
+    template: '<table v-if="tab.loaded === false"><tbody><tr><td class="text-center">Loading {{ label }}&hellip;<h1><i class="fa fa-spinner fa-spin"></i></h1></td></tr></tbody></table>',
+    computed: {
+        label: function() {
+            return this.tab.label.replace('_', ' ');
+        }
+    }
+});
+Vue.component('grid-empty', {
+    props: ['tab'],
+    template: '<table v-if="tab.loaded === true && tab.data.length == 0"><tbody><tr><td class="text-center">No results found.</td></tr></tbody></table>'
+});
+Vue.component('grid-results', {
+    props: ['results', 'pagination'],
+    template: '<grid-loading :tab="results"></grid-loading><grid-empty :tab="results"></grid-empty><table v-show="results.loaded === true"><thead is="grid-header" :header="results.data[0]"></thead><tbody class="grid_results"><tr is="grid-row" v-for="row in results.data | orderBy results.sortKey results.sortOrder | filterBy pagination[pagination.activeTab].search | highlightResults pagination[pagination.activeTab].search | paginate results.label" :row="row"></tr></tbody></table><grid-paginator :pagination="pagination" :tab="results"></grid-paginator>',
+    events: {
+        columnHeadClick: function () {
+            this.sortBy(event);
+        }
+    },
     filters: {
         //cribbed from https://github.com/vuejs/Discussion/issues/181
         paginate: function (list, tabLabel) {
@@ -126,22 +165,203 @@ var vm = new Vue({
                 return false;
             }
 
-            this.defineVisiblePageNumbers(tabLabel);
+            this.$parent.defineVisiblePageNumbers(tabLabel);
 
             var index = this.pagination[tabLabel].currentPage * this.pagination[tabLabel].itemsPerPage;
             return list.slice(index, index + this.pagination[tabLabel].itemsPerPage);
         },
         highlightResults: function (arr, search) {
             if (search == "") {
-                $(this.selector).removeHighlight();
+                $(this.$parent.selector).removeHighlight();
             }
             if (search != this.search) {
                 this.search = search;
-                this.highlightResults();
+                this.$parent.highlightResults();
             }
             return arr;
         }
     },
+    methods: {
+        setActiveTab: function (tabLabel) {
+            if (this.pagination.activeTab != tabLabel) {
+                this.pagination.activeTab = tabLabel;
+                this.search = this.pagination[tabLabel].search;
+                this.$nextTick(function () {
+                    this.$parent.highlightResults();
+                });
+            }
+            this.initializeDeleteButton();
+            this.$nextTick(function () {
+                this.$parent.highlightResults();
+            });
+        },
+        getActiveIndex: function (tabLabel) {
+            for (var index=0, len = this.results.length; index < len; index++) {
+                if (this.results[index].label.toLowerCase() == tabLabel.toLowerCase()) {
+                    return index;
+                }
+            }
+        },
+        sortBy: function (event) {
+            //if column isn't intended to be sortable, bail.
+            if ($(event.currentTarget).data("column").search("_input") != -1) {
+                return false;
+            }
+            //alter selected column state to indicate new sort order
+            if($(event.currentTarget).data("sort-order") == "asc") {
+                $(event.currentTarget).data("sort-order", "desc");
+            } else {
+                $(event.currentTarget).data("sort-order", "asc");
+            }
+            var index = this.getActiveIndex($(event.currentTarget).closest(".labcoat-grid").data("grid-id"));
+            //check config value of resetPaginationOnSort and set page to 1 if true.
+            if (this.results.resetPaginationOnSort) {
+                this.$parent.setPage(this.results.label, 0);
+            }
+
+            this.results.sortKey = $(event.currentTarget).data("column");
+            if (this.results.data[0].hasOwnProperty(this.results.sortKey + "_sort")) {
+                this.results.sortKey += "_sort";
+            }
+            if (this.results.data[0][$(event.currentTarget).data("column")].hasOwnProperty("textContent")) {
+                this.results.sortKey += ".textContent";
+            }
+            this.results.sortOrder = $(event.currentTarget).data("sort-order") == "asc" ? 1 : -1;
+            this.$root.$options.filters.orderBy(
+                this.results,
+                $(event.currentTarget).data("column"),
+                this.results.sortKey
+            );
+        },
+        updatePageCount: function (tabLabel) {
+            var resultCount = this.pagination[tabLabel].resultCount,
+                pageCount = Math.ceil(resultCount / this.pagination[tabLabel].itemsPerPage);
+            this.pagination[tabLabel].totalPages = pageCount;
+            if (this.pagination[tabLabel].currentPage >= pageCount && pageCount > 0) {
+                this.$parent.setPage(tabLabel, pageCount - 1, null);
+            }
+            this.$parent.initializeDeleteButton();
+        },
+    },
+});
+Vue.component('sort-icons', {
+    props: ['column'],
+    template: '<i class="fa fa-fw fa-sort" :class="sortorder" v-if="show"></i>',
+    computed: {
+        show: function () {
+            return this.column.search('_input') == -1;
+        },
+        sortorder: function () {
+            //Determine if the current column is active, then return appropriate fa=* classname.
+            var tab = this.getTabObject();
+            //normalize tab.sortKey without sub-props
+            tab.sortKey = tab.sortKey.replace('.textContent', '');
+            //column label is not special and can be approved straight away.
+            if (this.column == tab.sortKey) {
+                return this.getSortClass(tab);
+            }
+            //get possible sort column names and swap for this.column for the following comparison.
+            var currentColumn = tab.sortKey;
+            //remove column modifiers and overwrite currentColumn for comparison.
+            if (['a', 'input', 'sort'].indexOf(tab.sortKey.split('_').pop()) >= 0) {
+                currentColumn = tab.sortKey.substring(0,tab.sortKey.lastIndexOf('_'));
+            }
+            //adjusted column labels are ready for comparison.
+            if (this.column == currentColumn) {
+                return this.getSortClass(tab);
+            }
+            if (this.column == currentColumn && tab.sortKey !== this.column) {
+                return "";
+            }
+        },
+    },
+    methods: {
+        getTabObject: function () {
+            var activeTab = this.$options.parent.$root.pagination.activeTab;
+            var tab = [];
+             $.each(this.$options.parent.$root.tabs, function (index, value) {
+                if (value.label == activeTab) {
+                    tab = this;
+                }
+            });
+            return tab;
+        },
+        getSortClass: function (tab) {
+            if (tab.sortOrder == -1) {
+                return "fa-sort-desc";
+            } else {
+                return "fa-sort-asc";
+            }
+        }
+    }
+});
+Vue.component('grid-search', {
+    template: '<div class="table-search-block"><div class="row pull-right"><input type="text" class="form-control content-search filter" placeholder="Search" v-if="pagination[pagination.activeTab].render.pageNumbers.length" v-model="pagination[pagination.activeTab].search" @keyup.esc="clearForm"></div></div>',
+    props: ['pagination'],
+    methods: {
+        clearForm: function() {
+            this.pagination[this.pagination.activeTab].search = "";
+        }
+    }
+});
+Vue.component('grid-header-column', {
+    template: '<th class="header" v-if="show" :class="sortable" @click="this.$dispatch(\'columnHeadClick\')" data-column="{{column}}" data-sort-order="null">{{ label | capitalize }}<sort-icons :column="column"></sort-icons></th>',
+    props: ['column'],
+    computed: {
+        label: function () {
+            if (["a", "input"].indexOf(this.column.split("_").pop()) >= 0) {
+                return this.column.substring(0, this.column.lastIndexOf("_"));
+            }
+            return this.column;
+        },
+        sortable: function () {
+            if (this.column.search('_input') == -1) {
+                return "sortable";
+            }
+        },
+        show: function () {
+            var include = [];
+            var exclude = [];
+            var pagination = this.$options.parent.$root.pagination;
+            $.each(this.$options.parent.$root.tabs, function (index, value) {
+                if (value.label == pagination.activeTab) {
+                    include = this.include;
+                    exclude = this.exclude;
+                }
+            });
+            if (include.length) {
+                return include.indexOf(this.column) > -1;
+            }
+            if (exclude.length) {
+                return exclude.indexOf(this.column) == -1;
+            }
+        },
+    }
+});
+Vue.component('grid-header', {
+    template: '<thead><tr><th is="grid-header-column" v-for="(col, val) in header" :column="col"></th></tr></thead>',
+    props: ['header'],
+    computed: {
+        exclude: function () {
+            if (this.col.search('_a') > -1 || this.col.search('_sort') > -1) {
+                console.log(this.col);
+                return true;
+            }
+            var pagination = this.$root.pagination;
+            var exclude = [];
+            $.each(this.$root.tabs, function (index, value) {
+                if (value.label == pagination.activeTab) {
+                    exclude = this.exclude;
+                }
+            });
+            return exclude.indexOf(this.col) !== -1;
+        }
+    }
+});
+
+var vm = new Vue({
+    el: '.labcoat-grid',
+    data: labcoat_grid,
     methods: {
         setPage: function (tabLabel, pageNumber) {
             if (this.pagination[tabLabel].currentPage != pageNumber) {
@@ -163,67 +383,6 @@ var vm = new Vue({
             if (pageNumber < this.pagination[tabLabel].totalPages - 1) {
                 this.setPage(tabLabel, pageNumber + 1);
             }
-        },
-        setActiveTab: function (tabLabel) {
-            if (this.pagination.activeTab != tabLabel) {
-                this.pagination.activeTab = tabLabel;
-                this.search = this.pagination[tabLabel].search;
-                this.$nextTick(function () {
-                    this.highlightResults();
-                });
-            }
-            this.initializeDeleteButton();
-            this.$nextTick(function () {
-                this.highlightResults();
-            });
-        },
-        getActiveIndex: function (tabLabel) {
-            for (var index=0, len = this.$data.tabs.length; index < len; index++) {
-                if (this.$data.tabs[index].label.toLowerCase() == tabLabel.toLowerCase()) {
-                    return index;
-                }
-            }
-        },
-        sortBy: function (event) {
-            //if column isn't intended to be sortable, bail.
-            if ($(event.target).data("column").search("_input") != -1) {
-                return false;
-            }
-            //alter selected column state to indicate new sort order
-            if($(event.target).data("sort-order") == "asc") {
-                $(event.target).data("sort-order", "desc");
-            } else {
-                $(event.target).data("sort-order", "asc");
-            }
-
-            var index = this.getActiveIndex($(event.target).closest(".tab-pane").attr("id"));
-            //check config value of resetPaginationOnSort and set page to 1 if true.
-            if (this.$data.tabs[index].resetPaginationOnSort) {
-                this.setPage(this.$data.tabs[index].label, 0);
-            }
-
-            this.$data.tabs[index].sortKey = $(event.target).data("column");
-            if (this.$data.tabs[index].data[0].hasOwnProperty(this.$data.tabs[index].sortKey + "_sort")) {
-                this.$data.tabs[index].sortKey += "_sort";
-            }
-            if (this.$data.tabs[index].data[0][$(event.target).data("column")].hasOwnProperty("textContent")) {
-                this.$data.tabs[index].sortKey += ".textContent";
-            }
-            this.$data.tabs[index].sortOrder = $(event.target).data("sort-order") == "asc" ? 1 : -1;
-            this.$root.$options.filters.orderBy(
-                this.$data.tabs[index],
-                $(event.target).data("column"),
-                this.$data.tabs[index].sortKey
-            );
-        },
-        updatePageCount: function (tabLabel) {
-            var resultCount = this.pagination[tabLabel].resultCount,
-                pageCount = Math.ceil(resultCount / this.pagination[tabLabel].itemsPerPage);
-            this.pagination[tabLabel].totalPages = pageCount;
-            if (this.pagination[tabLabel].currentPage >= pageCount && pageCount > 0) {
-                this.setPage(tabLabel, pageCount - 1, null);
-            }
-            this.initializeDeleteButton();
         },
         defineVisiblePageNumbers: function (tabLabel) {
             var pages = [];
@@ -257,7 +416,7 @@ var vm = new Vue({
         */
         highlightResults() {
             this.$nextTick(function () {
-                $(this.selector).removeHighlight().highlight(this.search);
+                $(this.selector).removeHighlight().highlight(this.pagination[this.pagination.activeTab].search);
             });
         },
         initializeDeleteButton() {
@@ -275,7 +434,7 @@ var vm = new Vue({
             if (self.pagination.activeTab === "") {
                 self.pagination.activeTab = value.label;
             }
-            $.getJSON(this.url, function (data) {
+            $.getJSON(this.url.replace(/&amp;/g, '&'), function (data) {
                 this.data = data;
                 self.tabs[index].loaded = !self.tabs[index].loaded;
             }.bind(this), function (data, index) {

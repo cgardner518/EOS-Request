@@ -30,12 +30,12 @@
     </div>
     {!! Form::open(['url' => 'requests', 'files' => true, 'id' => 'form']) !!}
 
-  <div class="form-group nameField">
+  <div class="form-group form-row badged nameField">
     {!! Form::label('name', 'Name:', ['class' => 'control-label']) !!}
     <div class="inputWrapper">
       {!! Form::text('name', $eos->name, ['class' => 'form-control']) !!}
     </div>
-    <span class="badge red">Required</span>
+      <span class="badge red">Required</span>
   </div><br>
 
   <div class="project">
@@ -45,24 +45,25 @@
     </div>
   </div><br>
 
-  {!! Form::label('description', 'Description') !!}<span class="badge red">Required</span>
-    <div class="form-group">
+    <div class="form-group form-row badged">
+      {!! Form::label('description', 'Description') !!}
+      <span class="badge red">Required</span>
       {!! Form::textarea('description', $eos->description, ['class' => 'form-control']) !!}
     </div>
 
     {!! Form::label('', 'Approximate Dimensions in Millimeters') !!}
-    <div class="form-row dims">
-      <div class="dimensions">
+    <div class="dims">
+      <div class="form-row badged dimensions">
         {!! Form::label('dimX', 'X: ', ['class' => ' control-label col-sm-1']) !!}
         {!! Form::text('dimX', $eos->dimX, ['class' => 'form-control']) !!}
         <span class="badge red">Required</span>
       </div>
-      <div class="dimensions">
+      <div class="form-row badged dimensions">
         {!! Form::label('dimY', 'Y: ', ['class' => ' control-label col-sm-1']) !!}
         {!! Form::text('dimY', $eos->dimY, ['class' => 'form-control']) !!}
         <span class="badge red">Required</span>
       </div>
-      <div class="dimensions">
+      <div class="form-row badged dimensions">
         {!! Form::label('dimZ', 'Z: ', ['class' => ' control-label col-sm-1']) !!}
         {!! Form::text('dimZ', $eos->dimZ, ['class' => 'form-control']) !!}
         <span class="badge red">Required</span>
@@ -97,13 +98,13 @@
       <br>
     </div><br>
 
-    <div class="form-row stlFile">
+    <div class="form-row badged stlFile">
       {!! Form::label('stl', 'File: ') !!}
       {!! Form::file('stl') !!}
       <span class="badge red">Required</span>
     </div><br>
 
-    <div class="form-row parts">
+    <div class="form-row badged parts">
       {!! Form::label('number_of_parts', 'Number of Parts: ') !!}
       {!! Form::text('number_of_parts', $eos->number_of_parts, ['class' => 'form-control'])!!}
       <span class="badge red">Required</span>
