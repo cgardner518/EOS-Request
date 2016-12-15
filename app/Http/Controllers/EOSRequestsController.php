@@ -7,12 +7,16 @@ use Auth;
 use Gate;
 use File;
 use Storage;
+use App\User;
 use App\Email;
 use App\Project;
 use App\EOSRequest;
 use Illuminate\Http\Request;
+use App\Notifications\NewEosRequest;
 use App\Http\Requests\EditEosRequest;
 use App\Http\Requests\CreateEosRequest;
+use App\Notifications\EOSRequestRejected;
+use App\Notifications\EOSRequestCompleted;
 
 class EOSRequestsController extends Controller
 {
@@ -53,10 +57,13 @@ class EOSRequestsController extends Controller
       $email = new Email;
       $email->user_id = $eos->users->id;
       $email->email_message = $request->message;
+      $email->eos = $id;
       $email->save();
 
       $eos->status = 3;
       $eos->save();
+
+      $eos->users->notify(new EOSRequestRejected($eos));
 
       return redirect('/requests');
     }
@@ -68,6 +75,11 @@ class EOSRequestsController extends Controller
       $eos->save();
       // Auth::user()->notify(new \FlashWarning("The status has been changed for ".$eos->name));
       $res = ['Pending', 'In Process', 'Complete', 'Rejected'];
+
+      if($res[$eos->status] == 'Complete'){
+        $eos->users->notify(new EOSRequestCompleted($eos));
+      }
+
       return $res[$eos->status];
     }
 
@@ -98,6 +110,14 @@ class EOSRequestsController extends Controller
       $eos->user_id = Auth::user()->id;
       $request->file('stl')->storeAs('stlFiles/'.$eos->id, $fileName);
       $eos->save();
+
+      // Send notification to eosOp
+      $ops = DB::table('role_user')->where('role_id', 4)->pluck('user_id');
+      // dd($ops);
+      foreach ($ops as $key => $val) {
+        $eosOps = User::find($val);
+        $eosOps->notify(new NewEosRequest($eos));
+      }
 
       return redirect('/requests');
     }

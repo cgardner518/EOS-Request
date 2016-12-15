@@ -246,7 +246,7 @@
      }else if(res == 'Complete') {
        $button.hide()
        $reject.hide()
-       $td.text(res.toUpperCase())
+       $td.text(res)
      }
    })
  })
