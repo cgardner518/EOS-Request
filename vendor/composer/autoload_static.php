@@ -362,6 +362,7 @@ class ComposerStaticInit80a1f6abee946d53a4add3072860941d
     );
 
     public static $classMap = array (
+        'AddColumnsToUsers' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_201304_add_columns_to_users.php',
         'AddDataColumnToUiStates' => __DIR__ . '/../..' . '/database/migrations/2016_04_28_122942_add_data_column_to_ui_states.php',
         'AddDefaultToCost' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_204805_add_default_to_cost.php',
         'AddDomIdToMenuItems' => __DIR__ . '/../..' . '/database/migrations/2016_04_26_183121_add_dom-id_to_menu_items.php',
@@ -372,6 +373,7 @@ class ComposerStaticInit80a1f6abee946d53a4add3072860941d
         'AddIndexesToMenuBadges' => __DIR__ . '/../..' . '/database/migrations/2016_05_06_141956_add_indexes_to_menu_badges.php',
         'AddIndexsToMenuItems' => __DIR__ . '/../..' . '/database/migrations/2016_05_06_143917_add_indexs_to_menu_items.php',
         'AddManagementToRoles' => __DIR__ . '/../..' . '/database/migrations/2016_03_30_133635_add_management_to_roles.php',
+        'AddMoreColumnsToUsers' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_214701_add_more_columns_to_users.php',
         'AddNameToProjects' => __DIR__ . '/../..' . '/database/migrations/2016_12_01_152405_add_name_to_projects.php',
         'AddNullableToEosMigrationFile' => __DIR__ . '/../..' . '/database/migrations/2016_12_01_213429_add_nullable_to_eos_migration_file.php',
         'AddRolePermissionTable' => __DIR__ . '/../..' . '/database/migrations/2016_06_22_174538_add_role_permission_table.php',
@@ -383,9 +385,13 @@ class ComposerStaticInit80a1f6abee946d53a4add3072860941d
         'CreateEmailsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_06_180136_create_emails_table.php',
         'CreateMenuItemsTable' => __DIR__ . '/../..' . '/database/migrations/2015_04_11_142543_create_menu_items_table.php',
         'CreateMenusTable' => __DIR__ . '/../..' . '/database/migrations/2015_03_11_141353_create_menus_table.php',
+        'CreateMissionStatementsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_194647_create_mission_statements_table.php',
+        'CreateOrgChangesTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_194705_create_org_changes_table.php',
+        'CreateOrgRequestsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_194338_create_org_requests_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreatePermissionRoleLinkTable' => __DIR__ . '/../..' . '/database/migrations/2015_08_19_185200_create_permission_role_link_table.php',
         'CreatePermissionsTable' => __DIR__ . '/../..' . '/database/migrations/2015_02_11_001702_create_permissions_table.php',
+        'CreatePersonnelsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_194725_create_personnels_table.php',
         'CreateProjectsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_01_150647_create_projects_table.php',
         'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2015_05_12_184910_create_roles_table.php',
         'CreateUiStates' => __DIR__ . '/../..' . '/database/migrations/2015_09_28_004000_create_ui_states.php',

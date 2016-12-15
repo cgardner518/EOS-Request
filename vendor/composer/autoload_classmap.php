@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddColumnsToUsers' => $baseDir . '/database/migrations/2016_12_15_201304_add_columns_to_users.php',
     'AddDataColumnToUiStates' => $baseDir . '/database/migrations/2016_04_28_122942_add_data_column_to_ui_states.php',
     'AddDefaultToCost' => $baseDir . '/database/migrations/2016_12_07_204805_add_default_to_cost.php',
     'AddDomIdToMenuItems' => $baseDir . '/database/migrations/2016_04_26_183121_add_dom-id_to_menu_items.php',
@@ -16,6 +17,7 @@ return array(
     'AddIndexesToMenuBadges' => $baseDir . '/database/migrations/2016_05_06_141956_add_indexes_to_menu_badges.php',
     'AddIndexsToMenuItems' => $baseDir . '/database/migrations/2016_05_06_143917_add_indexs_to_menu_items.php',
     'AddManagementToRoles' => $baseDir . '/database/migrations/2016_03_30_133635_add_management_to_roles.php',
+    'AddMoreColumnsToUsers' => $baseDir . '/database/migrations/2016_12_15_214701_add_more_columns_to_users.php',
     'AddNameToProjects' => $baseDir . '/database/migrations/2016_12_01_152405_add_name_to_projects.php',
     'AddNullableToEosMigrationFile' => $baseDir . '/database/migrations/2016_12_01_213429_add_nullable_to_eos_migration_file.php',
     'AddRolePermissionTable' => $baseDir . '/database/migrations/2016_06_22_174538_add_role_permission_table.php',
@@ -27,9 +29,13 @@ return array(
     'CreateEmailsTable' => $baseDir . '/database/migrations/2016_12_06_180136_create_emails_table.php',
     'CreateMenuItemsTable' => $baseDir . '/database/migrations/2015_04_11_142543_create_menu_items_table.php',
     'CreateMenusTable' => $baseDir . '/database/migrations/2015_03_11_141353_create_menus_table.php',
+    'CreateMissionStatementsTable' => $baseDir . '/database/migrations/2016_12_15_194647_create_mission_statements_table.php',
+    'CreateOrgChangesTable' => $baseDir . '/database/migrations/2016_12_15_194705_create_org_changes_table.php',
+    'CreateOrgRequestsTable' => $baseDir . '/database/migrations/2016_12_15_194338_create_org_requests_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePermissionRoleLinkTable' => $baseDir . '/database/migrations/2015_08_19_185200_create_permission_role_link_table.php',
     'CreatePermissionsTable' => $baseDir . '/database/migrations/2015_02_11_001702_create_permissions_table.php',
+    'CreatePersonnelsTable' => $baseDir . '/database/migrations/2016_12_15_194725_create_personnels_table.php',
     'CreateProjectsTable' => $baseDir . '/database/migrations/2016_12_01_150647_create_projects_table.php',
     'CreateRolesTable' => $baseDir . '/database/migrations/2015_05_12_184910_create_roles_table.php',
     'CreateUiStates' => $baseDir . '/database/migrations/2015_09_28_004000_create_ui_states.php',
