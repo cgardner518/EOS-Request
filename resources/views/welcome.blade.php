@@ -66,12 +66,21 @@
             /*https://68.media.tumblr.com/3b9427ad8ba6006f461fcd8b91cc6080/tumblr_obc8k4v3l01rctpomo1_400.gif*/
             /*http://data.whicdn.com/images/64940340/original.gif*/
             /*https://media.giphy.com/media/14hS1ZEmSfKdTW/giphy.gif*/
+            /*https://media.giphy.com/media/Xp4E5EvYUJ0nm/giphy.gif*/
+            /*https://media.giphy.com/media/xb68TojBVb42s/giphy.gif*/
+            /*https://media.giphy.com/media/8IZCR0wzEIQms/giphy.gif*/
+            /*https://media.giphy.com/media/REoZelIzrsb7O/giphy.gif*/
+            /*https://media.giphy.com/media/yhScPwKdCTuZW/giphy.gif*/
+            /*https://media.giphy.com/media/IKy3MWMTUoX4Y/giphy.gif*/
+            /*https://media.giphy.com/media/fRZn2vraBGiA0/giphy.gif*/
+            /*https://media.giphy.com/media/10bbPvzEG1NZWU/giphy.gif*/
+
             h3{
-              background: url('http://data.whicdn.com/images/64940340/original.gif') center;
-              background-size: cover;
+              background: url('https://media.giphy.com/media/yhScPwKdCTuZW/giphy.gif') no-repeat center;
+              /*background-size: cover;*/
               -webkit-text-fill-color: transparent;
               -webkit-background-clip: text;
-              font-weight: 100;
+              font-size: 1em;
               padding:0;
             }
         </style>

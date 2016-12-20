@@ -11,13 +11,7 @@
 </style>
   <div class="links content">
     @if($user->name == 'Ben Solo')
-    <div class="bensolo">
-      <h1>1</h1>
-      <h1>3</h1>
-      <h1>3</h1>
-      <h1>7</h1>
-      {{-- <h1></h1> --}}
-    </div>
+    <div class="bensolo"><h1>1</h1><h1>3</h1><h1>3</h1><h1>7</h1></div>
     @endif
 
 
@@ -136,7 +130,9 @@
           </td>
           <td>
             <span title="Cost for print">
-              {{ $eos->cost }}
+              @if( $eos->cost > 0 )
+                {{ $eos->cost }}
+              @endif
             </span>
           </td>
           <td>

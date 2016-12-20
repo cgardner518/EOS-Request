@@ -1,0 +1,111 @@
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+
+// .fileRow{
+//   display: block;
+//   width: 100vw;
+// }
+
+.descField{
+  margin-top: -2.5em;
+}
+
+.orgChartInfo{
+  display: block;
+  margin-bottom: 2em;
+  a{
+    margin-left: 35em;
+    text-align: center;
+    text-decoration: underline;
+  }
+}
+
+// #annoyance{
+//   position: absolute;
+//   margin-top: -9em;
+//   right: 30.35em;
+// }
+
+.discoveryZone{
+  width: 30em;
+  min-height: 100px;
+  margin: auto;
+  background: white;
+  display: inline-block;
+  // outline: 8px solid palegoldenrod;
+}
+
+.discoveryZone2{
+  width: 30em;
+  min-height: 100px;
+  // margin: auto;
+  background: white;
+  display: inline-block;
+}
+.proposed{
+  float: right;
+  margin-top: -2.5em;
+}
+
+.dzInner{
+  position: relative;
+  border: 2px dashed lightgrey;
+  width: 29.6em;
+  // height: 95px;
+  top: 1px;
+  padding: 30px 30px;
+  margin: auto;
+  em{
+    text-decoration: underline;
+  }
+  p{
+    font-size: 12px;
+    text-align: center;
+  }
+  span{
+    position: absolute;
+    float: right;
+    margin-top: -5em;
+    margin-right: -1.5em;
+  }
+}
+
+.dzInner2{
+  position: relative;
+  border: 2px dashed lightgrey;
+  width: 29.6em;
+  // height: 95px;
+  top: 1px;
+  padding: 30px 30px;
+  margin: auto;
+  em{
+    text-decoration: underline;
+  }
+  p{
+    font-size: 12px;
+    text-align: center;
+  }
+  span{
+    position: absolute;
+    float: right;
+    margin-top: -5em;
+    margin-right: -1.5em;
+  }
+}
+
+#description-badge{
+  position: absolute !important;
+  display: block;
+  left: 94% !important;
+  top: 8px !important;
+  margin: none;
+  width: 53px;
+}

@@ -74,13 +74,13 @@
                 {{ $eos->id }}
               </td>
               <td class="nameDiv">
-                <span title="{{ $eos->users->name }}">
+                <span data-toggle="tooltip" title="{{ $eos->users->name }}">
                 {{ str_limit($eos->users->name, 7) }}
                 </span>
               </td>
               <td>{{ $eos->created_at}}</td>
               {{-- <td>
-                <span title="Current Status">
+                <span data-toggle="tooltip" title="Current Status">
                   <div class="status-td">
                     @if($eos->status === 0)
                       Pending
@@ -99,27 +99,27 @@
               </td> --}}
               <td>
                 @if($eos->status === 0 || $eos->status === 1 || $eos->status === 3)
-                  <a href="requests/{{ $eos->id }}/edit" title="Edit this request">
+                  <a href="requests/{{ $eos->id }}/edit" data-toggle="tooltip" title="Edit this request">
                     {{ $eos->name }}
                   </a>
                 @else
-                  <a href="requests/{{ $eos->id }}" title="View this request">
+                  <a href="requests/{{ $eos->id }}" data-toggle="tooltip" title="View this request">
                     {{ $eos->name }}
                   </a>
                 @endif
               </td>
               {{-- <td>
-                <span title="{{$eos->stl}}">
+                <span data-toggle="tooltip" title="{{$eos->stl}}">
                   {{ str_limit($eos->stl, 7) }}
                 </span>
               </td> --}}
               <td>
-                <span title="{{$eos->dimX}} x {{$eos->dimY}} x {{$eos->dimZ}}">
+                <span data-toggle="tooltip" title="{{$eos->dimX}} x {{$eos->dimY}} x {{$eos->dimZ}}">
                   {{ $eos->volume}}
                 </span>
               </td>
               <td>
-                <span title="Cost for print">
+                <span data-toggle="tooltip" title="Cost for print">
                   @if($eos->cost > 0)
                   {{ $eos->cost }}
                 @endif
@@ -127,50 +127,50 @@
               </td>
               <td>
                 @if($eos->project_id == 0)
-                <span title="No project">
+                <span data-toggle="tooltip" title="No project">
                   N
                 </span>
                 @else
-                <span title="{{$projects[$eos->project_id]}}">
+                <span data-toggle="tooltip" title="{{$projects[$eos->project_id]}}">
                   Y
                 </span>
                 @endif
               </td>
               <td>
                 @if( $eos->clean === 1 )
-                  <span title="Perfom post building cleaning">
+                  <span data-toggle="tooltip" title="Perfom post building cleaning">
                     Y
                   </span>
                 @else
-                  <span title="NO post build cleaning">
+                  <span data-toggle="tooltip" title="NO post build cleaning">
                     N
                   </span>
                 @endif
               </td>
               <td>
                 @if($eos->threads === 1)
-                  <span title="Has threads">
+                  <span data-toggle="tooltip" title="Has threads">
                     Y
                   </span>
                 @else
-                  <span title="NO threads">
+                  <span data-toggle="tooltip" title="NO threads">
                     N
                   </span>
                 @endif
               </td>
               <td>
                 @if($eos->hinges === 1)
-                  <span title="Has hinges or other moving parts">
+                  <span data-toggle="tooltip" title="Has hinges or other moving parts">
                     Y
                   </span>
                 @else
-                  <span title="NO hinges or other moving parts">
+                  <span data-toggle="tooltip" title="NO hinges or other moving parts">
                     N
                   </span>
                 @endif
               </td>
               <td>
-                <span title="{{ $eos->number_of_parts }} part(s)">
+                <span data-toggle="tooltip" title="{{ $eos->number_of_parts }} part(s)">
                   {{ $eos->number_of_parts }}
                 </span>
               </td>
@@ -214,8 +214,8 @@
                   </td>
             </tr>
             <tr class="hackAttack">
-              <td class="fileLink" colspan="2"><a download title="Download .STL file" href="{{$eos->filePath}}">{{ $eos->stl}}</a></td>
-              <td colspan="13"><span title="{{$eos->description}}">{{ str_limit($eos->description, 95) }}</span></td>
+              <td class="fileLink" colspan="2"><a download data-toggle="tooltip" title="Download .STL file" href="{{$eos->filePath}}">{{ $eos->stl}}</a></td>
+              <td colspan="13"><span data-toggle="tooltip" title="{{$eos->description}}">{{ str_limit($eos->description, 95) }}</span></td>
             </tr>
         @endforeach
      </table>
