@@ -32916,45 +32916,49 @@ $(function() {
         $('.table-header-rotated thead th[data-colid="'+col+'"]').removeClass('hover');
     });
 
-    function badgeMe(target){
-        var badgeOn = true;
-        var targetParent = $(target).closest('.form-row.badged');
-        if ($(target).attr('type') == 'radio' || $(target).attr('type') == 'checkbox'){
-            $(targetParent).find('input').each(function(){
-                if (badgeOn && $(this).is(':checked')){
-                    badgeOn = false;
-                }
-            });
-        }
-        else if ($(target).val() != ''){
-            badgeOn = false;
-        }
-
-        if (badgeOn){
-            $(target).removeClass('filled');
-            $(targetParent).find('.badge').fadeIn();
-        }
-        else {
-            $(target).addClass('filled');
-            $(targetParent).find('.badge').fadeOut();
-        }
-    }
-
-    $('.form-row.badged input, .form-row.badged textarea, .form-row.badged select').keyup(function(){
-        var target = this;
-        badgeMe(target);
-    });
-    $('.form-row.badged input, .form-row.badged textarea, .form-row.badged select').change(function(){
-        var target = this;
-        badgeMe(target);
-    });
-    $('.form-row.badged input, .form-row.badged textarea, .form-row.badged select').each(function(){
-        var target = this;
-        badgeMe(target);
-    });
-
+	// Setup the "Required" badges
+	badgeSetup($('#main-content'));
 });
 
+function badgeSetup($domElement) {
+	// Get all the elements that should have a "Required" badge.
+	$domElement.find('.form-row.badged input, .form-row.badged textarea, .form-row.badged select').each(function() {
+	    // Initial adjustment
+		badgeMe(this);
+
+		$(this).keyup(function() {
+			badgeMe(this);
+		});
+
+		$(this).change(function() {
+			badgeMe(this);
+		});
+	});
+}
+
+function badgeMe(target){
+    var badgeOn = true;
+    var targetParent = $(target).closest('.form-row.badged');
+    if ($(target).attr('type') == 'radio' || $(target).attr('type') == 'checkbox'){
+        $(targetParent).find('input').each(function(){
+            if (badgeOn && $(this).is(':checked')){
+                badgeOn = false;
+            }
+        });
+    }
+    else if ($(target).val() != ''){
+        badgeOn = false;
+    }
+
+    if (badgeOn){
+        $(target).removeClass('filled');
+        $(targetParent).find('.badge').fadeIn();
+    }
+    else {
+        $(target).addClass('filled');
+        $(targetParent).find('.badge').fadeOut();
+    }
+}
 // OPTIONS (in an options object you can set the following)
 	// initurl - the URL to be used for getting the initial field data.
 	// submiturl - the URL to be used for submitting the search & returning formatted results from.
@@ -33471,6 +33475,9 @@ function modalAjaxSetup(options) {
 			}
 		});
 	});
+
+	// Setup the Required badges
+	badgeSetup($modalId);
 
 	$modalId.modal('show');
 }
@@ -35274,4 +35281,4 @@ function displayErrorGritter(messages) {
 
 }).call(this);
 
-//# sourceMappingURL=/build/js/all-73b54926.js.map
+//# sourceMappingURL=/build/js/all-7e8711f1.js.map

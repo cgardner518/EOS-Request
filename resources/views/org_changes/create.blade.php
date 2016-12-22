@@ -6,6 +6,9 @@
 @endsection
 @section('main-content')
   <div class="indent-padding width-limited-1200">
+    <a href="/org_changes/create/1">One</a>
+    <a href="/org_changes/create/2">Two</a>
+    <a href="/org_changes/create/3">Three</a>
     <h3>Overview and Rationale</h3>
     <p>You base football-player! You crooked-nose knave! You puterell, you skalemar. You hedge-born levereter, you bedswerver fopdoodle! Ye olde mucksprout and mumblecrust. You rakefile skobberlotcher. Thou subtle, perjur’d, false, disloyal man! Thou art like a toad; ugly and venomous.</p>
   {!! Form::open(['url'=>'org_changes','id'=>'', 'class'=>'']) !!}
@@ -49,20 +52,26 @@
       </div>
     </div>
   </div>
+  <br><br>
+  <input type="file" id='desd'>
+  <input type="submit" id="submit">
   {!! Form::close() !!}
 </div>
 
 
    <script>
+
+   var droppedFiles = {};
+
    var dZone = $('div.dzInner').dropzone({
      url: "/org_changes",
      paramName: 'current_orgChart',
      autoProcessQueue: false,
-    //  addRemoveLinks: true,
      maxFiles: 1,
      maxfilesreached: function(file){
        $this = this;
        $file = file;
+       droppedFiles.$file = $file;
         $('.dz-error-mark').css({
           'position': 'absolute',
           'top': '60px',
@@ -87,15 +96,12 @@
         })
 
         $('.dzInner .dz-error-mark').click(function(evt){
-          console.log($file);
           $this.removeFile($file[0]);
-          // console.log($file[0]);
           $('.dzInner>span').fadeIn(400)
           $('.dzInner>p').show();
         })
      },
      maxfilesexceeded: function(file){
-       console.log(this);
        this.removeFile(file)
      },
     });
@@ -108,6 +114,7 @@
      maxfilesreached: function(file){
        $this2 = this;
        $file2 = file;
+       droppedFiles.$file2 = $file2;
         $('.dz-error-mark').css({
           'position': 'absolute',
           'top': '60px',
@@ -131,18 +138,61 @@
             $('.dzInner2 .dz-error-mark').hide('slide', {direction: 'down'}, 400)
         })
         $('.dzInner2 .dz-error-mark').click(function(evt){
-          // console.log($file2);
           $this2.removeFile($file2[0]);
-          // console.log($file[0]);
           $('.dzInner2>span').fadeIn(400)
           $('.dzInner2>p').show();
         })
      },
      maxfilesexceeded: function(file){
-       console.log(this);
        this.removeFile(file)
      },
-    });
+   });
+
+    $(document).on('click','#submit',function(e){
+      e.preventDefault()
+      e.stopPropagation()
+      console.log(droppedFiles.$file2[0]);
+      console.log($('#desd').val());
+
+      $token = $('input[name=_token]').attr('value')
+      $fyle = $('#desd').val();
+      $data = new FormData();
+
+      $data.append('_token', $token)
+      $data.append('stl', $fyle)
+      // $data.append('name', 'El Toro')
+      // $data.append('project_id', 1)
+      // $data.append('description', 'ddddddd')
+      // $data.append('dimX', 31)
+      // $data.append('dimY', 3)
+      // $data.append('dimZ', 13)
+      // $data.append('clean', 1)
+      // $data.append('date', '')
+      // $data.append('number_of_parts', 1)
+      // $data.append('admin_notes', 'ddddddd')
+      // {
+      //   'stl': $fyle,
+      //   'name': 'El Toro',
+      //   'project_id': 1,
+      //   'description': 'ddddddd',
+      //   'dimX': 31,
+      //   'dimY': 3,
+      //   'dimZ': 13,
+      //   'clean': 1,
+      //   'date': '',
+      //   'number_of_parts': 1,
+      //   'admin_notes': 'ddddddd',
+      // }
+
+      $.ajax({
+        url: 'http://chris.zurka.com/requests',
+        method: 'POST',
+        data: $data,
+        contentType: false,
+      })
+      // debugger;
+    })
+
 
    </script>
 

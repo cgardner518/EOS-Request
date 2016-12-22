@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\OrgRequest;
 use Illuminate\Http\Request;
+use NrlLaravel\Labcoat\Models\MenuItemAccess;
 
 class OrgChangeController extends Controller
 {
@@ -15,6 +17,57 @@ class OrgChangeController extends Controller
     {
         //
     }
+    public function firstTab()
+    {
+        //
+        $menuName = 'orgChangeTabs';
+        $suffix = "/112/edit";
+        return view('org_changes.tabs.first', compact('menuName', 'suffix'));
+    }
+    public function secondTab()
+    {
+        //
+        $menuName = 'orgChangeTabs';
+        // $suffix = "/$id/edit";
+        return view('org_changes.tabs.second', compact('menuName', 'suffix'));
+    }
+    public function thirdTab()
+    {
+        //
+        $menuName = 'orgChangeTabs';
+        // $suffix = "/$id/edit";
+        return view('org_changes.tabs.third', compact('menuName', 'suffix'));
+    }
+    public function firstTabEdit($id)
+    {
+        //
+        $menuName = 'orgChangeTabs';
+        $suffix = "/$id/edit";
+        return view('org_changes.tabs.first', compact('menuName', 'suffix', 'id'));
+    }
+    public function secondTabEdit($id)
+    {
+        //
+        $menuName = 'orgChangeTabs';
+        $suffix = "/$id/edit";
+        MenuItemAccess::set('thirdTab', $id, 'available');
+        return view('org_changes.tabs.second', compact('menuName', 'suffix', 'id'));
+    }
+    public function thirdTabEdit($id)
+    {
+        //
+        $menuName = 'orgChangeTabs';
+        $suffix = "/$id/edit";
+        return view('org_changes.tabs.third', compact('menuName', 'suffix', 'id'));
+    }
+    // public function tabs($tab)
+    // {
+    //     //
+    //     if($tab == 1){
+    //     }elseif ($tab == 2) {
+    //     }elseif ($tab == 3) {
+    //     }
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +77,8 @@ class OrgChangeController extends Controller
     public function create()
     {
         //
-        return view('org_changes.create');
+        $org_request = new OrgRequest;
+        return view('org_changes.create', compact('org_request'));
     }
 
     /**
