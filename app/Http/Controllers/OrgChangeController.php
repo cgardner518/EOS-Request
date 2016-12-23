@@ -144,7 +144,21 @@ class OrgChangeController extends Controller
     public function update(Request $request, $id)
     {
         //
-        dd($request->all());
+        // dd($request->all());
+        $orgRequest = OrgRequest::findOrFail($id);
+        $file1Name = $request->file('current_orgChart')->getClientOriginalName();
+        $file2Name = $request->file('new_orgChart')->getClientOriginalName();
+
+        $request->file('new_orgChart')->storeAs('newCharts/'.$id, $file2Name);
+        $request->file('current_orgChart')->storeAs('oldCharts/'.$id, $file1Name);
+
+        $orgRequest->title = $request['title'];
+        $orgRequest->description = $request['description'];
+        $orgRequest->current_orgChart = $request['current_orgChart'];
+        $orgRequest->new_orgChart = $request['new_orgChart'];
+        $orgRequest->save();
+
+        return redirect('/org_changes');
     }
 
     /**
