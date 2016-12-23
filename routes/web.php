@@ -38,8 +38,10 @@ Route::get('/peasant', function(){
 
 
 Route::get('/org_changes/create', 'OrgChangeController@create');
-Route::get('/org_changes/firstTab', 'OrgChangeController@firstTab');
+Route::get('/org_changes', 'OrgChangeController@index');
+// Route::get('/org_changes/firstTab', 'OrgChangeController@firstTab');
 Route::get('/org_changes/firstTab/{id}/edit', 'OrgChangeController@firstTabEdit');
 Route::get('/org_changes/secondTab/{id}/edit', 'OrgChangeController@secondTabEdit');
-Route::get('/org_changes/thirdTab/{id}/edit', 'OrgChangeController@thirdTab');
-Route::post('/org_changes', 'OrgChangeController@store');
+Route::get('/org_changes/thirdTab/{id}/edit', 'OrgChangeController@thirdTabEdit');
+Route::get('/org_changes/fourthTab/{id}/edit', 'OrgChangeController@fourthTabEdit');
+Route::patch('/org_changes/{id}', 'OrgChangeController@update');

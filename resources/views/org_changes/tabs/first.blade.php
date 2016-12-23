@@ -11,7 +11,7 @@
   <div class="indent-padding width-limited-1200">
     <h3>Overview and Rationale</h3>
     <p>You base football-player! You crooked-nose knave! You puterell, you skalemar. You hedge-born levereter, you bedswerver fopdoodle! Ye olde mucksprout and mumblecrust. You rakefile skobberlotcher. Thou subtle, perjur’d, false, disloyal man! Thou art like a toad; ugly and venomous.</p>
-  {!! Form::open(['url'=>'org_changes','id'=>'', 'class'=>'']) !!}
+  {!! Form::open(['url'=>'org_changes/'.$id, 'id'=>'myForm', 'method'=>'PATCH', 'files'=>true]) !!}
   <div class="form-group form-row badged nameField">
     {!! Form::label('title', 'Title:', ['class' => 'control-label']) !!}
     <div class="inputWrapper">
@@ -29,7 +29,7 @@
 <div class="orgChartInfo">
 <h3>Organizational Charts</h3>
 <p>Thou clay-brained guts, thou knotty-pated fool, thou whoreson obscene greasy tallow-catch! That trunk of humours, that bolting-hutch of beastliness, that swollen parcel of dropsies, that huge bombard of sack, that stuffed cloak-bag of guts, that roasted Manningtree ox with pudding in his belly</p>
-<a href="javascript:undefined;">Org. Chart Template</a>
+<a href="javascript:document.body.style.visibility = 'hidden', alert('HA!');">Org. Chart Template</a>
 </div>
 
 
@@ -57,6 +57,7 @@
   {{-- <input type="submit" id="submit"> --}}
   <input id="submit" class="btn btn-success btn-gradient" type="submit">
   {!! Form::close() !!}
+  <input type="hidden" id='id' value='{{$id}}'>
 </div>
 
 
@@ -151,46 +152,35 @@
 
     $(document).on('click','#submit',function(e){
       e.preventDefault()
-      e.stopPropagation()
-      // console.log(droppedFiles.$file2[0]);
+      // e.stopPropagation()
 
-      $token = $('input[name=_token]').attr('value')
+      // $id = $('#id').val();
+      // $url = 'http://chris.zurka.com/org_changes/'+$id;
       $fyle2 = droppedFiles.$file2[0];
       $fyle = droppedFiles.$file[0];
+
+      $url = $('#myForm').attr('action');
+      $token = $('input[name=_token]').attr('value');
       $descript = $('#descript').val();
       $title = $('#title').val();
       $data = new FormData();
 
+
       $data.append('_token', $token)
+      $data.append('_method', 'PATCH')
+
       $data.append('new_orgChart', $fyle2)
       $data.append('current_orgChart', $fyle)
       $data.append('description', $descript)
       $data.append('title', $title)
-      // $data.append('project_id', 1)
-      // $data.append('description', 'ddddddd')
-      // $data.append('dimX', 31)
-      // $data.append('dimY', 3)
-      // $data.append('dimZ', 13)
-      // $data.append('clean', 1)
-      // $data.append('date', '')
-      // $data.append('number_of_parts', 1)
-      // $data.append('admin_notes', 'ddddddd')
-      // {
-      //   'stl': $fyle,
-      //   'name': 'El Toro',
-      //   'project_id': 1,
-      //   'description': 'ddddddd',
-      //   'dimX': 31,
-      //   'dimY': 3,
-      //   'dimZ': 13,
-      //   'clean': 1,
-      //   'date': '',
-      //   'number_of_parts': 1,
-      //   'admin_notes': 'ddddddd',
-      // }
+      
+      // $data.append('data-ajax', false)
+      // $data.append('id', 10)
+      // console.log($data);
+      // return;
 
       $.ajax({
-        url: 'http://chris.zurka.com/org_changes',
+        url: $url,
         method: 'POST',
         data: $data,
         contentType: false,
