@@ -22,18 +22,19 @@
   display: block;
   margin-bottom: 2em;
   a{
-    display: block;
-    margin: auto;
-    text-align: center;
+  //   display: block;
+  //   margin: auto;
+  //   text-align: center;
     text-decoration: underline;
   }
 }
 
-// #annoyance{
-//   position: absolute;
-//   margin-top: -9em;
-//   right: 30.35em;
-// }
+.current{
+  // outline: 1px solid palegoldenrod;
+  width: 35em;
+  margin: 0;
+  display: inline-block;
+}
 
 .discoveryZone{
   width: 30em;
@@ -41,7 +42,6 @@
   margin: auto;
   background: white;
   display: inline-block;
-  // outline: 8px solid palegoldenrod;
 }
 
 .discoveryZone2{
@@ -51,10 +51,18 @@
   background: white;
   display: inline-block;
 }
+.fileRow{
+  // outline: 1px solid red;
+  display: block;
+  height: 10em;
+}
 .proposed{
   float: right;
-  margin-top: -2.5em;
+  display: inline-block;
+  // margin-top: -5.5em;
+  // outline: 1px solid aqua;
 }
+
 
 .dzInner{
   position: relative;
@@ -109,4 +117,15 @@
   top: 8px !important;
   margin: none;
   width: 53px;
+}
+
+#submit{
+  width: 10em;
+  position: relative;
+  display: block;
+  margin:auto;
+}
+
+.stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active{
+  background: linear-gradient(to right, rgba(46, 85, 144, 1) 0%, rgba(46, 85, 144, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(46,85,144,1) 100%) !important;
 }

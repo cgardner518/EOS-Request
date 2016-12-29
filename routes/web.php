@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () {return view('welcome');})->name('velcome');
 
 Route::get('/requests', 'EOSRequestsController@index');
 // Route::get('/requests/changeStatus/{id}', 'EOSRequestsController@status')->name('request.changeStatus');
@@ -36,12 +34,31 @@ Route::get('/peasant', function(){
   return redirect('/requests');
 });
 
+Route::get('/stigz', function(){
+  $ch = curl_init();
+  // set url
+  curl_setopt($ch, CURLOPT_URL, "https://www.stigviewer.com/stig/application_security_and_development/2014-04-03/MAC-3_Sensitive/json");
+  //return the transfer as a string
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  // $output contains the output string
+  $output = curl_exec($ch);
+  $output = json_decode($output, true);
+  // close curl resource to free up system resources
+  curl_close($ch);
+  return response()->json($output);
+});
+
 
 Route::get('/org_changes/create', 'OrgChangeController@create');
 Route::get('/org_changes', 'OrgChangeController@index');
-// Route::get('/org_changes/firstTab', 'OrgChangeController@firstTab');
-Route::get('/org_changes/firstTab/{id}/edit', 'OrgChangeController@firstTabEdit');
-Route::get('/org_changes/secondTab/{id}/edit', 'OrgChangeController@secondTabEdit');
-Route::get('/org_changes/thirdTab/{id}/edit', 'OrgChangeController@thirdTabEdit');
-Route::get('/org_changes/fourthTab/{id}/edit', 'OrgChangeController@fourthTabEdit');
+Route::get('/newChartDownload/{id}', 'OrgChangeController@newChartDownload');
+Route::get('/oldChartDownload/{id}', 'OrgChangeController@oldChartDownload');
+
+
+$tabs = ['firstTab','secondTab','thirdTab','fourthTab'];
+foreach($tabs as $tab){
+  Route::get("/org_changes/$tab/{id}/edit", 'OrgChangeController@'.$tab.'Edit');
+}
+
 Route::patch('/org_changes/{id}', 'OrgChangeController@update');
+Route::delete('/org_changes/{id}', 'OrgChangeController@destroy')->name('org_changes.destroy');

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\OrgRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use NrlLaravel\Labcoat\Models\MenuItemAccess;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrgChangeController extends Controller
 {
@@ -20,40 +22,20 @@ class OrgChangeController extends Controller
 
         return view('org_changes.index', compact('orgRequests'));
     }
-    public function firstTab()
-    {
-        //
-        $menuName = 'orgChangeTabs';
-        $suffix = "/112/edit";
-        return view('org_changes.tabs.first', compact('menuName', 'suffix'));
-    }
-    public function secondTab()
-    {
-        //
-        $menuName = 'orgChangeTabs';
-        // $suffix = "/$id/edit";
-        return view('org_changes.tabs.second', compact('menuName', 'suffix'));
-    }
-    public function thirdTab()
-    {
-        //
-        $menuName = 'orgChangeTabs';
-        // $suffix = "/$id/edit";
-        return view('org_changes.tabs.third', compact('menuName', 'suffix'));
-    }
     public function firstTabEdit($id)
     {
         //
+        $org = OrgRequest::find($id);
         $menuName = 'orgChangeTabs';
         $suffix = "/$id/edit";
-        return view('org_changes.tabs.first', compact('menuName', 'suffix', 'id'));
+        return view('org_changes.tabs.first', compact('menuName', 'suffix', 'id', 'org'));
     }
     public function secondTabEdit($id)
     {
         //
         $menuName = 'orgChangeTabs';
         $suffix = "/$id/edit";
-        // MenuItemAccess::set('thirdTab', $id, 'available');
+        
         return view('org_changes.tabs.second', compact('menuName', 'suffix', 'id'));
     }
     public function thirdTabEdit($id)
@@ -70,14 +52,33 @@ class OrgChangeController extends Controller
         $suffix = "/$id/edit";
         return view('org_changes.tabs.fourth', compact('menuName', 'suffix', 'id'));
     }
-    // public function tabs($tab)
-    // {
-    //     //
-    //     if($tab == 1){
-    //     }elseif ($tab == 2) {
-    //     }elseif ($tab == 3) {
-    //     }
-    // }
+
+    public function newChartDownload($id){
+      $org = OrgRequest::findOrFail($id);
+      $file = '../storage/app/newCharts/'.$id.'/'.$org->new_orgChart;
+
+      return response(Storage::get('newCharts/'.$id.'/'.$org->new_orgChart))
+                          ->header('Content-Description', 'File Transfer')
+                          ->header('Content-Type', 'application/octet-stream')
+                          ->header('Content-Disposition', 'attachment; filename="'.basename($file).'"')
+                          ->header('Cache-Control', 'must-revalidate')
+                          ->header('Pragma', 'public')
+                          ->header('Content-Length', filesize($file))
+                          ->header('Expires', '0');
+    }
+    public function oldChartDownload($id){
+      $org = OrgRequest::findOrFail($id);
+      $file = '../storage/app/oldCharts/'.$id.'/'.$org->current_orgChart;
+
+      return response(Storage::get('oldCharts/'.$id.'/'.$org->current_orgChart))
+                          ->header('Content-Description', 'File Transfer')
+                          ->header('Content-Type', 'application/octet-stream')
+                          ->header('Content-Disposition', 'attachment; filename="'.basename($file).'"')
+                          ->header('Cache-Control', 'must-revalidate')
+                          ->header('Pragma', 'public')
+                          ->header('Content-Length', filesize($file))
+                          ->header('Expires', '0');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -89,15 +90,9 @@ class OrgChangeController extends Controller
         //
         $org_request = new OrgRequest;
         $org_request->save();
-        // dd($org_request->id);
         $id = $org_request->id;
-        $menuName = 'orgChangeTabs';
-        $suffix = "/$id/edit";
 
-        return redirect()->action(
-          'OrgChangeController@firstTabEdit', ['id'=>$id]
-        );
-        // return view('org_changes.tabs.first', compact('org_request', 'menuName', 'suffix', 'id'));
+        return redirect()->action('OrgChangeController@firstTabEdit', ['id'=>$id]);
     }
 
     /**
@@ -146,16 +141,20 @@ class OrgChangeController extends Controller
         //
         // dd($request->all());
         $orgRequest = OrgRequest::findOrFail($id);
-        $file1Name = $request->file('current_orgChart')->getClientOriginalName();
-        $file2Name = $request->file('new_orgChart')->getClientOriginalName();
+        if($request->file('current_orgChart')){
+          $file1Name = $request->file('current_orgChart')->getClientOriginalName();
+          $request->file('current_orgChart')->storeAs('oldCharts/'.$id, $file1Name);
+          $orgRequest->current_orgChart = $file1Name;
+        };
+        if($request->file('new_orgChart')){
+          $file2Name = $request->file('new_orgChart')->getClientOriginalName();
+          $request->file('new_orgChart')->storeAs('newCharts/'.$id, $file2Name);
+          $orgRequest->new_orgChart = $file2Name;
+        }
 
-        $request->file('new_orgChart')->storeAs('newCharts/'.$id, $file2Name);
-        $request->file('current_orgChart')->storeAs('oldCharts/'.$id, $file1Name);
 
         $orgRequest->title = $request['title'];
         $orgRequest->description = $request['description'];
-        $orgRequest->current_orgChart = $request['current_orgChart'];
-        $orgRequest->new_orgChart = $request['new_orgChart'];
         $orgRequest->save();
 
         return redirect('/org_changes');
@@ -170,5 +169,8 @@ class OrgChangeController extends Controller
     public function destroy($id)
     {
         //
+        OrgRequest::destroy($id);
+
+        return redirect('/org_changes');
     }
 }

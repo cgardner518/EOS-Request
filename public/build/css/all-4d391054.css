@@ -13150,10 +13150,12 @@ thead tr {
   display: block;
   margin-bottom: 2em; }
   .orgChartInfo a {
-    display: block;
-    margin: auto;
-    text-align: center;
     text-decoration: underline; }
+
+.current {
+  width: 35em;
+  margin: 0;
+  display: inline-block; }
 
 .discoveryZone {
   width: 30em;
@@ -13168,9 +13170,13 @@ thead tr {
   background: white;
   display: inline-block; }
 
+.fileRow {
+  display: block;
+  height: 10em; }
+
 .proposed {
   float: right;
-  margin-top: -2.5em; }
+  display: inline-block; }
 
 .dzInner {
   position: relative;
@@ -13215,6 +13221,15 @@ thead tr {
   top: 8px !important;
   margin: none;
   width: 53px; }
+
+#submit {
+  width: 10em;
+  position: relative;
+  display: block;
+  margin: auto; }
+
+.stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active {
+  background: linear-gradient(to right, rgba(46, 85, 144, 1) 0%, rgba(46, 85, 144, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(46, 85, 144, 1) 100%) !important; }
 
 /*
  * The MIT License
@@ -13669,4 +13684,4 @@ thead tr {
   border-right: 6px solid transparent;
   border-bottom: 6px solid #be2626; }
 
-/*# sourceMappingURL=/build/css/all-2602f308.css.map */
+/*# sourceMappingURL=/build/css/all-4d391054.css.map */

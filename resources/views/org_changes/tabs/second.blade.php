@@ -14,11 +14,7 @@
 
     <button type="button" class="btn btn-primary btn-gradient">Add Mission Statement</button>
 
-    <h3>Organizational Changes</h3>
-    <p>Laboris eu eiusmod magna laborum nostrud anim excepteur labore exercitation aute.Cupidatat laborum amet in aute reprehenderit veniam culpa do ea et minim pariatur consectetur deserunt.Irure ullamco aliquip nostrud elit aute nulla in ullamco esse dolore sunt.</p>
-
-    <button type="button" class="btn btn-primary btn-gradient">Add Change</button>
-
+</div>
 
 
 @stop
