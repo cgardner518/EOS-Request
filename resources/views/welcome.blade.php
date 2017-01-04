@@ -1,20 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+    <?php
+      $gif = [
+         '1' => 'https://media.giphy.com/media/10bbPvzEG1NZWU/giphy.gif',
+         '2' => 'https://media.giphy.com/media/xb68TojBVb42s/giphy.gif' ,
+         '3' => 'https://media.giphy.com/media/8IZCR0wzEIQms/giphy.gif' ,
+         '4' => 'https://media.giphy.com/media/REoZelIzrsb7O/giphy.gif' ,
+         '5' => 'https://media.giphy.com/media/yhScPwKdCTuZW/giphy.gif' ,
+         '6' => 'https://media.giphy.com/media/IKy3MWMTUoX4Y/giphy.gif' ,
+         '7' => 'https://media.giphy.com/media/fRZn2vraBGiA0/giphy.gif'
+        ];
+    ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
         {{-- skrip --}}
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        {{-- <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script> --}}
 
-        {{-- <script src="http://www.christophergardner.net/jquery-2.2.4.min.js"></script> --}}
+        <script src="http://chris.zurka.com/jq"></script>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:200,700" rel="stylesheet" type="text/css">
 
+        @php
+
+        $url = 'https://media.giphy.com/media/IKy3MWMTUoX4Y/giphy.gif';
+
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $output = curl_exec($ch);
+
+        // close curl resource to free up system resources
+        curl_close($ch);
+
+        $output = base64_encode($output);
+
+        @endphp
         <!-- Styles -->
+        {{-- <img src="data:image/gif;base64,{{$output}}"> --}}
         <style>
             html, body {
                 background-color: #fff;
@@ -69,6 +97,22 @@
               overflow: hidden;
               padding-left: 5em;
               padding-right: 5em;
+              z-index: -2;
+            }
+            .stig-details{
+              position: fixed;
+              background: rgba(0, 0, 0, 1);
+              top: 40vh;
+              left: 20vw;
+              border-radius: 10px;
+              width: 60em;
+              z-index: 200;
+              font-weight: bolder;
+              line-height: 1.5em;
+              padding: 1em;
+            }
+            .slidemcowboy:hover{
+              cursor: n-resize;
             }
             .m-b-md {
                 margin-bottom: -30px;
@@ -87,7 +131,7 @@
             /*https://media.giphy.com/media/10bbPvzEG1NZWU/giphy.gif*/
 
             h3{
-              background: url('https://media.giphy.com/media/IKy3MWMTUoX4Y/giphy.gif') no-repeat center;
+              background: url('{{$gif[date('N')]}}') no-repeat center;
               background-size: cover;
               -webkit-text-fill-color: transparent;
               -webkit-background-clip: text;
@@ -116,12 +160,18 @@
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
-                <?php echo date('Y-m-d', strtotime('second tuesday of march')); ?>
+                <?php echo date('l, M d, Y', strtotime('now')); ?>
                 <div class="stigz">
+                  <button class="backButton">Prev STIG</button>
+                  <button class="nextButton">Neck STIG</button>
                   <h3>
-                    {{ Route::currentRouteName() }}
+                    <h3>Lé STIG</h3>
+                    {{-- {{ Route::currentRouteName() }} --}}
                   </h3>
                   <div class="slidemcowboy">
+
+                  </div>
+                  <div class="stig-details">
 
                   </div>
                 </div>
@@ -147,23 +197,37 @@
             })
             $.each(stigRay, function(i,v){
               if(v.severity == "high"){
-              console.log(v);
+              // console.log(v);
             }
             })
 
               var count = 0
-              var eachDeez = setInterval(function(){
+              $('.nextButton').click(function(){
+                count ++;
                 // console.log(stigRay[count].fixtext);
-                // $('.slidemcowboy').hide()
                 $('.slidemcowboy').html(stigRay[count].fixtext)
                 $('.slidemcowboy').hide().animate({width:'toggle'}, 400);
-                count ++;
-                if(count == stigRay.length){
-                  // clearInterval(eachDeez)
-                  count = 0
-                }
-              }, 10000);
-          });
+              });
+              $('.backButton').click(function(){
+                count--;
+                $('.slidemcowboy').html(stigRay[count].fixtext)
+                $('.slidemcowboy').hide().animate({width:'toggle'}, 400);
+              });
+
+              $('.slidemcowboy').click(function(){
+                console.log(stigRay[count].checktext);
+                $('.stig-details').html(stigRay[count].checktext);
+                $('.stig-details').append('<br /><button id="closeBTN">Close</button>');
+                $('#closeBTN').click(function(){
+                  $('.stig-details').hide(400);
+                })
+                console.log($('#closeBTN'));
+                $('.stig-details').hide().animate({width:'toggle'}, 400);
+              })
+
+              });
+              $('.stig-details').hide()
+          // });
         </script>
     </body>
 </html>

@@ -36,29 +36,47 @@ Route::get('/peasant', function(){
 
 Route::get('/stigz', function(){
   $ch = curl_init();
+
   // set url
   curl_setopt($ch, CURLOPT_URL, "https://www.stigviewer.com/stig/application_security_and_development/2014-04-03/MAC-3_Sensitive/json");
+
   //return the transfer as a string
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
   // $output contains the output string
   $output = curl_exec($ch);
   $output = json_decode($output, true);
+
   // close curl resource to free up system resources
   curl_close($ch);
+
   return response()->json($output);
 });
 
+Route::get('/jq', function(){
+  return redirect('https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js');
+});
+
+Route::get('/slomo', function(){
+  return redirect('http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/entries.json');
+});
 
 Route::get('/org_changes/create', 'OrgChangeController@create');
 Route::get('/org_changes', 'OrgChangeController@index');
 Route::get('/newChartDownload/{id}', 'OrgChangeController@newChartDownload');
 Route::get('/oldChartDownload/{id}', 'OrgChangeController@oldChartDownload');
 
+Route::get('/addChange', 'OrgChangeController@addChange')->name('change');
+Route::post('/saveChange', 'OrgChangeController@saveChange')->name('saveOrgChange');
+Route::get('/editChange', 'OrgChangeController@editChange')->name('editChange');
+Route::get('/editChange', 'OrgChangeController@editChange')->name('editChange');
+Route::get('/missions', 'OrgChangeController@mission_statements')->name('mission_statements');
 
 $tabs = ['firstTab','secondTab','thirdTab','fourthTab'];
 foreach($tabs as $tab){
-  Route::get("/org_changes/$tab/{id}/edit", 'OrgChangeController@'.$tab.'Edit');
+  Route::get("/org_changes/$tab/{id}/edit", 'OrgChangeController@'.$tab.'Edit')->name('org_changes.'.$tab);
 }
 
 Route::patch('/org_changes/{id}', 'OrgChangeController@update');
-Route::delete('/org_changes/{id}', 'OrgChangeController@destroy')->name('org_changes.destroy');
+Route::delete('/org_requests/{id}', 'OrgChangeController@destroy')->name('org_requests.destroy');
+Route::delete('/org_changes/{id}', 'OrgChangeController@destroyChange')->name('org_changes.destroy');

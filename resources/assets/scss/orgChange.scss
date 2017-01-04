@@ -120,10 +120,42 @@
 }
 
 #submit{
-  width: 10em;
+  // width: 10em;
   position: relative;
   display: block;
   margin:auto;
+  top: .5em;
+}
+
+.org_change_modal{
+  display: block;
+  span{
+    // background: blue;
+    display: inline;
+  }
+  input{
+    display: inline;
+    width: 75%;
+    margin-left: 2em;
+  }
+  label{
+    display: inline;
+  }
+  select{
+    width: 40%;
+  }
+  #fromLabel{
+    margin-right: -0.5em ;
+  }
+  #from{
+    // margin-left: .7em;
+  }
+  #toLabel{
+      // margin-right: -.4em;
+      margin-right: -1.7em;
+  }
+  #typeLabel{
+  }
 }
 
 .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active{

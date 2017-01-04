@@ -364,6 +364,7 @@ class ComposerStaticInit80a1f6abee946d53a4add3072860941d
     public static $classMap = array (
         'AddColumnsToUsers' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_201304_add_columns_to_users.php',
         'AddDataColumnToUiStates' => __DIR__ . '/../..' . '/database/migrations/2016_04_28_122942_add_data_column_to_ui_states.php',
+        'AddDefaultAccessToMenuItems' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_222220_add_default_access_to_menu_items.php',
         'AddDefaultToCost' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_204805_add_default_to_cost.php',
         'AddDomIdToMenuItems' => __DIR__ . '/../..' . '/database/migrations/2016_04_26_183121_add_dom-id_to_menu_items.php',
         'AddEosIdToEmail' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_143713_add_eos_id_to_email.php',
@@ -438,6 +439,7 @@ class ComposerStaticInit80a1f6abee946d53a4add3072860941d
         'CreateBadgesTable' => __DIR__ . '/../..' . '/database/migrations/2015_07_30_220002_create_badges_table.php',
         'CreateEOSRequestsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_16_145445_create_e_o_s_requests_table.php',
         'CreateEmailsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_06_180136_create_emails_table.php',
+        'CreateMenuItemAccess' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_152015_create_menu_item_access.php',
         'CreateMenuItemsTable' => __DIR__ . '/../..' . '/database/migrations/2015_04_11_142543_create_menu_items_table.php',
         'CreateMenusTable' => __DIR__ . '/../..' . '/database/migrations/2015_03_11_141353_create_menus_table.php',
         'CreateMissionStatementsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_194647_create_mission_statements_table.php',

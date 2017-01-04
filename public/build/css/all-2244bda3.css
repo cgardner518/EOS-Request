@@ -12447,6 +12447,8 @@ div.align-me {
 /* Tabs */
 .nav-tabs {
   max-height: 42px; }
+  .nav-tabs .tab-label {
+    padding: 0 15px; }
 
 .labcoat-style .nav .open a, .labcoat-style .nav .open a:hover, .labcoat-style .nav .open a:focus {
   background-color: #fff; }
@@ -12509,9 +12511,10 @@ div.align-me {
         height: 26px;
         line-height: 5px; }
         .labcoat-style.header-tabs .nav-tabs li a:hover, .labcoat-style.header-tabs .nav-tabs li a:active, .labcoat-style.header-tabs .nav-tabs li a:focus {
-          color: #000;
-          border-color: #ebebeb;
-          background-color: #ebebeb; }
+          border-color: #dcdcdc;
+          background-color: #dcdcdc;
+          color: #4c4f59;
+          text-decoration: none; }
       .labcoat-style.header-tabs .nav-tabs li.active a, .labcoat-style.header-tabs .nav-tabs li.active a:hover, .labcoat-style.header-tabs .nav-tabs li.active a:focus {
         border-color: #ebebeb;
         background-color: #ebebeb;
@@ -12525,7 +12528,8 @@ div.align-me {
           .labcoat-style.header-tabs .nav-tabs li.disabled a:hover, .labcoat-style.header-tabs .nav-tabs li.disabled a:active, .labcoat-style.header-tabs .nav-tabs li.disabled a:focus {
             color: #000;
             border-color: #ebebeb;
-            background-color: #ebebeb; }
+            background-color: #ebebeb;
+            text-decoration: none; }
   .labcoat-style .tab-content {
     background-color: #c6c6c6;
     padding: 0; }
@@ -12535,50 +12539,41 @@ div.align-me {
       margin-bottom: 0; }
 
 .stepped-tabs .stepped-tabs-wrapper {
-  box-sizing: content-box;
   background-color: #6da9cf;
   text-align: center;
-  height: 25px;
-  overflow: hidden;
-  border-top: 1px solid #6da9cf; }
+  height: 26px;
+  overflow: hidden; }
   .stepped-tabs .stepped-tabs-wrapper .nav-tabs {
     display: inline-block;
     border-radius: 6px 6px 0 0;
     background-color: transparent;
-    padding: 0;
-    margin-top: -1px; }
+    padding: 0; }
     .stepped-tabs .stepped-tabs-wrapper .nav-tabs li {
       float: left;
       display: block;
-      background-color: rgba(46, 85, 144, 1); }
+      background-color: #2e5590; }
       .stepped-tabs .stepped-tabs-wrapper .nav-tabs li a, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li .stepped-tab-label {
+        border-radius: 0;
+        border: none;
         padding: 0 15px;
         font-size: 14px;
         line-height: 26px; }
-      .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active {
-        background-color: transparent;
-        background: -moz-linear-gradient(left, rgba(46, 85, 144, 1) 0%, rgba(46, 85, 144, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(209, 209, 209, 1) 100%);
-        background: -webkit-linear-gradient(left, rgba(46, 85, 144, 1) 0%, rgba(46, 85, 144, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(209, 209, 209, 1) 100%);
-        background: linear-gradient(to right, rgba(46, 85, 144, 1) 0%, rgba(46, 85, 144, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(209, 209, 209, 1) 100%); }
-        .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active a, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active a:hover, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active a:focus {
-          border-color: rgba(46, 85, 144, 1);
-          border-bottom-color: #ebebeb;
-          background-color: #ebebeb;
-          color: #4c4f59; }
+        .stepped-tabs .stepped-tabs-wrapper .nav-tabs li a:hover, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li .stepped-tab-label:hover, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li a:focus, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li .stepped-tab-label:focus, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li a:active, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li .stepped-tab-label:active {
+          background-color: #dcdcdc;
+          color: #4c4f59;
+          text-decoration: none; }
+      .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active a, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active a:hover, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active a:focus {
+        border-color: #2e5590;
+        border-bottom-color: #ebebeb; }
       .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.unavailable {
-        background-color: rgba(209, 209, 209, 1); }
+        background-color: #d1d1d1; }
         .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.unavailable a, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.unavailable a:hover, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.unavailable a:focus, .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.unavailable .stepped-tab-label {
+          background-color: #d1d1d1;
           color: #8e9095;
-          cursor: not-allowed; }
-    .stepped-tabs .stepped-tabs-wrapper .nav-tabs li:hover a {
-      border-color: #dcdcdc;
-      background-color: #dcdcdc;
-      color: #4c4f59; }
+          cursor: not-allowed;
+          text-decoration: none; }
     .stepped-tabs .stepped-tabs-wrapper .nav-tabs > li > a {
       margin-right: 0; }
-
-.nav-tabs .tab-label {
-  padding: 0 15px; }
 /*
  Overrides the default Gritter styles for our usage
  Note that the jquery.gritter.js file has been altered as well.
@@ -13223,13 +13218,29 @@ thead tr {
   width: 53px; }
 
 #submit {
-  width: 10em;
   position: relative;
   display: block;
-  margin: auto; }
+  margin: auto;
+  top: 0.5em; }
 
-.stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active {
-  background: linear-gradient(to right, rgba(46, 85, 144, 1) 0%, rgba(46, 85, 144, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(46, 85, 144, 1) 100%) !important; }
+.org_change_modal {
+  display: block; }
+  .org_change_modal span {
+    display: inline; }
+  .org_change_modal input {
+    display: inline;
+    width: 75%;
+    margin-left: 2em; }
+  .org_change_modal label {
+    display: inline; }
+  .org_change_modal select {
+    width: 40%; }
+  .org_change_modal #fromLabel {
+    margin-right: -0.5em; }
+  .org_change_modal #toLabel {
+    margin-right: -1.7em; }
+  .stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active {
+    background: linear-gradient(to right, rgba(46, 85, 144, 1) 0%, rgba(46, 85, 144, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(46, 85, 144, 1) 100%) !important; }
 
 /*
  * The MIT License
@@ -13684,4 +13695,4 @@ thead tr {
   border-right: 6px solid transparent;
   border-bottom: 6px solid #be2626; }
 
-/*# sourceMappingURL=/build/css/all-4d391054.css.map */
+/*# sourceMappingURL=/build/css/all-2244bda3.css.map */

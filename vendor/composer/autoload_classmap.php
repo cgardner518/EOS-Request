@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddColumnsToUsers' => $baseDir . '/database/migrations/2016_12_15_201304_add_columns_to_users.php',
     'AddDataColumnToUiStates' => $baseDir . '/database/migrations/2016_04_28_122942_add_data_column_to_ui_states.php',
+    'AddDefaultAccessToMenuItems' => $baseDir . '/database/migrations/2016_12_15_222220_add_default_access_to_menu_items.php',
     'AddDefaultToCost' => $baseDir . '/database/migrations/2016_12_07_204805_add_default_to_cost.php',
     'AddDomIdToMenuItems' => $baseDir . '/database/migrations/2016_04_26_183121_add_dom-id_to_menu_items.php',
     'AddEosIdToEmail' => $baseDir . '/database/migrations/2016_12_15_143713_add_eos_id_to_email.php',
@@ -82,6 +83,7 @@ return array(
     'CreateBadgesTable' => $baseDir . '/database/migrations/2015_07_30_220002_create_badges_table.php',
     'CreateEOSRequestsTable' => $baseDir . '/database/migrations/2016_11_16_145445_create_e_o_s_requests_table.php',
     'CreateEmailsTable' => $baseDir . '/database/migrations/2016_12_06_180136_create_emails_table.php',
+    'CreateMenuItemAccess' => $baseDir . '/database/migrations/2016_12_15_152015_create_menu_item_access.php',
     'CreateMenuItemsTable' => $baseDir . '/database/migrations/2015_04_11_142543_create_menu_items_table.php',
     'CreateMenusTable' => $baseDir . '/database/migrations/2015_03_11_141353_create_menus_table.php',
     'CreateMissionStatementsTable' => $baseDir . '/database/migrations/2016_12_15_194647_create_mission_statements_table.php',

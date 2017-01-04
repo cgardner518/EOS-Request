@@ -10,7 +10,7 @@
 @section('main-content')
   <div class="indent-padding width-limited-1200">
     <h3>Overview and Rationale</h3>
-    <p>You base football-player! You crooked-nose knave! You puterell, you skalemar. You hedge-born levereter, you bedswerver fopdoodle! Ye olde mucksprout and mumblecrust. You rakefile skobberlotcher. Thou subtle, perjur’d, false, disloyal man! Thou art like a toad; ugly and venomous.</p>
+    <p>Laboris eu eiusmod magna laborum nostrud anim excepteur labore exercitation aute.Cupidatat laborum amet in aute reprehenderit veniam culpa do ea et minim pariatur consectetur deserunt.Irure ullamco aliquip nostrud elit aute nulla in ullamco esse dolore sunt.</p>
   {!! Form::open(['url'=>'org_changes/'.$id, 'id'=>'myForm', 'method'=>'PATCH', 'files'=>true]) !!}
   <div class="form-group form-row badged nameField">
     {!! Form::label('title', 'Title:', ['class' => 'control-label']) !!}
@@ -21,14 +21,13 @@
   </div><br>
   <div class="form-group form-row badged nameField descField">
     <span class="badge red" id="description-badge">Required</span>
-  {{-- {!! Form::label('description', 'Description:', ['class' => 'control-label']) !!} --}}
-  {{-- <div class="inputWrapper"> --}}
+
     {!! Form::textarea('description', $org->description, ['class' => 'form-control','id' => 'descript', 'placeholder' => 'Enter overview/rationale for proposed reorganization']) !!}
   {{-- </div> --}}
 </div><br>
 <div class="orgChartInfo">
 <h3>Organizational Charts</h3>
-<p>Thou clay-brained guts, thou knotty-pated fool, thou whoreson obscene greasy tallow-catch! That trunk of humours, that bolting-hutch of beastliness, that swollen parcel of dropsies, that huge bombard of sack, that stuffed cloak-bag of guts, that roasted Manningtree ox with pudding in his belly</p>
+<p>Culpa cillum ex dolor occaecat amet magna consequat aute Lorem duis ad ipsum ipsum cupidatat consectetur.Reprehenderit anim aliquip dolore fugiat sint duis aliquip anim est sint consequat laboris deserunt sunt.</p>
 <div class="text-center">
   <i class="fa fa-file-o"></i> <a href="javascript:document.body.style.visibility = 'hidden', alert('HA!');"> Org. Chart Template</a>
 </div>
@@ -38,47 +37,70 @@
 <div class="fileRow">
   <div class="current">
     <h5>Current Organizational Chart</h5>
-      @if(!$org->current_orgChart)
+
           <div class="discoveryZone">
             <div class="dzInner">
               <p><em>Choose your files</em> or drag them here.</p>
               <span class="badge red">Required</span>
             </div>
           </div>
-    @elseif ($org->current_orgChart)
 
-        <h4>{{$org->current_orgChart}}</h4>
-        {{-- <span class="badge red">Required</span> --}}
+        <h4>{{$org->current_orgChart}} &nbsp; <i data-toggle="tooltip" title="Remove/Add New File" class="fa fa-trash" id="changeDZ1" style="text-decoration:none;"></i></h4>
 
-    @endif
   </div>
 
     <div class="proposed">
       <h5 id="annoyance">Proposed Organizational Chart</h5>
-        @if(!$org->new_orgChart)
+        {{-- @if(!$org->new_orgChart) --}}
           <div class="discoveryZone2">
             <div class="dzInner2">
               <p><em>Choose your files</em> or drag them here.</p>
               <span class="badge red">Required</span>
             </div>
           </div>
-        @elseif ($org->new_orgChart)
+        {{-- @elseif ($org->new_orgChart) --}}
 
-          <h4>{{$org->new_orgChart}}</h4>
+          <h4>{{$org->new_orgChart}} &nbsp; <i data-toggle="tooltip" title="Remove/Add New File" class="fa fa-trash" id="changeDZ2" style="text-decoration:none;"></i></h4>
 
-      @endif
+      {{-- @endif --}}
     </div>
   </div>
   <br><br>
-  {{-- <input type="file" id='desd'> --}}
-  {{-- <input type="submit" id="submit"> --}}
-  <a id="submit" class="btn btn-success btn-gradient ">Save & Continue</a>
+
+  <button id="submit" class="btn btn-success btn-gradient ">Save &nbsp; <i class="fa fa-arrow-right"></i></button>
   {!! Form::close() !!}
   <input type="hidden" id='id' value='{{$id}}'>
 </div>
 
 
    <script>
+   if ($('.current h4').text() == "   ") {
+     console.log($('.current h4').text());
+     $('.current h4').hide()
+     $('.discoveryZone').show()
+   }else {
+     $('.discoveryZone').hide()
+   }
+
+   if ($('.proposed h4').text() == "   ") {
+     console.log($('.proposed h4').text());
+     $('.proposed h4').hide()
+     $('.discoveryZone2').show()
+   }else {
+     $('.discoveryZone2').hide()
+   }
+
+  $('#changeDZ1').click(function(){
+    $('.current h4').hide()
+    $('.discoveryZone').show()
+
+  })
+
+  $('#changeDZ2').click(function(){
+    $('.proposed h4').hide()
+    $('.discoveryZone2').show()
+
+  })
 
    var droppedFiles = {};
 
@@ -175,12 +197,12 @@
      },
    });
 
-    $(document).on('click','#submit',function(e){
+
+
+    $('#submit').click(function(e){
       e.preventDefault()
-      // e.stopPropagation()
       $id = $('#id').val()
-      // $id = $('#id').val();
-      // $url = 'http://chris.zurka.com/org_changes/'+$id;
+
 
       $url = $('#myForm').attr('action');
       $token = $('input[name=_token]').attr('value');
@@ -202,10 +224,6 @@
       $data.append('description', $descript)
       $data.append('title', $title)
 
-      // $data.append('data-ajax', false)
-      // $data.append('id', 10)
-      // console.log($data);
-      // return;
 
       $.ajax({
         url: $url,
@@ -216,7 +234,6 @@
       }).then(function(response){
         window.location.replace('http://chris.zurka.com/org_changes/secondTab/'+$id+'/edit')
       })
-      // debugger;
     })
 
 

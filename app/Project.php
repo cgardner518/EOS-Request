@@ -10,6 +10,7 @@ class Project extends Model
     protected $fillable = [
       'name'
     ];
+    
     // These will be pulled LASR schedular site at NRL
     public static function projectsForUser($user_id = ''){
 

@@ -9,12 +9,46 @@
 @endsection
 @section('main-content')
   <div class="indent-padding width-limited-1200">
-    <h3>Updated Mission Statements</h3>
-    <p>Veniam culpa mollit amet officia dolor ipsum esse qui sint officia nisi eiusmod sint esse incididunt culpa eiusmod. Labore qui ut aute laborum laboris fugiat sunt magna consequat nulla sint adipisicing id. Amet ex duis et ex veniam sit veniam occaecat aute deserunt ipsum amet est eiusmod. In laboris aliquip occaecat et enim cupidatat culpa dolor duis nostrud et eiusmod aliquip cupidatat dolore.</p>
+    {!! Form::open() !!}
+    {!! Form::close() !!}
 
-    <button type="button" class="btn btn-primary btn-gradient">Add Mission Statement</button>
+    <h3>Organizational Changes</h3>
+    <p>Laboris eu eiusmod magna laborum nostrud anim excepteur labore exercitation aute.Cupidatat laborum amet in aute reprehenderit veniam culpa do ea et minim pariatur consectetur deserunt.Irure ullamco aliquip nostrud elit aute nulla in ullamco esse dolore sunt.</p>
+  @if (empty($orgChanges))
+    <p><em>Currently no Organizational Changes</em></p>
+    @else
+    <table>
+      <thead>
+        <th></th>
+        <th>Type</th>
+        <th>From</th>
+        <th>To</th>
+        <th></th>
+      </thead>
+      @foreach ($orgChanges as $change)
+        <tr>
+          <td><a href="javascript:undefined;" class="fa fa-pencil" style="text-decoration:none;" data-modal-url="{{URL::route('editChange', ['id' => $change['id']])}}" data-modal-id="org_change_edit{{ $change['id'] }}"></a></td>
+          @if($change['type'] == 0)
+          <td>
+            Unit Title
+          </td>
+          @else
+            <td>
+              Code
+            </td>
+          @endif
+          <td>{{$change['from']}}</td>
+          <td>{{$change['to']}}</td>
+          <td><a href="javascript:undefined;" class="fa fa-fw fa-trash" style="text-decoration: none;"  data-delete-url="{{ URL::route('org_changes.destroy', $change['id']) }}" ></a></td>
+        </tr>
+      @endforeach
+    </table>
+    {{-- @php
+      $org_request_id = $orgChanges[0]['org_request'];
+    @endphp --}}
+  @endif
 
-</div>
-
-
+    <button type="button" data-modal-url="{{ URL::route('change', ['id' => $id ]) }}"  class="btn btn-primary btn-gradient" data-modal-id="org_change-{{ $id }}">Add Title Change</button>
+    <a href="{{ URL::route('org_changes.thirdTab', [ 'id' => $id ]) }}" class="btn btn-success btn-gradient ">Save &nbsp; <i class="fa fa-arrow-right"></i></a>
+  </div>
 @stop

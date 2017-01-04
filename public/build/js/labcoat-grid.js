@@ -414,12 +414,12 @@ var vm = new Vue({
         * Vue needs some time to update the model binding before highlighting can work.
         * use this.$nextTick() to delay that process.
         */
-        highlightResults() {
+        highlightResults: function() {
             this.$nextTick(function () {
                 $(this.selector).removeHighlight().highlight(this.pagination[this.pagination.activeTab].search);
             });
         },
-        initializeDeleteButton() {
+        initializeDeleteButton: function() {
             $("#tabbed-table a[data-delete-url], #tabbed-table button[data-delete-url]").attr('data-delete-url', function(){
                 var url = $(this).attr('data-delete-url');
                 url = url.replace(/%7B\S+%7D/g, $(this).attr('data-delete-id'));

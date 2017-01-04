@@ -17,4 +17,5 @@ class OrgRequest extends Model
     {
       return '/chartDownload/'.$this->id.'/'.$this->current_orgChart;
     }
+
 }

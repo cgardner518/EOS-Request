@@ -43,6 +43,7 @@ class EOSRequestsController extends Controller
 
     public function reject(Request $request){
       // dd($request->all());
+
       $id = $request->id;
       $modalId = $request->modalId;
 
