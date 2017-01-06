@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', function () {return view('welcome');})->name('velcome');
 
 Route::get('/requests', 'EOSRequestsController@index');
@@ -33,6 +34,60 @@ Route::get('/peasant', function(){
   Auth::loginUsingId('c5ad9b2d-b59e-11e6-8fb9-0aad45e20ffe');
   return redirect('/requests');
 });
+
+
+
+Route::get('/org_changes/create', 'OrgChangeController@create');
+Route::get('/org_changes', 'OrgChangeController@index');
+Route::get('/newChartDownload/{id}', 'OrgChangeController@newChartDownload');
+Route::get('/oldChartDownload/{id}', 'OrgChangeController@oldChartDownload');
+
+Route::get('/addChange', 'OrgChangeController@addChange')->name('change');
+Route::post('/saveChange', 'OrgChangeController@saveChange')->name('saveOrgChange');
+Route::get('/editChange', 'OrgChangeController@editChange')->name('editChange');
+Route::patch('/updateChange', 'OrgChangeController@updateChange')->name('updateChange');
+
+Route::get('/missions', 'OrgChangeController@mission_statements')->name('mission_statements');
+Route::post('/saveMission', 'OrgChangeController@save_mission_statement')->name('save_mission_statement');
+
+Route::get('/personnel', 'OrgChangeController@personnel')->name('personnel');
+Route::post('/savePersonnel', 'OrgChangeController@savePersonnel')->name('savePersonnel');
+
+$tabs = ['firstTab','secondTab','thirdTab','fourthTab'];
+foreach($tabs as $tab){
+  Route::get("/org_changes/$tab/{id}/edit", 'OrgChangeController@'.$tab.'Edit')->name('org_changes.'.$tab);
+}
+
+Route::patch('/org_changes/{id}', 'OrgChangeController@update');
+Route::delete('/org_requests/{id}', 'OrgChangeController@destroy')->name('org_requests.destroy');
+Route::delete('/org_changes/{id}', 'OrgChangeController@destroyChange')->name('org_changes.destroy');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+// ***Chris Crap***
+// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
 
 Route::get('/stigz', function(){
   $ch = curl_init();
@@ -61,22 +116,159 @@ Route::get('/slomo', function(){
   return redirect('http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/entries.json');
 });
 
-Route::get('/org_changes/create', 'OrgChangeController@create');
-Route::get('/org_changes', 'OrgChangeController@index');
-Route::get('/newChartDownload/{id}', 'OrgChangeController@newChartDownload');
-Route::get('/oldChartDownload/{id}', 'OrgChangeController@oldChartDownload');
+Route::get('/dubai', function(){
+  return '
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <title>DUBAI</title>
+      <style media="screen">
+      body{
+        background: black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+      }
+      video{
+        margin:auto;
+        padding:0;
+        height:98vh;
+        z-index: 100;
+      }
+      iframe{
+        position:absolute;
+        z-index: -100000;
+        left: -9000em;
+        top: -100em;
+      }
+      </style>
+    </head>
+    <body>
+  <video src="http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/comp_DB_D011_D009_SIGNCMP_v15_6Mbps.mov" autoplay loop type="video/mp4"></video>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/E5s6jcuw6NM?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=E5s6jcuw6NM" frameborder="0" allowfullscreen></iframe>
+    </body>
+  </html>
+  ';
+  // https://youtu.be/E5s6jcuw6NM
+});
+Route::get('/hawaii', function(){
+  return '
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <title>HAWAII</title>
+      <style media="screen">
+        body{
+          background: black;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          z-index: 1;
+        }
+        video{
+          margin:auto;
+          padding:0;
+          height:98vh;
+          z-index: 100;
+        }
+        iframe{
+          position:absolute;
+          z-index: -100000;
+          left: -9000em;
+          top: -100em;
+        }
+      </style>
+    </head>
+    <body>
+  <video src="http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b10-1.mov" autoplay loop type="video/mp4"></video>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/438Gx2_SMNo?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=438Gx2_SMNo" frameborder="0" allowfullscreen></iframe>
+    </body>
+  </html>
+  ';
+});
 
-Route::get('/addChange', 'OrgChangeController@addChange')->name('change');
-Route::post('/saveChange', 'OrgChangeController@saveChange')->name('saveOrgChange');
-Route::get('/editChange', 'OrgChangeController@editChange')->name('editChange');
-Route::get('/editChange', 'OrgChangeController@editChange')->name('editChange');
-Route::get('/missions', 'OrgChangeController@mission_statements')->name('mission_statements');
+Route::get('/nyc', function(){
+  return '
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <title>NYC</title>
+      <style media="screen">
+        body{
+          background: black;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          z-index: 1;
+        }
+        video{
+          margin:auto;
+          padding:0;
+          height:98vh;
+          z-index: 100;
+        }
+        iframe{
+          position:absolute;
+          z-index: -100000;
+          left: -9000em;
+          top: -100em;
+        }
+      </style>
+    </head>
+    <body>
+  <video src="http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b2-3.mov" autoplay loop type="video/mp4"></video>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/phnIXtJBI5E?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=phnIXtJBI5E" frameborder="0" allowfullscreen></iframe>
+    </body>
+  </html>
+  ';
+});
 
-$tabs = ['firstTab','secondTab','thirdTab','fourthTab'];
-foreach($tabs as $tab){
-  Route::get("/org_changes/$tab/{id}/edit", 'OrgChangeController@'.$tab.'Edit')->name('org_changes.'.$tab);
-}
+Route::get('/la', function(){
+  return '
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <title>L.A.</title>
+      <style media="screen">
+        body{
+          background: black;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          z-index: 1;
+        }
+        video{
+          margin:auto;
+          padding:0;
+          height:98vh;
+          z-index: 100;
+        }
+        iframe{
+          position:absolute;
+          z-index: -100000;
+          left: -9000em;
+          top: -100em;
+        }
+      </style>
+    </head>
+    <body>
+  <video src="http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/comp_LA_A009_C009_t9_6M_tag0.mov" autoplay loop type="video/mp4"></video>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/O9Oc-WrQYZM?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=O9Oc-WrQYZM" frameborder="0" allowfullscreen></iframe>
 
-Route::patch('/org_changes/{id}', 'OrgChangeController@update');
-Route::delete('/org_requests/{id}', 'OrgChangeController@destroy')->name('org_requests.destroy');
-Route::delete('/org_changes/{id}', 'OrgChangeController@destroyChange')->name('org_changes.destroy');
+    </body>
+  </html>
+  ';
+  // https://youtu.be/O9Oc-WrQYZM
+});
+
+Route::get('/curl', function(){
+  return '<iframe width="560" height="315" src="https://www.youtube.com/embed/herNYSdJd0o?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=herNYSdJd0o" frameborder="0" allowfullscreen></iframe>';
+
+    // .com/embed/Yo19ZhO7CAc?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=Yo19ZhO7CAc" frameborder="0" allowfullscreen
+
+});

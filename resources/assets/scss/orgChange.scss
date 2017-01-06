@@ -22,15 +22,11 @@
   display: block;
   margin-bottom: 2em;
   a{
-  //   display: block;
-  //   margin: auto;
-  //   text-align: center;
     text-decoration: underline;
   }
 }
 
 .current{
-  // outline: 1px solid palegoldenrod;
   width: 35em;
   margin: 0;
   display: inline-block;
@@ -52,15 +48,12 @@
   display: inline-block;
 }
 .fileRow{
-  // outline: 1px solid red;
   display: block;
   height: 10em;
 }
 .proposed{
   float: right;
   display: inline-block;
-  // margin-top: -5.5em;
-  // outline: 1px solid aqua;
 }
 
 
@@ -68,7 +61,6 @@
   position: relative;
   border: 2px dashed lightgrey;
   width: 29.6em;
-  // height: 95px;
   top: 1px;
   padding: 30px 30px;
   margin: auto;
@@ -91,7 +83,6 @@
   position: relative;
   border: 2px dashed lightgrey;
   width: 29.6em;
-  // height: 95px;
   top: 1px;
   padding: 30px 30px;
   margin: auto;
@@ -120,7 +111,6 @@
 }
 
 #submit{
-  // width: 10em;
   position: relative;
   display: block;
   margin:auto;
@@ -130,34 +120,41 @@
 .org_change_modal{
   display: block;
   span{
-    // background: blue;
-    display: inline;
-  }
-  input{
-    display: inline;
-    width: 75%;
-    margin-left: 2em;
-  }
-  label{
-    display: inline;
-  }
-  select{
-    width: 40%;
-  }
-  #fromLabel{
-    margin-right: -0.5em ;
-  }
-  #from{
-    // margin-left: .7em;
-  }
-  #toLabel{
-      // margin-right: -.4em;
-      margin-right: -1.7em;
-  }
-  #typeLabel{
+    select{
+      margin: 0;
+    }
   }
 }
 
-.stepped-tabs .stepped-tabs-wrapper .nav-tabs li.active{
-  background: linear-gradient(to right, rgba(46, 85, 144, 1) 0%, rgba(46, 85, 144, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(46,85,144,1) 100%) !important;
+.org_change_td{
+  width: 2em;
+}
+
+.personnel_table_td{
+  width: 2em;
+}
+
+.mission_statements_table{
+  // margin-bottom: 0;
+  tr{
+    background: #f2f2f2 !important;
+  }
+}
+.expanding_div{
+  display:block;
+  overflow: hidden;
+  height: 6em;
+  outline: 1px solid aliceblue;
+}
+.showLink{
+  position: absolute;
+  background: #f2f2f2;
+  width: 82.25em;
+  z-index: 2;
+  top: 13em;
+  height: 1.75em;
+  text-align: center;
+  a{
+    margin: auto;
+  }
 }

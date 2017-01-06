@@ -9,9 +9,10 @@ class OrgChange extends Model
     //
 
     protected $fillable = [
-      'type',
-      'from',
-      'to',
+      'from_title',
+      'from_code',
+      'to_title',
+      'to_code',
       'org_request'
     ];
 

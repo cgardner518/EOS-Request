@@ -8,17 +8,33 @@
 
   {!! Form::open([ 'url' => '/saveChange', 'class' => 'org_change_modal']) !!}
 
-  {!! Form::label('type', 'Type:', ['class' => 'control-label', 'id' => 'typeLabel']) !!}
-  {!! Form::select('type', array('0' => 'Unit Title', '1' => 'Code')) !!}
+  {{-- {!! Form::label('type', 'Type:', ['class' => 'control-label', 'id' => 'typeLabel']) !!}
+  {!! Form::select('type', array('0' => 'Unit Title', '1' => 'Code')) !!} --}}
 
   <div class="form-row">
-  {!! Form::label('from', 'From:', ['class' => 'control-label', 'id' => 'fromLabel']) !!}
-  {!! Form::select('from', $orgs ) !!}
+  {!! Form::label('from_title', 'From Title:', ['class' => 'control-label align-me left']) !!}
+  <span class="inline-left">
+    {!! Form::select('from_title', $orgs ) !!}
+  </span>
   </div>
   <div class="form-row">
-    {!! Form::label('to', 'To:', ['class' => 'control-label', 'id' => 'toLabel']) !!}
-    {!! Form::text('to', '', ['class' => 'form-control', 'id' => 'toField']) !!}
-    <span class="badge red toFieldSpan">Required</span>
+    {!! Form::label('to_title', 'To Title:', ['class' => 'align-me left' ]) !!}
+    <span class="inline-left">
+    {!! Form::text('to_title', '', ['class' => 'form-control'] ) !!}
+    </span>
+  </div>
+  <div class="form-row">
+    {!! Form::label('from_code', 'From Code:', ['class' => 'control-label align-me left']) !!}
+    <span class="inline-left">
+      {!! Form::select('from_code', $codes ) !!}
+    </span>
+  </div>
+  <div class="form-row">
+    {!! Form::label('to_code', 'To Code:', ['class' => 'control-label align-me left']) !!}
+    <span class="inline-left">
+    {!! Form::text('to_code', '', ['class' => 'form-control']) !!}
+  </span>
+
   </div>
 
   <input name="org_request" type="hidden" value="{{$id}}">
@@ -27,30 +43,15 @@
 
 </div>
 <script type="text/javascript">
-var $orgs = [
-  @foreach ($orgs as $org)
-  '{{$org}}',
-  @endforeach
-];
 
-var $codes = [
-  @foreach ($codes as $code)
-  '{{$code}}',
-  @endforeach
-];
+$('#from_title').on('change', function(){
 
-$('#type').on('change', function(){
-  if($(this).val() == 0){
-    $.each($('#from option'),function(k,v){
-      v.text = $orgs[k];
-      console.log($orgs);
-    })
-  }else{
-    $.each($('#from option'),function(k,v){
-      v.text = $codes[k];
-      console.log($codes);
-    })
-  }
+  $('#from_code').val($('#from_title').val())
+
+})
+$('#from_code').on('change', function(){
+
+  $('#from_title').val($('#from_code').val())
 
 })
 

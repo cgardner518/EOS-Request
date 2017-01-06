@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\OrgRequest;
+use App\User;
 use App\OrgChange;
+use App\Personnel;
+use App\OrgRequest;
+use App\MissionStatement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use NrlLaravel\Labcoat\Models\MenuItemAccess;
@@ -31,55 +34,75 @@ class OrgChangeController extends Controller
         $suffix = "/$id/edit";
         return view('org_changes.tabs.first', compact('menuName', 'suffix', 'id', 'org'));
     }
-    public function secondTabEdit($id)
-    {
-        //
-        // dd(OrgChange::allOrganizations()[1]);
-        $org = OrgRequest::find($id);
-        $codes = OrgChange::allOrgCodes();
-        $orgs = OrgChange::allOrganizations();
-        $orgChanges = OrgChange::where('org_request', $id)->get()->toArray();
-        $menuName = 'orgChangeTabs';
-        $suffix = "/$id/edit";
-
-        return view('org_changes.tabs.second', compact('menuName', 'suffix', 'id', 'org', 'orgs', 'orgChanges', 'codes'));
-    }
     public function thirdTabEdit($id)
     {
         //
         $org = OrgRequest::find($id);
+        $missions = MissionStatement::where('org_request', $id)->get()->toArray();
+        $orgs = OrgChange::allOrganizations();
+        $codes = OrgChange::allOrgCodes();
+        $organizations = [];
+          foreach ($codes as $key => $value){
+            $organizations= array_add($organizations, $codes[$key], $orgs[$key]);
+          }
         $menuName = 'orgChangeTabs';
         $suffix = "/$id/edit";
-        return view('org_changes.tabs.third', compact('menuName', 'suffix', 'id'));
+
+        return view('org_changes.tabs.third', compact('menuName', 'suffix', 'id', 'missions', 'organizations'));
     }
     public function fourthTabEdit($id)
     {
         //
+        $personnel = Personnel::where('org_request', $id)->get()->toArray();
         $org = OrgRequest::find($id);
         $menuName = 'orgChangeTabs';
         $suffix = "/$id/edit";
-        return view('org_changes.tabs.fourth', compact('menuName', 'suffix', 'id'));
+
+        // dd($personnel);
+
+        return view('org_changes.tabs.fourth', compact('menuName', 'suffix', 'id', 'personnel'));
     }
 
+    // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    // ******
+    // * UNIT CHANGES
+    // ******
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    public function secondTabEdit($id)
+    {
+      //
+      $org = OrgRequest::find($id);
+      $codes = OrgChange::allOrgCodes();
+      $orgs = OrgChange::allOrganizations();
+      $orgChanges = OrgChange::where('org_request', $id)->get()->toArray();
+      $menuName = 'orgChangeTabs';
+      $suffix = "/$id/edit";
+
+      return view('org_changes.tabs.second', compact('menuName', 'suffix', 'id', 'org', 'orgs', 'orgChanges', 'codes'));
+    }
     public function addChange(Request $request)
     {
-      // dd($request->all());
       $id = $request->id;
       $modalId = $request->modalId;
       $orgs = OrgChange::allOrganizations();
       $codes = OrgChange::allOrgCodes();
-      // dd($orgs[1]);
+
       return view('org_changes.modals.orgChange', compact('modalId', 'id', 'orgs', 'codes'));
     }
+
+
 
     public function editChange(Request $request)
     {
       $modalId = $request->modalId;
 
       $unitChange = OrgChange::find($request->id);
-
       $id = $unitChange->org_request;
-      // dd($unitChange);
+
+
       $orgs = OrgChange::allOrganizations();
       $codes = OrgChange::allOrgCodes();
 
@@ -88,71 +111,127 @@ class OrgChangeController extends Controller
 
     public function updateChange(Request $request)
     {
-      // dd($request->all());
       $orgChange = OrgChange::find($request->id);
 
-      if ($request->type == 0) {
+      $orgChange->from_title = OrgChange::allOrganizations()[$request->from_title];
+      $orgChange->from_code = OrgChange::allOrgCodes()[$request->from_code];
+      $orgChange->org_request = $request->org_request;
 
-
-        $orgChange->type = 0;
-        $orgChange->from = OrgChange::allOrganizations()[$request->from];
-        $orgChange->to = $request->to;
-        $orgChange->org_request = $request->org_request;
-
-        $orgChange->save();
-
+      if (!$request->to_code) {
+        $orgChange->to_code = $orgChange->from_code;
       }else{
-
-        $orgChange->type = 1;
-        $orgChange->from = OrgChange::allOrgCodes()[$request->from];
-        $orgChange->to = $request->to;
-        $orgChange->org_request = $request->org_request;
-
-        $orgChange->save();
+        $orgChange->to_code = $request->to_code;
       }
+
+      if (!$request->to_title) {
+        $orgChange->to_title = $orgChange->from_title;
+      }else{
+        $orgChange->to_title = $request->to_title;
+      }
+
+      $orgChange->save();
 
       return redirect()->action('OrgChangeController@secondTabEdit', ['id'=>$request->org_request]);
     }
 
     public function saveChange(Request $request)
     {
-
       $orgChange = new OrgChange;
 
-      if ($request->type == 0) {
-        $orgChange->type = 0;
-        $orgChange->from = OrgChange::allOrganizations()[$request->from];
-        $orgChange->to = $request->to;
-        $orgChange->org_request = $request->org_request;
+      $orgChange->from_title = OrgChange::allOrganizations()[$request->from_title];
+      $orgChange->from_code = OrgChange::allOrgCodes()[$request->from_code];
+      $orgChange->org_request = $request->org_request;
 
-        $orgChange->save();
-
-      }else {
-
-        $orgChange->type = 1;
-        $orgChange->from = OrgChange::allOrgCodes()[$request->from];
-        $orgChange->to = $request->to;
-        $orgChange->org_request = $request->org_request;
-
-        $orgChange->save();
+      if (!$request->to_code) {
+        $orgChange->to_code = $orgChange->from_code;
+      }else{
+        $orgChange->to_code = $request->to_code;
       }
+
+      if (!$request->to_title) {
+        $orgChange->to_title = $orgChange->from_title;
+      }else{
+        $orgChange->to_title = $request->to_title;
+      }
+      // dd($orgChange);
+      $orgChange->save();
 
       return redirect()->action('OrgChangeController@secondTabEdit', ['id'=>$request->org_request]);
     }
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    // ******
+    // * END UNIT CHANGES
+    // ******
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+    // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     // ******
     // * MISSION STATEMENTS
     // ******
-
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public function mission_statements(Request $request)
     {
+      $id = $request->id;
       $modalId = $request->modalId;
       $orgs = OrgChange::allOrganizations();
       $codes = OrgChange::allOrgCodes();
-
-      // dd($modalId);
-      return view('org_changes.modals.mission_statements', compact('modalId', 'orgs', 'codes'));
+      $organizations = [];
+        foreach ($codes as $key => $value){
+          $organizations= array_add($organizations, $codes[$key], $orgs[$key]);
+        }
+      return view('org_changes.modals.mission_statements', compact('modalId', 'organizations', 'id'));
     }
+
+    public function save_mission_statement(Request $request)
+    {
+      $mission = new MissionStatement;
+      $mission->statement = $request->proposed;
+      $mission->code = $request->for;
+      $mission->org_request = $request->org_request;
+      $mission->save();
+
+      return redirect()->route('org_changes.thirdTab', ['id'=>$request->org_request]);
+
+    }
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    // ******
+    // * END MISSION STATEMENTS
+    // ******
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    // *******
+    // * PERSONNEL MODALS
+    // *******
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    public function personnel(Request $request)
+    {
+      // dd($request->all());
+      $id = $request->id;
+      $modalId = $request->modalId;
+      $usersGetter = User::all()->toArray();
+      $users = [];
+      foreach ($usersGetter as $user) {
+        $users = array_add($users, $user['id'], $user['name']);
+      }
+
+      return view('org_changes.modals.personnel', compact('modalId', 'id', 'users'));
+
+    }
+    public function savePersonnel(Request $request)
+    {
+      dd($request->all());
+    }
+
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    // *******
+    // * END PERSONNEL
+    // *******
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     public function newChartDownload($id){
       $org = OrgRequest::findOrFail($id);
@@ -268,7 +347,6 @@ class OrgChangeController extends Controller
      */
     public function destroy($id)
     {
-        //
         OrgRequest::destroy($id);
 
         return redirect('/org_changes');
@@ -278,8 +356,6 @@ class OrgChangeController extends Controller
     {
       $org = OrgChange::find($id);
       $tabID = $org->org_request;
-
-      // dd($tabID);
 
       OrgChange::destroy($id);
 

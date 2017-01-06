@@ -1,13 +1,20 @@
 @extends('Labcoat::modals/standard')
 @section('modal-title')
   Create/Update Mission Statements
-  <p class="changeMe">Aliquip consectetur eiusmod deserunt irure non quis qui consectetur occaecat ipsum culpa magna.In consequat excepteur Lorem ex ipsum ea eiusmod duis.</p>
+
 @stop
 
 @section('modal-body')
-  {!! Form::open() !!}
+  {!! Form::open([ 'url' => '/saveMission', 'class' => 'mission_statement_modal']) !!}
   {!! Form::label('for', 'For: ', ['class' => 'control-label']) !!}
-  {!! Form::select('for', ) !!}
+  {!! Form::select('for', $organizations, ['class' => 'form-control'] ) !!}
+
+<div class="form-row badged">
+  {!! Form::label('proposed', 'Proposed Mission Statement:', ['class' => 'control-label']) !!}
+  <span class="badge red">Required</span>
+  {!! Form::textarea('proposed', '', ['class' => 'form-control']) !!}
+</div>
+<input type="hidden" name="org_request" value="{{$id}}">
   {!! Form::close() !!}
 @stop
 

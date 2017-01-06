@@ -5,7 +5,7 @@
 / New Request
 @endsection
 @section('tab-menu')
-  @include('Labcoat::partials/stepped-tabs')
+  @include('Labcoat::partials/tabs')
 @endsection
 @section('main-content')
   <div class="indent-padding width-limited-1200">
@@ -40,12 +40,12 @@
 
           <div class="discoveryZone">
             <div class="dzInner">
-              <p><em>Choose your files</em> or drag them here.</p>
+              <p class="dzText"><em>Choose your files</em> or drag them here.</p>
               <span class="badge red">Required</span>
             </div>
           </div>
 
-        <h4>{{$org->current_orgChart}} &nbsp; <i data-toggle="tooltip" title="Remove/Add New File" class="fa fa-trash" id="changeDZ1" style="text-decoration:none;"></i></h4>
+        <h4>{{$org->current_orgChart}} &nbsp; <a data-toggle="tooltip" href="javascript:undefined;" data-delete-url="" title="Remove/Add New File" class="fa fa-fw fa-trash" id="changeDZ1" style="text-decoration:none; "></a></h4>
 
   </div>
 
@@ -54,13 +54,13 @@
         {{-- @if(!$org->new_orgChart) --}}
           <div class="discoveryZone2">
             <div class="dzInner2">
-              <p><em>Choose your files</em> or drag them here.</p>
+              <p class="dzText2"><em>Choose your files</em> or drag them here.</p>
               <span class="badge red">Required</span>
             </div>
           </div>
         {{-- @elseif ($org->new_orgChart) --}}
 
-          <h4>{{$org->new_orgChart}} &nbsp; <i data-toggle="tooltip" title="Remove/Add New File" class="fa fa-trash" id="changeDZ2" style="text-decoration:none;"></i></h4>
+          <h4>{{$org->new_orgChart}} &nbsp; <a data-toggle="tooltip" href="javascript:undefined;" data-delete-url="" title="Remove/Add New File" class="fa fa-trash" id="changeDZ2" style="text-decoration:none;"></a></h4>
 
       {{-- @endif --}}
     </div>
@@ -74,6 +74,9 @@
 
 
    <script>
+   $('.dzText').click(function(){
+     console.log('YOu clicked me');
+   })
    if ($('.current h4').text() == "   ") {
      console.log($('.current h4').text());
      $('.current h4').hide()
@@ -109,6 +112,7 @@
      paramName: 'current_orgChart',
      autoProcessQueue: false,
      maxFiles: 1,
+     clickable: ['div.dzInner', '.dzText'],
      maxfilesreached: function(file){
        $this = this;
        $file = file;
@@ -156,6 +160,7 @@
      paramName: 'new_orgChart',
      autoProcessQueue: false,
      maxFiles: 1,
+     clickable: ['div.dzInner2', '.dzText2'],
      maxfilesreached: function(file){
        $this2 = this;
        $file2 = file;
@@ -235,8 +240,6 @@
         window.location.replace('http://chris.zurka.com/org_changes/secondTab/'+$id+'/edit')
       })
     })
-
-
    </script>
 
 @stop
