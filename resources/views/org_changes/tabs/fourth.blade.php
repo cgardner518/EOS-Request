@@ -57,6 +57,6 @@
         {{-- @endforeach --}}
       </table>
     {{-- @endif --}}
-    <button type="button" data-modal-url="{{ URL::route('personnel', ['id' => $id ]) }}" data-modal-id="personnel-{{ $id }}" class="btn btn-primary btn-gradient">Add Peronnel</button>
+    <button type="button" data-modal-url="{{ URL::route('personnel', ['id' => $id ]) }}" data-modal-id="personnel-{{ $id }}" class="btn btn-primary btn-gradient">Add Personnel</button>
   </div>
 @stop

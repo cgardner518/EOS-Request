@@ -9,10 +9,10 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 
-// .fileRow{
-//   display: block;
-//   width: 100vw;
-// }
+.new-org-button{
+  margin-bottom: 2em;
+  margin-top: 1em;
+}
 
 .descField{
   margin-top: -2.5em;
@@ -144,7 +144,8 @@
   display:block;
   overflow: hidden;
   height: 6em;
-  outline: 1px solid aliceblue;
+  // outline: 1px solid aliceblue;
+  margin-bottom: 1em;
 }
 .showLink{
   position: absolute;

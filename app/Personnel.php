@@ -17,6 +17,10 @@ class Personnel extends Model
       'org_request'
     ];
 
+    public function org_request()
+    {
+      return $this->belongsTo(OrgRequest::class);
+    }
     // static function allPersonnel()
     // {
     //   return User::get()->all();

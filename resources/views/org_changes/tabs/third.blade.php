@@ -59,7 +59,7 @@ console.log($('.mission_statements_table').height());
   $('.showLink').css({'top': $('.expanding_div').height+'px'})
   $('.showLink a').click(function(e){
     e.preventDefault()
-    $('.expanding_div').animate({height: $num*1.5+"px"}, 400)
+    $('.expanding_div').animate({height: $num+"px"}, 400)
     $('.showLink').hide()
   })
 </script>

@@ -13138,6 +13138,10 @@ thead tr {
 
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+.new-org-button {
+  margin-bottom: 2em;
+  margin-top: 1em; }
+
 .descField {
   margin-top: -2.5em; }
 
@@ -13241,7 +13245,7 @@ thead tr {
   display: block;
   overflow: hidden;
   height: 6em;
-  outline: 1px solid aliceblue; }
+  margin-bottom: 1em; }
 
 .showLink {
   position: absolute;
@@ -13707,4 +13711,4 @@ thead tr {
   border-right: 6px solid transparent;
   border-bottom: 6px solid #be2626; }
 
-/*# sourceMappingURL=/build/css/all-77ac7273.css.map */
+/*# sourceMappingURL=/build/css/all-78183643.css.map */
