@@ -19,20 +19,20 @@ class OrgChange extends Model
     public static function allOrganizations()
     {
       return [
-         'ABC Systems',
-         '123 Systems',
-         'The Actual Batcave, like from Batman'
+         'Information Technology Division',
+         'Center for Computational Science',
+         'Chemistry'
       ];
     }
 
     public static function allOrgCodes()
     {
       return [
-         '9990',
-         '9980',
-         '6660'
+         '5500',
+         '5590',
+         '6100'
       ];
     }
 
-    
+
 }

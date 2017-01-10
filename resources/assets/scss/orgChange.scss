@@ -14,6 +14,10 @@
   margin-top: 1em;
 }
 
+.btn-space{
+  margin-top: 48px
+}
+
 .descField{
   margin-top: -2.5em;
 }
@@ -135,27 +139,27 @@
 }
 
 .mission_statements_table{
-  // margin-bottom: 0;
+  margin-bottom: 0;
   tr{
     background: #f2f2f2 !important;
   }
 }
 .expanding_div{
+  position: relative;
   display:block;
-  overflow: hidden;
-  height: 6em;
-  // outline: 1px solid aliceblue;
+  height: 8em;
+  // outline: 1px solid aquaMarine;
   margin-bottom: 1em;
+  overflow: hidden;
+  z-index: 4;
+  border-bottom: .5px solid lightgrey;
 }
 .showLink{
-  position: absolute;
-  background: #f2f2f2;
-  width: 82.25em;
   z-index: 2;
-  top: 13em;
-  height: 1.75em;
+  position: absolute;
+  background: linear-gradient( rgba( 0, 0, 0, 0), #f2f2f2, #f2f2f2, #f2f2f2);
   text-align: center;
-  a{
-    margin: auto;
-  }
+  margin-left: 41px;
+  bottom: 0;
+  height: 20px;
 }

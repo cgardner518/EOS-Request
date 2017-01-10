@@ -48,7 +48,7 @@ class OrgChangeController extends Controller
         $menuName = 'orgChangeTabs';
         $suffix = "/$id/edit";
 
-        return view('org_changes.tabs.third', compact('menuName', 'suffix', 'id', 'missions', 'organizations'));
+        return view('org_changes.tabs.third', compact('menuName', 'suffix', 'id', 'missions', 'organizations', 'org'));
     }
     public function fourthTabEdit($id)
     {
@@ -60,7 +60,7 @@ class OrgChangeController extends Controller
 
         // dd($personnel);
 
-        return view('org_changes.tabs.fourth', compact('menuName', 'suffix', 'id', 'personnel'));
+        return view('org_changes.tabs.fourth', compact('menuName', 'suffix', 'id', 'personnel', 'org'));
     }
 
     // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*

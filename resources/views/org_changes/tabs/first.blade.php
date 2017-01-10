@@ -1,8 +1,12 @@
 @extends('Labcoat::layouts/standard')
 @section('page-title')
 
-    Organizational Change Request
-/ New Request
+    <a href="/org_changes" style="color:white">Organizational Change Request</a>
+/ @if($org->title)
+    {{$org->title}}
+  @else
+    Untitled
+  @endif
 @endsection
 @section('tab-menu')
   @include('Labcoat::partials/tabs')
@@ -29,7 +33,7 @@
 <h3>Organizational Charts</h3>
 <p>Culpa cillum ex dolor occaecat amet magna consequat aute Lorem duis ad ipsum ipsum cupidatat consectetur.Reprehenderit anim aliquip dolore fugiat sint duis aliquip anim est sint consequat laboris deserunt sunt.</p>
 <div class="text-center">
-  <i class="fa fa-file-o"></i> <a href="javascript:document.body.style.visibility = 'hidden', alert('HA!');"> Org. Chart Template</a>
+  <i class="fa fa-file-o"></i> <a href="#"> Org. Chart Template</a>
 </div>
 </div>
 
@@ -58,11 +62,9 @@
               <span class="badge red">Required</span>
             </div>
           </div>
-        {{-- @elseif ($org->new_orgChart) --}}
 
           <h4>{{$org->new_orgChart}} &nbsp; <a data-toggle="tooltip" href="javascript:undefined;" data-delete-url="" title="Remove/Add New File" class="fa fa-trash" id="changeDZ2" style="text-decoration:none;"></a></h4>
 
-      {{-- @endif --}}
     </div>
   </div>
   <br><br>

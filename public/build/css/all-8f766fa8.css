@@ -13142,6 +13142,9 @@ thead tr {
   margin-bottom: 2em;
   margin-top: 1em; }
 
+.btn-space {
+  margin-top: 48px; }
+
 .descField {
   margin-top: -2.5em; }
 
@@ -13238,25 +13241,28 @@ thead tr {
 .personnel_table_td {
   width: 2em; }
 
-.mission_statements_table tr {
-  background: #f2f2f2 !important; }
+.mission_statements_table {
+  margin-bottom: 0; }
+  .mission_statements_table tr {
+    background: #f2f2f2 !important; }
 
 .expanding_div {
+  position: relative;
   display: block;
+  height: 8em;
+  margin-bottom: 1em;
   overflow: hidden;
-  height: 6em;
-  margin-bottom: 1em; }
+  z-index: 4;
+  border-bottom: 0.5px solid lightgrey; }
 
 .showLink {
-  position: absolute;
-  background: #f2f2f2;
-  width: 82.25em;
   z-index: 2;
-  top: 13em;
-  height: 1.75em;
-  text-align: center; }
-  .showLink a {
-    margin: auto; }
+  position: absolute;
+  background: linear-gradient(rgba(0, 0, 0, 0), #f2f2f2, #f2f2f2, #f2f2f2);
+  text-align: center;
+  margin-left: 41px;
+  bottom: 0;
+  height: 20px; }
 
 /*
  * The MIT License
@@ -13711,4 +13717,4 @@ thead tr {
   border-right: 6px solid transparent;
   border-bottom: 6px solid #be2626; }
 
-/*# sourceMappingURL=/build/css/all-78183643.css.map */
+/*# sourceMappingURL=/build/css/all-8f766fa8.css.map */

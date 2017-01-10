@@ -1,8 +1,12 @@
 @extends('Labcoat::layouts/standard')
 @section('page-title')
 
-    Organizational Change Request
-/ New Request
+  <a href="/org_changes" style="color:white">Organizational Change Request</a>
+/ @if($org->title)
+  {{$org->title}}
+@else
+  Untitled
+@endif
 @endsection
 @section('tab-menu')
   @include('Labcoat::partials/tabs')
@@ -31,7 +35,13 @@
 
   @endif
 
-    <button type="button" data-modal-url="{{ URL::route('change', ['id' => $id ]) }}"  class="btn btn-primary btn-gradient" data-modal-id="org_change-{{ $id }}">Add Title Change</button>
-    <a href="{{ URL::route('org_changes.thirdTab', [ 'id' => $id ]) }}" class="btn btn-success btn-gradient ">Save &nbsp; <i class="fa fa-arrow-right"></i></a>
+  <div class="text-center">
+    <p>
+      <button type="button" data-modal-url="{{ URL::route('change', ['id' => $id ]) }}"  class="btn btn-primary btn-gradient" data-modal-id="org_change-{{ $id }}">Add Title Change</button>
+    </p>
+    <p class="btn-space">
+      <a href="{{ URL::route('org_changes.thirdTab', [ 'id' => $id ]) }}" class="btn btn-success btn-gradient ">Save &nbsp; <i class="fa fa-arrow-right"></i></a>
+    </p>
+  </div>
   </div>
 @stop
