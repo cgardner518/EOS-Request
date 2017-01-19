@@ -61,6 +61,9 @@
       </table>
     <div class="text-center">
       <button type="button" data-modal-url="{{ URL::route('personnel', ['id' => $id ]) }}" data-modal-id="personnel-{{ $id }}" class="btn btn-primary btn-gradient">Add Personnel</button>
+      <p class="btn-space">
+        <a href="{{ URL::route('org_changes.review', [ 'id' => $id ]) }}" class="btn btn-success btn-gradient ">Save &nbsp; <i class="fa fa-arrow-right"></i></a>
+      </p>
     </div>
   </div>
 @stop

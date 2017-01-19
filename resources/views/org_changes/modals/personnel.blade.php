@@ -10,7 +10,6 @@
     {!! Form::label('user', 'User:') !!}
     {!! Form::select('user', $users) !!}
 
-    <input type="text" name="" value="">
   {!! Form::close() !!}
 @stop
 

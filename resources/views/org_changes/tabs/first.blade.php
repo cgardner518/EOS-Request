@@ -41,7 +41,6 @@
 <div class="fileRow">
   <div class="current">
     <h5>Current Organizational Chart</h5>
-
           <div class="discoveryZone">
             <div class="dzInner">
               <p class="dzText"><em>Choose your files</em> or drag them here.</p>
@@ -49,8 +48,7 @@
             </div>
           </div>
 
-        <h4>{{$org->current_orgChart}} &nbsp; <a data-toggle="tooltip" href="javascript:undefined;" data-delete-url="" title="Remove/Add New File" class="fa fa-fw fa-trash" id="changeDZ1" style="text-decoration:none; "></a></h4>
-
+        <h4><a href="/oldChartDownload/{{$org->id}}">{{$org->current_orgChart}}</a> &nbsp; <a data-toggle="tooltip" href="javascript:undefined;" data-delete-url="" title="Remove/Add New File" class="fa fa-fw fa-trash" id="changeDZ1" style="text-decoration:none; "></a></h4>
   </div>
 
     <div class="proposed">
@@ -63,7 +61,7 @@
             </div>
           </div>
 
-          <h4>{{$org->new_orgChart}} &nbsp; <a data-toggle="tooltip" href="javascript:undefined;" data-delete-url="" title="Remove/Add New File" class="fa fa-trash" id="changeDZ2" style="text-decoration:none;"></a></h4>
+          <h4><a href="/newChartDownload/{{$org->id}}">{{$org->new_orgChart}}</a> &nbsp; <a data-toggle="tooltip" href="javascript:undefined;" data-delete-url="" title="Remove/Add New File" class="fa fa-trash" id="changeDZ2" style="text-decoration:none;"></a></h4>
 
     </div>
   </div>
@@ -77,7 +75,7 @@
 
    <script>
    $('.dzText').click(function(){
-     console.log('YOu clicked me');
+     console.log('You clicked me');
    })
    if ($('.current h4').text() == "   ") {
      console.log($('.current h4').text());

@@ -1,0 +1,37 @@
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+.unit-box{
+  background: white;
+  width: 10em;
+  display: inline-block;
+  margin: 1em;
+  text-align: center;
+  p:first-child{
+    background: #6da9cf;
+    color: white;
+  }
+}
+.unit-box-container{
+  display: block;
+  ul{
+    display: none;
+    list-style-type: none;
+  }
+  h1{
+    display: inline;
+  }
+  h4{
+    display: inline;
+    text-decoration: underline;
+  }
+}
+h1{
+  i{
+    width: 20px;
+  }
+}

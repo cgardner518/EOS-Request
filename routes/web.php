@@ -12,7 +12,184 @@
 */
 
 
-Route::get('/', function () {return view('welcome');})->name('velcome');
+Route::get('/', function(){
+  Auth::loginUsingId('855bf786-c83c-11e5-a306-08002777c33d');
+  return redirect('/about');
+});
+
+Route::get('/v', function () {return view('welcome');})->name('velcome');
+
+Route::get('/practice', function () {
+  return view('structure');
+});
+
+Route::get('/structure', function () {
+
+  $organizations = [
+    [
+      'name' => 'Systems',
+      'code' => '5000',
+      'type' => 'Directorate',
+      'divisions' => [
+        [
+          'name' => 'Radar',
+          'code' => '5300',
+          'type' => 'Division',
+          'branches' => [
+            [
+            'name' => 'Analysis',
+            'code' => '5310',
+            'type' => 'Branch'
+            ],
+            [
+              'name' => 'Advanced Radar Systems',
+              'code' => '5320',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Surveillance Technology',
+              'code' => '5340',
+              'type' => 'Branch'
+            ],
+          ]
+        ],
+        [
+          'name' => 'Information Technology',
+          'code' => '5500',
+          'type' => 'Division',
+          'branches' => [
+            [
+              'name' => 'Free Space Photonics Communications Office',
+              'code' => '5505',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Navy Center for Applied Research In Artificial Intelligence',
+              'code' => '5510',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Networks and Communication Systems',
+              'code' => '5520',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Center For High Assurance Computer Systems',
+              'code' => '5540',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Transmission Technology',
+              'code' => '5550',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Information Management and Decision Architectures',
+              'code' => '5580',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Center For Computational Science',
+              'code' => '5590',
+              'type' => 'Branch',
+              'sections' => [
+                [
+                  'name' => 'Research Networks',
+                  'code' => '5591',
+                  'type' => 'Section'
+                ],
+                [
+                  'name' => 'Operational Networks',
+                  'code' => '5592',
+                  'type' => 'Section'
+                ],
+                [
+                  'name' => 'HPC Support',
+                  'code' => '5594',
+                  'type' => 'Section'
+                ],
+                [
+                  'name' => 'Web Applications & Systems Support',
+                  'code' => '5595',
+                  'type' => 'Section'
+                ],
+                [
+                  'name' => 'Ruth H. Hooker Research Library',
+                  'code' => '5596',
+                  'type' => 'Section'
+                ]
+              ]
+            ],
+          ]
+        ]
+      ]
+    ],
+    [
+      'name' => 'Materials Science & Component Technology',
+      'code' => '6000',
+      'type' => 'Directorate',
+      'divisions' => [
+        [
+          'name' => 'Laboratory for Computational Physics & Fluid Dynamics',
+          'code' => '6040',
+          'type' => 'Division',
+          'branches' => [
+            [
+              'name' => 'Laboratory for Propulsion, Energetic, and Dynamic Systems',
+              'code' => '6041',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Laboratory for Advanced Computational Physics',
+              'code' => '6042',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Laboratory for Multiscale Reactive Flow Physics',
+              'code' => '6043',
+              'type' => 'Branch'
+            ]
+          ]
+        ],
+        [
+          'name' => 'Chemistry',
+          'code' => '6100',
+          'type' => 'Division',
+          'branches' => [
+            [
+              'name' => 'Chemical Dynamics & Diagnostics',
+              'code' => '6110',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Materials Chemistry',
+              'code' => '6120',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Center for Corrosion Science & Engineering',
+              'code' => '6130',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Surface Chemistry',
+              'code' => '6170',
+              'type' => 'Branch'
+            ],
+            [
+              'name' => 'Navy Technical Center For Safety & Survivability',
+              'code' => '6180',
+              'type' => 'Branch'
+            ]
+          ]
+        ]
+      ]
+    ]
+  ];
+// dd($organizations);
+  return view('newStructure', compact('organizations'));
+})->name('structure');
+
 
 Route::get('/requests', 'EOSRequestsController@index');
 // Route::get('/requests/changeStatus/{id}', 'EOSRequestsController@status')->name('request.changeStatus');
@@ -49,6 +226,8 @@ Route::patch('/updateChange', 'OrgChangeController@updateChange')->name('updateC
 
 Route::get('/missions', 'OrgChangeController@mission_statements')->name('mission_statements');
 Route::post('/saveMission', 'OrgChangeController@save_mission_statement')->name('save_mission_statement');
+Route::get('/editMission', 'OrgChangeController@edit_mission_statement')->name('edit_mission_statement');
+Route::patch('/updateMission', 'OrgChangeController@update_mission_statement')->name('update_mission_statement');
 
 Route::get('/personnel', 'OrgChangeController@personnel')->name('personnel');
 Route::post('/savePersonnel', 'OrgChangeController@savePersonnel')->name('savePersonnel');
@@ -57,10 +236,12 @@ $tabs = ['firstTab','secondTab','thirdTab','fourthTab'];
 foreach($tabs as $tab){
   Route::get("/org_changes/$tab/{id}/edit", 'OrgChangeController@'.$tab.'Edit')->name('org_changes.'.$tab);
 }
+Route::get("/org_changes/review/{id}/edit", 'OrgChangeController@review')->name('org_changes.review');
 
 Route::patch('/org_changes/{id}', 'OrgChangeController@update');
 Route::delete('/org_requests/{id}', 'OrgChangeController@destroy')->name('org_requests.destroy');
 Route::delete('/org_changes/{id}', 'OrgChangeController@destroyChange')->name('org_changes.destroy');
+Route::delete('/missions/{id}', 'OrgChangeController@destroyMission')->name('missions.destroy');
 
 
 
@@ -83,9 +264,9 @@ Route::delete('/org_changes/{id}', 'OrgChangeController@destroyChange')->name('o
 
 
 
-// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ***Chris Crap***
-// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 
 
@@ -183,7 +364,7 @@ Route::get('/hawaii', function(){
       </style>
     </head>
     <body>
-  <video src="http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b10-1.mov" autoplay loop type="video/mp4"></video>
+  <video src="http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b10-1.mov" autoplay playsinline loop type="video/mp4"></video>
   <iframe width="560" height="315" src="https://www.youtube.com/embed/438Gx2_SMNo?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=438Gx2_SMNo" frameborder="0" allowfullscreen></iframe>
     </body>
   </html>
@@ -267,7 +448,7 @@ Route::get('/la', function(){
 });
 
 Route::get('/curl', function(){
-  return '<iframe width="560" height="315" src="https://www.youtube.com/embed/herNYSdJd0o?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=herNYSdJd0o" frameborder="0" allowfullscreen></iframe>';
+  return '<iframe style="width:95vw;height:95vh;" src="https://www.youtube.com/embed/herNYSdJd0o?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=herNYSdJd0o" frameborder="0" allowfullscreen></iframe>';
 
     // .com/embed/Yo19ZhO7CAc?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=Yo19ZhO7CAc" frameborder="0" allowfullscreen
 

@@ -11,7 +11,7 @@
 return [
     'scssFiles' =>  [
         //located in resources/assets/scss
-        "app.scss", "orgChange.scss","dropzone.scss"
+        "app.scss", "orgChange.scss","dropzone.scss","structure.scss"
     ],
     'cssFiles'  =>  [
         //located in resources/assets/css

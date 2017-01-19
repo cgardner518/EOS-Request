@@ -34,22 +34,7 @@ class OrgChangeController extends Controller
         $suffix = "/$id/edit";
         return view('org_changes.tabs.first', compact('menuName', 'suffix', 'id', 'org'));
     }
-    public function thirdTabEdit($id)
-    {
-        //
-        $org = OrgRequest::find($id);
-        $missions = MissionStatement::where('org_request', $id)->get()->toArray();
-        $orgs = OrgChange::allOrganizations();
-        $codes = OrgChange::allOrgCodes();
-        $organizations = [];
-          foreach ($codes as $key => $value){
-            $organizations= array_add($organizations, $codes[$key], $orgs[$key]);
-          }
-        $menuName = 'orgChangeTabs';
-        $suffix = "/$id/edit";
 
-        return view('org_changes.tabs.third', compact('menuName', 'suffix', 'id', 'missions', 'organizations', 'org'));
-    }
     public function fourthTabEdit($id)
     {
         //
@@ -62,6 +47,24 @@ class OrgChangeController extends Controller
 
         return view('org_changes.tabs.fourth', compact('menuName', 'suffix', 'id', 'personnel', 'org'));
     }
+
+    public function review($id)
+    {
+      //
+      $org = OrgRequest::find($id);
+      $orgs = OrgChange::allOrganizations();
+      $codes = OrgChange::allOrgCodes();
+      $organizations = [];
+        foreach ($codes as $key => $value){
+          $organizations= array_add($organizations, $codes[$key], $orgs[$key]);
+        }
+      $missions = $org->mission_statements;
+      $changes = $org->org_changes;
+      $menuName = 'orgChangeTabs';
+      $suffix = "/$id/edit";
+      return view('org_changes.tabs.review', compact('menuName', 'suffix', 'id', 'org', 'missions', 'changes', 'organizations'));
+    }
+
 
     // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -158,6 +161,17 @@ class OrgChangeController extends Controller
 
       return redirect()->action('OrgChangeController@secondTabEdit', ['id'=>$request->org_request]);
     }
+
+    public function destroyChange($id)
+    {
+      $org = OrgChange::find($id);
+      $tabID = $org->org_request;
+
+      OrgChange::destroy($id);
+
+      return redirect("/org_changes/secondTab/$tabID/edit");
+    }
+
     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     // ******
     // * END UNIT CHANGES
@@ -171,6 +185,24 @@ class OrgChangeController extends Controller
     // * MISSION STATEMENTS
     // ******
     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    public function thirdTabEdit($id)
+    {
+        //
+        $org = OrgRequest::find($id);
+        $missions = MissionStatement::where('org_request', $id)->get()->toArray();
+        $orgs = OrgChange::allOrganizations();
+        $codes = OrgChange::allOrgCodes();
+        $organizations = [];
+          foreach ($codes as $key => $value){
+            $organizations= array_add($organizations, $codes[$key], $orgs[$key]);
+          }
+        $menuName = 'orgChangeTabs';
+        $suffix = "/$id/edit";
+
+        return view('org_changes.tabs.third', compact('menuName', 'suffix', 'id', 'missions', 'organizations', 'org'));
+    }
+
     public function mission_statements(Request $request)
     {
       $id = $request->id;
@@ -195,6 +227,44 @@ class OrgChangeController extends Controller
       return redirect()->route('org_changes.thirdTab', ['id'=>$request->org_request]);
 
     }
+
+    public function edit_mission_statement(Request $request)
+    {
+      $mission = MissionStatement::find($request->id);
+      $org_request = $mission->org_request;
+      $id = $mission->id;
+      $modalId = $request->modalId;
+      $orgs = OrgChange::allOrganizations();
+      $codes = OrgChange::allOrgCodes();
+      $organizations = [];
+        foreach ($codes as $key => $value){
+          $organizations= array_add($organizations, $codes[$key], $orgs[$key]);
+        }
+
+      return view('org_changes.modals.edit_mission_statements', compact('modalId', 'organizations', 'id', 'mission', 'org_request'));
+    }
+    public function update_mission_statement(Request $request)
+    {
+      // dd($request->all());
+      $mission = MissionStatement::find($request->id);
+      $mission->org_request = $request->org_request;
+      $mission->statement = $request->proposed;
+      $mission->code = $request->for;
+      $mission->save();
+
+      return redirect()->action('OrgChangeController@thirdTabEdit', ['id'=>$request->org_request]);
+    }
+
+    public function destroyMission($id)
+    {
+      $mission = MissionStatement::find($id);
+      $tabID = $mission->org_request;
+
+      MissionStatement::destroy($id);
+
+      return redirect()->action('OrgChangeController@thirdTabEdit', ['id'=>$tabID]);
+    }
+
     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     // ******
     // * END MISSION STATEMENTS
@@ -352,13 +422,4 @@ class OrgChangeController extends Controller
         return redirect('/org_changes');
     }
 
-    public function destroyChange($id)
-    {
-      $org = OrgChange::find($id);
-      $tabID = $org->org_request;
-
-      OrgChange::destroy($id);
-
-      return redirect("/org_changes/secondTab/$tabID/edit");
-    }
 }
