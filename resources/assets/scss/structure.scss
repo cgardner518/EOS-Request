@@ -7,13 +7,26 @@
 
 .unit-box{
   background: white;
-  width: 10em;
+  width: 8em;
+  height: 3.5em;
   display: inline-block;
   margin: 1em;
   text-align: center;
   p:first-child{
     background: #6da9cf;
     color: white;
+    font-weight: lighter;
+    font-size: .75em;
+    padding: 0;
+    margin: 0;
+    height: 1.3em;
+    padding-bottom: 2em;
+  }
+  .code-text{
+    font-size: 1.5em;
+    font-weight: lighter;
+    padding: 0;
+    margin: 0;
   }
 }
 .unit-box-container{
@@ -33,5 +46,70 @@
 h1{
   i{
     width: 20px;
+  }
+}
+
+/*// Purpose: boxes*/
+.purposeBox  {
+  margin-top: 23px;
+  margin-bottom: 23px;
+  font-size: 14px;
+  padding: 14px 23px;
+  background-color: #f4f4f4;
+  border: 1px solid #d6d6d6;
+    // h4{
+    //   position: absolute;
+    //   z-index: 50;
+    //   margin-top: 0;
+    // }
+    // .POS{
+    //   position: absolute;
+    //   margin-top: 0;
+    //   z-index: 50;
+    //   right: 27em;
+    //   top: 10.5em;
+    // }
+    // .POS2{
+    //   position: absolute;
+    //   margin-top: -10.5em;
+    //   z-index: 50;
+    //   right: 27em;
+    // }
+}
+.pBoxTable{
+  text-align: center;
+  border: none;
+  margin-top: 0em;
+  tr{
+    background: #f4f4f4 !important;
+    border: none;
+  }
+  td{
+    background: rgba(0,0,0,0);
+    border: none;
+    line-height: 1em;
+  }
+  td:nth-child(odd){
+    text-align: right;
+    width: 10em;
+  }
+  td:nth-child(even){
+    text-align: left;
+  }
+}
+
+.assignments-table{
+  .container-fluid{
+    border-top: 1px solid #d6d6d6;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+}
+.row{
+  *{
+    line-height: 2em;
+  }
+  .text-left{
+    margin-left: -1.5em;
   }
 }

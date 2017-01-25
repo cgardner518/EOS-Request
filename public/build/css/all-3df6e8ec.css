@@ -13725,13 +13725,25 @@ body.secure-marking #main-page-wrapper {
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 .unit-box {
   background: white;
-  width: 10em;
+  width: 8em;
+  height: 3.5em;
   display: inline-block;
   margin: 1em;
   text-align: center; }
   .unit-box p:first-child {
     background: #6da9cf;
-    color: white; }
+    color: white;
+    font-weight: lighter;
+    font-size: 0.75em;
+    padding: 0;
+    margin: 0;
+    height: 1.3em;
+    padding-bottom: 2em; }
+  .unit-box .code-text {
+    font-size: 1.5em;
+    font-weight: lighter;
+    padding: 0;
+    margin: 0; }
 
 .unit-box-container {
   display: block; }
@@ -13746,5 +13758,40 @@ body.secure-marking #main-page-wrapper {
 
 h1 i {
   width: 20px; }
+/*// Purpose: boxes*/
+.purposeBox {
+  margin-top: 23px;
+  margin-bottom: 23px;
+  font-size: 14px;
+  padding: 14px 23px;
+  background-color: #f4f4f4;
+  border: 1px solid #d6d6d6; }
 
-/*# sourceMappingURL=/build/css/all-a472ab0c.css.map */
+.pBoxTable {
+  text-align: center;
+  border: none;
+  margin-top: 0em; }
+  .pBoxTable tr {
+    background: #f4f4f4 !important;
+    border: none; }
+  .pBoxTable td {
+    background: rgba(0, 0, 0, 0);
+    border: none;
+    line-height: 1em; }
+  .pBoxTable td:nth-child(odd) {
+    text-align: right;
+    width: 10em; }
+  .pBoxTable td:nth-child(even) {
+    text-align: left; }
+
+.assignments-table .container-fluid {
+  border-top: 1px solid #d6d6d6;
+  padding-top: 1em;
+  padding-bottom: 1em; }
+
+.row * {
+  line-height: 2em; }
+  .row .text-left {
+    margin-left: -1.5em; }
+
+/*# sourceMappingURL=/build/css/all-3df6e8ec.css.map */

@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,179 +21,30 @@ Route::get('/', function(){
 Route::get('/v', function () {return view('welcome');})->name('velcome');
 
 Route::get('/practice', function () {
-  return view('structure');
+  return view('pract');
 });
 
 Route::get('/structure', function () {
-
-  $organizations = [
-    [
-      'name' => 'Systems',
-      'code' => '5000',
-      'type' => 'Directorate',
-      'divisions' => [
-        [
-          'name' => 'Radar',
-          'code' => '5300',
-          'type' => 'Division',
-          'branches' => [
-            [
-            'name' => 'Analysis',
-            'code' => '5310',
-            'type' => 'Branch'
-            ],
-            [
-              'name' => 'Advanced Radar Systems',
-              'code' => '5320',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Surveillance Technology',
-              'code' => '5340',
-              'type' => 'Branch'
-            ],
-          ]
-        ],
-        [
-          'name' => 'Information Technology',
-          'code' => '5500',
-          'type' => 'Division',
-          'branches' => [
-            [
-              'name' => 'Free Space Photonics Communications Office',
-              'code' => '5505',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Navy Center for Applied Research In Artificial Intelligence',
-              'code' => '5510',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Networks and Communication Systems',
-              'code' => '5520',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Center For High Assurance Computer Systems',
-              'code' => '5540',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Transmission Technology',
-              'code' => '5550',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Information Management and Decision Architectures',
-              'code' => '5580',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Center For Computational Science',
-              'code' => '5590',
-              'type' => 'Branch',
-              'sections' => [
-                [
-                  'name' => 'Research Networks',
-                  'code' => '5591',
-                  'type' => 'Section'
-                ],
-                [
-                  'name' => 'Operational Networks',
-                  'code' => '5592',
-                  'type' => 'Section'
-                ],
-                [
-                  'name' => 'HPC Support',
-                  'code' => '5594',
-                  'type' => 'Section'
-                ],
-                [
-                  'name' => 'Web Applications & Systems Support',
-                  'code' => '5595',
-                  'type' => 'Section'
-                ],
-                [
-                  'name' => 'Ruth H. Hooker Research Library',
-                  'code' => '5596',
-                  'type' => 'Section'
-                ]
-              ]
-            ],
-          ]
-        ]
-      ]
-    ],
-    [
-      'name' => 'Materials Science & Component Technology',
-      'code' => '6000',
-      'type' => 'Directorate',
-      'divisions' => [
-        [
-          'name' => 'Laboratory for Computational Physics & Fluid Dynamics',
-          'code' => '6040',
-          'type' => 'Division',
-          'branches' => [
-            [
-              'name' => 'Laboratory for Propulsion, Energetic, and Dynamic Systems',
-              'code' => '6041',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Laboratory for Advanced Computational Physics',
-              'code' => '6042',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Laboratory for Multiscale Reactive Flow Physics',
-              'code' => '6043',
-              'type' => 'Branch'
-            ]
-          ]
-        ],
-        [
-          'name' => 'Chemistry',
-          'code' => '6100',
-          'type' => 'Division',
-          'branches' => [
-            [
-              'name' => 'Chemical Dynamics & Diagnostics',
-              'code' => '6110',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Materials Chemistry',
-              'code' => '6120',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Center for Corrosion Science & Engineering',
-              'code' => '6130',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Surface Chemistry',
-              'code' => '6170',
-              'type' => 'Branch'
-            ],
-            [
-              'name' => 'Navy Technical Center For Safety & Survivability',
-              'code' => '6180',
-              'type' => 'Branch'
-            ]
-          ]
-        ]
-      ]
-    ]
-  ];
-// dd($organizations);
-  return view('newStructure', compact('organizations'));
+  return view('recurse', compact('organizations'));
 })->name('structure');
 
 
+Route::get('structure/{directorate}', function($org){
+  return view('orgShow', compact('org'));
+});
+
+Route::get('structure/{directorate}/{division}', function($org, $division){
+  return view('orgShow', compact('org'));
+});
+
+Route::get('structure/{directorate}/{division}/{branch}', function($org){
+  return view('orgShow', compact('org'));
+});
+
+
+
+
 Route::get('/requests', 'EOSRequestsController@index');
-// Route::get('/requests/changeStatus/{id}', 'EOSRequestsController@status')->name('request.changeStatus');
 Route::get('/reject', 'EOSRequestsController@reject')->name('request.reject');
 Route::post('/reject/{id}', 'EOSRequestsController@rejected');
 Route::post('/change/{id}', 'EOSRequestsController@change');
@@ -406,50 +258,4 @@ Route::get('/nyc', function(){
     </body>
   </html>
   ';
-});
-
-Route::get('/la', function(){
-  return '
-  <html>
-    <head>
-      <meta charset="utf-8">
-      <title>L.A.</title>
-      <style media="screen">
-        body{
-          background: black;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          z-index: 1;
-        }
-        video{
-          margin:auto;
-          padding:0;
-          height:98vh;
-          z-index: 100;
-        }
-        iframe{
-          position:absolute;
-          z-index: -100000;
-          left: -9000em;
-          top: -100em;
-        }
-      </style>
-    </head>
-    <body>
-  <video src="http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/comp_LA_A009_C009_t9_6M_tag0.mov" autoplay loop type="video/mp4"></video>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/O9Oc-WrQYZM?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=O9Oc-WrQYZM" frameborder="0" allowfullscreen></iframe>
-
-    </body>
-  </html>
-  ';
-  // https://youtu.be/O9Oc-WrQYZM
-});
-
-Route::get('/curl', function(){
-  return '<iframe style="width:95vw;height:95vh;" src="https://www.youtube.com/embed/herNYSdJd0o?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=herNYSdJd0o" frameborder="0" allowfullscreen></iframe>';
-
-    // .com/embed/Yo19ZhO7CAc?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=Yo19ZhO7CAc" frameborder="0" allowfullscreen
-
 });
