@@ -74,6 +74,6 @@ $('#toField').keyup(function(){
 @section('modal-js')
   <script>
     modalAjaxSetup('{{ $modalId }}');
-    // modalAjaxSetup({ modalId: '{{ $modalId }}' , success: console.log});
+    // modalAjaxSetup({ modalId: '{{ $modalId }}' , success: console.log});    
   </script>
 @stop

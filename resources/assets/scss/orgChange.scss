@@ -136,12 +136,15 @@
 
 .personnel_table_td{
   width: 2em;
+  border-bottom: 0;
 }
 
 .mission_statements_table{
   margin-bottom: 0;
+  border-collapse: collapse;
   tr{
     background: #f2f2f2 !important;
+    border-bottom: 0;
   }
 }
 .expanding_div{

@@ -13239,12 +13239,15 @@ body.secure-marking #main-page-wrapper {
   width: 2em; }
 
 .personnel_table_td {
-  width: 2em; }
+  width: 2em;
+  border-bottom: 0; }
 
 .mission_statements_table {
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  border-collapse: collapse; }
   .mission_statements_table tr {
-    background: #f2f2f2 !important; }
+    background: #f2f2f2 !important;
+    border-bottom: 0; }
 
 .expanding_div {
   position: relative;
@@ -13743,6 +13746,7 @@ body.secure-marking #main-page-wrapper {
     font-size: 1.5em;
     font-weight: lighter;
     padding: 0;
+    padding-top: 0.13em;
     margin: 0; }
 
 .unit-box-container {
@@ -13794,4 +13798,4 @@ h1 i {
   .row .text-left {
     margin-left: -1.5em; }
 
-/*# sourceMappingURL=/build/css/all-3df6e8ec.css.map */
+/*# sourceMappingURL=/build/css/all-5d8f1487.css.map */

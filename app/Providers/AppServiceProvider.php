@@ -196,21 +196,25 @@ class AppServiceProvider extends ServiceProvider
            'name' => 'Laboratory for Computational Physics & Fluid Dynamics',
            'code' => '6040',
            'type' => 'Division',
+           'parent_tree' => '6000',
            'departments' => [
                [
                  'name' => 'Laboratory for Propulsion, Energetic, and Dynamic Systems',
                  'code' => '6041',
-                 'type' => 'Branch'
+                 'type' => 'Branch',
+                 'parent_tree' => '6000/6040',
                ],
                [
                  'name' => 'Laboratory for Advanced Computational Physics',
                  'code' => '6042',
-                 'type' => 'Branch'
+                 'type' => 'Branch',
+                 'parent_tree' => '6000/6040',
                ],
                [
                  'name' => 'Laboratory for Multiscale Reactive Flow Physics',
                  'code' => '6043',
-                 'type' => 'Branch'
+                 'type' => 'Branch',
+                 'parent_tree' => '6000/6040',
                ]
              ]
            ],
@@ -218,31 +222,37 @@ class AppServiceProvider extends ServiceProvider
              'name' => 'Chemistry',
              'code' => '6100',
              'type' => 'Division',
+             'parent_tree' => '6000',
              'departments' => [
                [
                  'name' => 'Chemical Dynamics & Diagnostics',
                  'code' => '6110',
-                 'type' => 'Branch'
+                 'type' => 'Branch',
+                 'parent_tree' => '6000/6100',
                ],
                [
                  'name' => 'Materials Chemistry',
                  'code' => '6120',
-                 'type' => 'Branch'
+                 'type' => 'Branch',
+                 'parent_tree' => '6000/6100',
                ],
                [
                  'name' => 'Center for Corrosion Science & Engineering',
                  'code' => '6130',
-                 'type' => 'Branch'
+                 'type' => 'Branch',
+                 'parent_tree' => '6000/6100',
                ],
                [
                  'name' => 'Surface Chemistry',
                  'code' => '6170',
-                 'type' => 'Branch'
+                 'type' => 'Branch',
+                 'parent_tree' => '6000/6100',
                ],
                [
                  'name' => 'Navy Technical Center For Safety & Survivability',
                  'code' => '6180',
-                 'type' => 'Branch'
+                 'type' => 'Branch',
+                 'parent_tree' => '6000/6100',
                ]
              ]
            ]

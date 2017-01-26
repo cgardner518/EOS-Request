@@ -1,11 +1,11 @@
 @extends('Labcoat::layouts/standard')
 @section('page-title')
-Page Title
+Organization Structure
 @endsection
 @section('main-content')
 
 <div class="indent-padding width-limited-1200">
-  @each('org-partials.org-structure-partial', $organizations, 'value')
+  @each('orgStructure.org-partials.org-structure-partial', $organizations, 'value')
 </div>
 
 <script type="text/javascript">

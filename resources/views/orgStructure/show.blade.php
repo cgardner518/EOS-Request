@@ -33,8 +33,8 @@ $current_unit = $ray->map(function($item, $key) use($org){
 ->filter(function($val, $key){
   return $val;
 });
-$value = $current_unit->all();
-// dd($value[0]);
+$value = array_values($current_unit->toArray());
+// dd($value);
 @endphp
 
 @section('page-title')
@@ -49,12 +49,12 @@ $value = $current_unit->all();
 <a href="/" style="color:white">NRL</a> / <a href="/structure" style="color:white">1000</a>
 @if(isset($parents))/ <a href="/structure/{{$parents[0]}}" style="color:white">{{$parents[0]}}</a> @endif
 @if(isset($parents[1]))/ <a href="/structure/{{$parents[1]}}" style="color:white">{{$parents[1]}}</a> @endif
-@if(isset($parents[2]))/ <a href="/structure/{{$parents[2]}}" style="color:white">{{$parents[2]}}</a> @endif 
+@if(isset($parents[2]))/ <a href="/structure/{{$parents[2]}}" style="color:white">{{$parents[2]}}</a> @endif
 @endsection
 @section('main-content')
 
 <div class="indent-padding width-limited-1200">
-@each('org-partials.org-structure-partial', $value, 'value')
+@each('orgStructure.org-partials.org-structure-partial', $value, 'value')
 <div class="org-info-show">
   <h3>Organizational Information</h3>
   <div class="purposeBox">
@@ -128,9 +128,9 @@ $value = $current_unit->all();
   <div class="org-role-show">
     <h3>Roles</h3>
     @if (isset($value[0]['roles']))
-      @each('org-partials.org-role-partial', $value[0]['roles'], 'value')
+      @each('orgStructure.org-partials.org-role-partial', $value[0]['roles'], 'value')
     @else
-      @include('org-partials.no-roles-partial')
+      @include('orgStructure.org-partials.no-roles-partial')
     @endif
   </div>
 </div>

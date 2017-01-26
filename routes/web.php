@@ -25,24 +25,17 @@ Route::get('/practice', function () {
 });
 
 Route::get('/structure', function () {
-  return view('recurse', compact('organizations'));
+  return view('orgStructure.index', compact('organizations'));
 })->name('structure');
 
 
 Route::get('structure/{directorate}', function($org){
-  return view('orgShow', compact('org'));
+  return view('orgStructure.show', compact('org'));
 });
 
-Route::get('structure/{directorate}/{division}', function($org, $division){
-  return view('orgShow', compact('org'));
-});
-
-Route::get('structure/{directorate}/{division}/{branch}', function($org){
-  return view('orgShow', compact('org'));
-});
-
-
-
+// *------------------------------------------------------------------------------------------------------------------------------*
+// EOS Request routes
+// *------------------------------------------------------------------------------------------------------------------------------*
 
 Route::get('/requests', 'EOSRequestsController@index');
 Route::get('/reject', 'EOSRequestsController@reject')->name('request.reject');
@@ -63,6 +56,10 @@ Route::get('/peasant', function(){
   Auth::loginUsingId('c5ad9b2d-b59e-11e6-8fb9-0aad45e20ffe');
   return redirect('/requests');
 });
+
+// *------------------------------------------------------------------------------------------------------------------------------*
+// End EOS Request routes
+// *------------------------------------------------------------------------------------------------------------------------------*
 
 
 
@@ -94,168 +91,3 @@ Route::patch('/org_changes/{id}', 'OrgChangeController@update');
 Route::delete('/org_requests/{id}', 'OrgChangeController@destroy')->name('org_requests.destroy');
 Route::delete('/org_changes/{id}', 'OrgChangeController@destroyChange')->name('org_changes.destroy');
 Route::delete('/missions/{id}', 'OrgChangeController@destroyMission')->name('missions.destroy');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-// ***Chris Crap***
-// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-
-
-Route::get('/stigz', function(){
-  $ch = curl_init();
-
-  // set url
-  curl_setopt($ch, CURLOPT_URL, "https://www.stigviewer.com/stig/application_security_and_development/2014-04-03/MAC-3_Sensitive/json");
-
-  //return the transfer as a string
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-  // $output contains the output string
-  $output = curl_exec($ch);
-  $output = json_decode($output, true);
-
-  // close curl resource to free up system resources
-  curl_close($ch);
-
-  return response()->json($output);
-});
-
-Route::get('/jq', function(){
-  return redirect('https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js');
-});
-
-Route::get('/slomo', function(){
-  return redirect('http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/entries.json');
-});
-
-Route::get('/dubai', function(){
-  return '
-  <html>
-    <head>
-      <meta charset="utf-8">
-      <title>DUBAI</title>
-      <style media="screen">
-      body{
-        background: black;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 1;
-      }
-      video{
-        margin:auto;
-        padding:0;
-        height:98vh;
-        z-index: 100;
-      }
-      iframe{
-        position:absolute;
-        z-index: -100000;
-        left: -9000em;
-        top: -100em;
-      }
-      </style>
-    </head>
-    <body>
-  <video src="http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/comp_DB_D011_D009_SIGNCMP_v15_6Mbps.mov" autoplay loop type="video/mp4"></video>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/E5s6jcuw6NM?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=E5s6jcuw6NM" frameborder="0" allowfullscreen></iframe>
-    </body>
-  </html>
-  ';
-  // https://youtu.be/E5s6jcuw6NM
-});
-Route::get('/hawaii', function(){
-  return '
-  <html>
-    <head>
-      <meta charset="utf-8">
-      <title>HAWAII</title>
-      <style media="screen">
-        body{
-          background: black;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          z-index: 1;
-        }
-        video{
-          margin:auto;
-          padding:0;
-          height:98vh;
-          z-index: 100;
-        }
-        iframe{
-          position:absolute;
-          z-index: -100000;
-          left: -9000em;
-          top: -100em;
-        }
-      </style>
-    </head>
-    <body>
-  <video src="http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b10-1.mov" autoplay playsinline loop type="video/mp4"></video>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/438Gx2_SMNo?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=438Gx2_SMNo" frameborder="0" allowfullscreen></iframe>
-    </body>
-  </html>
-  ';
-});
-
-Route::get('/nyc', function(){
-  return '
-  <html>
-    <head>
-      <meta charset="utf-8">
-      <title>NYC</title>
-      <style media="screen">
-        body{
-          background: black;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          z-index: 1;
-        }
-        video{
-          margin:auto;
-          padding:0;
-          height:98vh;
-          z-index: 100;
-        }
-        iframe{
-          position:absolute;
-          z-index: -100000;
-          left: -9000em;
-          top: -100em;
-        }
-      </style>
-    </head>
-    <body>
-  <video src="http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b2-3.mov" autoplay loop type="video/mp4"></video>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/phnIXtJBI5E?autoplay=1&loop=1&cc_load_policy=1rel=0&amp;controls=0&amp;showinfo=0&playlist=phnIXtJBI5E" frameborder="0" allowfullscreen></iframe>
-    </body>
-  </html>
-  ';
-});
