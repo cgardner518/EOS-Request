@@ -13770,6 +13770,8 @@ h1 i {
   padding: 14px 23px;
   background-color: #f4f4f4;
   border: 1px solid #d6d6d6; }
+  .purposeBox .col-md-1.pull-right {
+    text-align: right; }
 
 .pBoxTable {
   text-align: center;
@@ -13798,4 +13800,4 @@ h1 i {
   .row .text-left {
     margin-left: -1.5em; }
 
-/*# sourceMappingURL=/build/css/all-5d8f1487.css.map */
+/*# sourceMappingURL=/build/css/all-9c6d3c27.css.map */
