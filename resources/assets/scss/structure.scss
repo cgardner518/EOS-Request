@@ -49,6 +49,30 @@ h1{
     width: 20px;
   }
 }
+.org_structrue_search_div{
+  margin-top: -6em;
+  display: block;
+  height: 10em;
+  width: 20em;
+  input{
+    width: 20em;
+    margin-top: 1.5em;
+    // display: inline;
+    position: absolute;
+  }
+  a{
+    margin-left: 1em;
+    display: block;
+  }
+}
+
+.org_structure_show_select_div{
+  display: block;
+  margin-top: 6em;
+  select{
+    width: 20em;
+  }
+}
 
 /*// Purpose: boxes*/
 .purposeBox  {

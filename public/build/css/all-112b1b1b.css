@@ -13762,6 +13762,25 @@ body.secure-marking #main-page-wrapper {
 
 h1 i {
   width: 20px; }
+
+.org_structrue_search_div {
+  margin-top: -6em;
+  display: block;
+  height: 10em;
+  width: 20em; }
+  .org_structrue_search_div input {
+    width: 20em;
+    margin-top: 1.5em;
+    position: absolute; }
+  .org_structrue_search_div a {
+    margin-left: 1em;
+    display: block; }
+
+.org_structure_show_select_div {
+  display: block;
+  margin-top: 6em; }
+  .org_structure_show_select_div select {
+    width: 20em; }
 /*// Purpose: boxes*/
 .purposeBox {
   margin-top: 23px;
@@ -13800,4 +13819,4 @@ h1 i {
   .row .text-left {
     margin-left: -1.5em; }
 
-/*# sourceMappingURL=/build/css/all-9c6d3c27.css.map */
+/*# sourceMappingURL=/build/css/all-112b1b1b.css.map */
