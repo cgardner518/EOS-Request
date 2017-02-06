@@ -12,6 +12,9 @@
   display: inline-block;
   margin: 1em;
   text-align: center;
+  :hover{
+    cursor: pointer;
+  }
   p:first-child{
     background: #6da9cf;
     color: white;
@@ -47,6 +50,9 @@
 h1{
   i{
     width: 20px;
+  }
+  :hover{
+    cursor: pointer;
   }
 }
 .org_structrue_search_div{

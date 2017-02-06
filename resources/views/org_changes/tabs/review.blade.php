@@ -14,7 +14,7 @@
 @section('main-content')
   <div class="indent-padding width-limited-1200">
     <div class="review-divs">
-      <a href="/org_changes/firstTab/{{$org->id}}/edit">
+      <a href="/org_changes/overview/{{$org->id}}/edit">
         <h3>Overview and Rationale <i class="fa fa-external-link"></i></h3>
       </a>
       <p><label>Title: </label>{{$org->title}}</p>
@@ -22,14 +22,14 @@
       <p>{{$org->description}}</p>
     </div>
     <div class="review-divs">
-      <a href="/org_changes/firstTab/{{$org->id}}/edit">
+      <a href="/org_changes/overview/{{$org->id}}/edit">
         <h3>Organizational Charts <i class="fa fa-external-link"></i></h3>
       </a>
       <p><label>Current Organizational Chart: </label><a href="/oldChartDownload/{{$org->id}}">{{$org->current_orgChart}}</a></p>
       <p><label>Proposed Organizational Chart: </label><a href="/newChartDownload/{{$org->id}}">{{$org->new_orgChart}}</a></p>
     </div>
     <div class="review-divs">
-      <a href="/org_changes/thirdTab/{{$org->id}}/edit">
+      <a href="/org_changes/mission/{{$org->id}}/edit">
         <h3>Updated Mission Statements <i class="fa fa-external-link"></i></h3>
       </a>
       @if (!!$missions)
@@ -58,7 +58,7 @@
     </div>
 
     <div class="review-divs">
-      <a href="/org_changes/secondTab/{{$org->id}}/edit">
+      <a href="/org_changes/changes/{{$org->id}}/edit">
       <h3>Organizational Changes <i class="fa fa-external-link"></i></h3>
       </a>
       @if (!!$changes)
@@ -77,7 +77,7 @@
     </div>
 
     <div class="review-divs">
-      <a href="/org_changes/fourthTab/{{$org->id}}/edit">
+      <a href="/org_changes/personnel/{{$org->id}}/edit">
       <h3>Personnel Realignment and Reassignment <i class="fa fa-external-link"></i></h3>
       </a>
       <table>
@@ -134,6 +134,9 @@
         })
         $('.showLink a').click(function(){
 
+          var showHeight = $(this).parent().height('auto')
+
+
           var currHeight = $(this).closest('.expanding_div').height();
           $(this).closest('.expanding_div').height('auto');
           var animationheight = $(this).closest('.expanding_div').height()
@@ -143,12 +146,20 @@
             $(this).closest('.expanding_div').animate({
               'height': animationheight,
             }, 500)
+            $(this).parent().animate({
+              'height': showHeight,
+              'padding-top': 0
+            },300);
             $(this).text('Show Less')
           }else{
             console.log(currHeight);
             $(this).closest('.expanding_div').animate({
-              'height': '8em',
+              'height': '13em',
             }, 500)
+            $(this).parent().css({
+              'height': '4em',
+              'padding-top': '2em'
+            });
             $(this).text('Show More')
           }
         })

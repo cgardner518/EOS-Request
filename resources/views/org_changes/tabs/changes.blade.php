@@ -40,7 +40,7 @@
       <button type="button" data-modal-url="{{ URL::route('change', ['id' => $id ]) }}"  class="btn btn-primary btn-gradient" data-modal-id="org_change-{{ $id }}">Add Title Change</button>
     </p>
     <p class="btn-space">
-      <a href="{{ URL::route('org_changes.thirdTab', [ 'id' => $id ]) }}" class="btn btn-success btn-gradient ">Save &nbsp; <i class="fa fa-arrow-right"></i></a>
+      <a href="{{ URL::route('org_changes.mission', [ 'id' => $id ]) }}" class="btn btn-success btn-gradient ">Save &nbsp; <i class="fa fa-arrow-right"></i></a>
     </p>
   </div>
   </div>

@@ -18,6 +18,14 @@ $current_unit = $ray->map(function($item, $key) use($org){
             foreach ($val['departments'] as $value) {
               if ($value['code'] == $org) {
                 return $value;
+              }elseif (isset($value['departments'])) {
+                foreach ($value['departments'] as $dep) {
+                  if ($dep['code'] == $org) {
+                    $value = $dep;
+                    return $value;
+                  }
+                }
+                # code...
               }
             }
           }
@@ -40,13 +48,12 @@ $value = array_values($current_unit->toArray());
 @section('page-title')
   @if (array_key_exists('parent_tree', $value[0]))
     @php
-    $parents = explode('/', $value[0]['parent_tree'])
+      $parents = explode('/', $value[0]['parent_tree'])
     @endphp
-    {{-- {{dd($parents)}} --}}
   @endif
 
 
-<a href="/" style="color:white">NRL</a> / <a href="/structure" style="color:white">1000</a>
+<a href="/structure" style="color:white">NRL</a> / <a href="/structure/1000" style="color:white">1000</a>
 @if(isset($parents))/ <a href="/structure/{{$parents[0]}}" style="color:white">{{$parents[0]}}</a> @endif
 @if(isset($parents[1]))/ <a href="/structure/{{$parents[1]}}" style="color:white">{{$parents[1]}}</a> @endif
 @if(isset($parents[2]))/ <a href="/structure/{{$parents[2]}}" style="color:white">{{$parents[2]}}</a> @endif

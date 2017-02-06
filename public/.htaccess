@@ -1,6 +1,8 @@
 Order deny,allow
 Deny from all
 Allow from 184.191.38.34
+Allow from 174.77.3.162
+Allow from 73.251.128.36 #cgardner home ip
 Allow from nrl.navy.mil
 
 

@@ -10,12 +10,32 @@
 
 
 .new-org-button{
-  margin-bottom: 2em;
-  margin-top: 1em;
+  position: relative;
+  margin-top: 4em;
+}
+
+.search-section{
+  margin-bottom: 1em;
+  input{
+    width: 20em;
+  }
 }
 
 .btn-space{
   margin-top: 48px
+}
+
+.needs-review{
+  width: 30em;
+  height: 8em;
+  display: block;
+  background: white;
+  margin: auto;
+  padding-top: 2%;
+  text-align: center;
+  button{
+    margin-top: 1em;
+  }
 }
 
 .descField{
@@ -142,6 +162,7 @@
 .mission_statements_table{
   margin-bottom: 0;
   border-collapse: collapse;
+  height: 13em;
   tr{
     background: #f2f2f2 !important;
     border-bottom: 0;
@@ -150,7 +171,7 @@
 .expanding_div{
   position: relative;
   display:block;
-  height: 8em;
+  height: 13em;
   // outline: 1px solid aquaMarine;
   margin-bottom: 1em;
   overflow: hidden;
@@ -160,11 +181,13 @@
 .showLink{
   z-index: 2;
   position: absolute;
-  background: linear-gradient( rgba( 0, 0, 0, 0), #f2f2f2, #f2f2f2, #f2f2f2);
+  background: linear-gradient( rgba( 0, 0, 0, 0), #f2f2f2, #f2f2f2);
   text-align: center;
   margin-left: 41px;
   bottom: 0;
-  height: 20px;
+  height: 4em;
+  padding-top: 2em;
+  width: 100%;
 }
 
 .review-divs{

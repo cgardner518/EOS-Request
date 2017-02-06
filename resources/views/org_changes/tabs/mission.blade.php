@@ -52,7 +52,7 @@
         <button type="button" data-modal-url="{{ URL::route('mission_statements', ['id' => $id ]) }}" data-modal-id="mission_statements-{{ $id }}" class="btn btn-primary btn-gradient">Add Mission Statement</button>
       </p>
       <p class="btn-space">
-        <a href="{{ URL::route('org_changes.fourthTab', [ 'id' => $id ]) }}" class="btn btn-success btn-gradient ">Save &nbsp; <i class="fa fa-arrow-right"></i></a>
+        <a href="{{ URL::route('org_changes.personnel', [ 'id' => $id ]) }}" class="btn btn-success btn-gradient ">Save &nbsp; <i class="fa fa-arrow-right"></i></a>
       </p>
     </div>
     <input type="hidden" id="id" value="{{$id}}">
@@ -72,19 +72,26 @@
         }
       })
       $('.fa-trash').change(function(){
-        window.location.replace('http://chris.zurka.com/org_changes/thirdTab/'+$id+'/edit')
+        window.location.replace('http://chris.zurka.com/org_changes/mission/'+$id+'/edit')
       })
       $('.showLink a').click(function(){
+
+        var showHeight = $(this).parent().height('auto')
 
         var currHeight = $(this).closest('.expanding_div').height();
         $(this).closest('.expanding_div').height('auto');
         var animationheight = $(this).closest('.expanding_div').height()
         $(this).closest('.expanding_div').height(currHeight)
       //
+      // console.log()
         if ($(this).text() == 'Show More') {
           $(this).closest('.expanding_div').animate({
             'height': animationheight,
           }, 500)
+          $(this).parent().animate({
+            'height': showHeight,
+            'padding-top': 0
+          },300);
           $(this).text('Show Less')
           $.each($(this).parent().parent().find('.personnel_table_td'), function(k,v){
             $(v).find('a').show()
@@ -94,8 +101,12 @@
             $(v).find('a').hide()
           })
           $(this).closest('.expanding_div').animate({
-            'height': '8em',
+            'height': '13em',
           }, 500)
+          $(this).parent().css({
+            'height': '4em',
+            'padding-top': '2em'
+          });
           $(this).text('Show More')
         }
       })

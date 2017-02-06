@@ -65,6 +65,8 @@ Route::get('/peasant', function(){
 
 Route::get('/org_changes/create', 'OrgChangeController@create');
 Route::get('/org_changes', 'OrgChangeController@index');
+Route::patch('/org_changes/{id}', 'OrgChangeController@update');
+Route::delete('/org_changes/{id}', 'OrgChangeController@destroyChange')->name('org_changes.destroy');
 Route::get('/newChartDownload/{id}', 'OrgChangeController@newChartDownload');
 Route::get('/oldChartDownload/{id}', 'OrgChangeController@oldChartDownload');
 
@@ -77,17 +79,14 @@ Route::get('/missions', 'OrgChangeController@mission_statements')->name('mission
 Route::post('/saveMission', 'OrgChangeController@save_mission_statement')->name('save_mission_statement');
 Route::get('/editMission', 'OrgChangeController@edit_mission_statement')->name('edit_mission_statement');
 Route::patch('/updateMission', 'OrgChangeController@update_mission_statement')->name('update_mission_statement');
+Route::delete('/missions/{id}', 'OrgChangeController@destroyMission')->name('missions.destroy');
 
 Route::get('/personnel', 'OrgChangeController@personnel')->name('personnel');
 Route::post('/savePersonnel', 'OrgChangeController@savePersonnel')->name('savePersonnel');
 
-$tabs = ['firstTab','secondTab','thirdTab','fourthTab'];
+$tabs = ['overview','changes','mission','personnel', 'review'];
 foreach($tabs as $tab){
   Route::get("/org_changes/$tab/{id}/edit", 'OrgChangeController@'.$tab.'Edit')->name('org_changes.'.$tab);
 }
-Route::get("/org_changes/review/{id}/edit", 'OrgChangeController@review')->name('org_changes.review');
 
-Route::patch('/org_changes/{id}', 'OrgChangeController@update');
 Route::delete('/org_requests/{id}', 'OrgChangeController@destroy')->name('org_requests.destroy');
-Route::delete('/org_changes/{id}', 'OrgChangeController@destroyChange')->name('org_changes.destroy');
-Route::delete('/missions/{id}', 'OrgChangeController@destroyMission')->name('missions.destroy');

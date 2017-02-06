@@ -14,11 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrgChangeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
@@ -26,29 +21,17 @@ class OrgChangeController extends Controller
 
         return view('org_changes.index', compact('orgRequests'));
     }
-    public function firstTabEdit($id)
+
+    public function create()
     {
-        //
-        $org = OrgRequest::find($id);
-        $menuName = 'orgChangeTabs';
-        $suffix = "/$id/edit";
-        return view('org_changes.tabs.first', compact('menuName', 'suffix', 'id', 'org'));
+        $org_request = new OrgRequest;
+        $org_request->save();
+        $id = $org_request->id;
+
+        return redirect()->action('OrgChangeController@firstTabEdit', ['id'=>$id]);
     }
 
-    public function fourthTabEdit($id)
-    {
-        //
-        $personnel = Personnel::where('org_request', $id)->get()->toArray();
-        $org = OrgRequest::find($id);
-        $menuName = 'orgChangeTabs';
-        $suffix = "/$id/edit";
-
-        // dd($personnel);
-
-        return view('org_changes.tabs.fourth', compact('menuName', 'suffix', 'id', 'personnel', 'org'));
-    }
-
-    public function review($id)
+    public function reviewEdit($id)
     {
       //
       $org = OrgRequest::find($id);
@@ -65,6 +48,13 @@ class OrgChangeController extends Controller
       return view('org_changes.tabs.review', compact('menuName', 'suffix', 'id', 'org', 'missions', 'changes', 'organizations'));
     }
 
+    public function destroy($id)
+    {
+        OrgRequest::destroy($id);
+
+        return redirect('/org_changes');
+    }
+
 
     // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -74,7 +64,7 @@ class OrgChangeController extends Controller
     // ******
     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-    public function secondTabEdit($id)
+    public function changesEdit($id)
     {
       //
       $org = OrgRequest::find($id);
@@ -84,7 +74,7 @@ class OrgChangeController extends Controller
       $menuName = 'orgChangeTabs';
       $suffix = "/$id/edit";
 
-      return view('org_changes.tabs.second', compact('menuName', 'suffix', 'id', 'org', 'orgs', 'orgChanges', 'codes'));
+      return view('org_changes.tabs.changes', compact('menuName', 'suffix', 'id', 'org', 'orgs', 'orgChanges', 'codes'));
     }
     public function addChange(Request $request)
     {
@@ -134,7 +124,7 @@ class OrgChangeController extends Controller
 
       $orgChange->save();
 
-      return redirect()->action('OrgChangeController@secondTabEdit', ['id'=>$request->org_request]);
+      return redirect()->action('OrgChangeController@changesEdit', ['id'=>$request->org_request]);
     }
 
     public function saveChange(Request $request)
@@ -159,7 +149,7 @@ class OrgChangeController extends Controller
       // dd($orgChange);
       $orgChange->save();
 
-      return redirect()->action('OrgChangeController@secondTabEdit', ['id'=>$request->org_request]);
+      return redirect()->action('OrgChangeController@changesEdit', ['id'=>$request->org_request]);
     }
 
     public function destroyChange($id)
@@ -169,7 +159,7 @@ class OrgChangeController extends Controller
 
       OrgChange::destroy($id);
 
-      return redirect("/org_changes/secondTab/$tabID/edit");
+      return redirect("/org_changes/changes/$tabID/edit");
     }
 
     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -186,7 +176,7 @@ class OrgChangeController extends Controller
     // ******
     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-    public function thirdTabEdit($id)
+    public function missionEdit($id)
     {
         //
         $org = OrgRequest::find($id);
@@ -200,7 +190,7 @@ class OrgChangeController extends Controller
         $menuName = 'orgChangeTabs';
         $suffix = "/$id/edit";
 
-        return view('org_changes.tabs.third', compact('menuName', 'suffix', 'id', 'missions', 'organizations', 'org'));
+        return view('org_changes.tabs.mission', compact('menuName', 'suffix', 'id', 'missions', 'organizations', 'org'));
     }
 
     public function mission_statements(Request $request)
@@ -224,7 +214,7 @@ class OrgChangeController extends Controller
       $mission->org_request = $request->org_request;
       $mission->save();
 
-      return redirect()->route('org_changes.thirdTab', ['id'=>$request->org_request]);
+      return redirect()->route('org_changes.mission', ['id'=>$request->org_request]);
 
     }
 
@@ -245,14 +235,13 @@ class OrgChangeController extends Controller
     }
     public function update_mission_statement(Request $request)
     {
-      // dd($request->all());
       $mission = MissionStatement::find($request->id);
       $mission->org_request = $request->org_request;
       $mission->statement = $request->proposed;
       $mission->code = $request->for;
       $mission->save();
 
-      return redirect()->action('OrgChangeController@thirdTabEdit', ['id'=>$request->org_request]);
+      return redirect()->action('OrgChangeController@missionEdit', ['id'=>$request->org_request]);
     }
 
     public function destroyMission($id)
@@ -262,7 +251,7 @@ class OrgChangeController extends Controller
 
       MissionStatement::destroy($id);
 
-      return redirect()->action('OrgChangeController@thirdTabEdit', ['id'=>$tabID]);
+      return redirect()->action('OrgChangeController@missionEdit', ['id'=>$tabID]);
     }
 
     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -275,7 +264,7 @@ class OrgChangeController extends Controller
 
     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     // *******
-    // * PERSONNEL MODALS
+    // * PERSONNEL
     // *******
     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     public function personnel(Request $request)
@@ -292,9 +281,23 @@ class OrgChangeController extends Controller
       return view('org_changes.modals.personnel', compact('modalId', 'id', 'users'));
 
     }
+
     public function savePersonnel(Request $request)
     {
       dd($request->all());
+    }
+
+    public function personnelEdit($id)
+    {
+        //
+        $personnel = Personnel::where('org_request', $id)->get()->toArray();
+        $org = OrgRequest::find($id);
+        $menuName = 'orgChangeTabs';
+        $suffix = "/$id/edit";
+
+        // dd($personnel);
+
+        return view('org_changes.tabs.personnel', compact('menuName', 'suffix', 'id', 'personnel', 'org'));
     }
 
     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -302,6 +305,23 @@ class OrgChangeController extends Controller
     // * END PERSONNEL
     // *******
     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    // *******
+    // * OVERVIEW
+    // *******
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    public function overviewEdit($id)
+    {
+        //
+        $org = OrgRequest::find($id);
+        $menuName = 'orgChangeTabs';
+        $suffix = "/$id/edit";
+        return view('org_changes.tabs.overview', compact('menuName', 'suffix', 'id', 'org'));
+    }
 
     public function newChartDownload($id){
       $org = OrgRequest::findOrFail($id);
@@ -330,65 +350,9 @@ class OrgChangeController extends Controller
                           ->header('Expires', '0');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $org_request = new OrgRequest;
-        $org_request->save();
-        $id = $org_request->id;
-
-        return redirect()->action('OrgChangeController@firstTabEdit', ['id'=>$id]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-        dd($request->all());
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
-        // dd($request->all());
         $orgRequest = OrgRequest::findOrFail($id);
         if($request->file('current_orgChart')){
           $file1Name = $request->file('current_orgChart')->getClientOriginalName();
@@ -409,17 +373,12 @@ class OrgChangeController extends Controller
         return redirect('/org_changes');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        OrgRequest::destroy($id);
 
-        return redirect('/org_changes');
-    }
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    // *******
+    // * END OVERVIEW
+    // *******
+    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
 
 }

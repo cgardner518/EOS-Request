@@ -13139,11 +13139,27 @@ body.secure-marking #main-page-wrapper {
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 .new-org-button {
-  margin-bottom: 2em;
-  margin-top: 1em; }
+  position: relative;
+  margin-top: 4em; }
+
+.search-section {
+  margin-bottom: 1em; }
+  .search-section input {
+    width: 20em; }
 
 .btn-space {
   margin-top: 48px; }
+
+.needs-review {
+  width: 30em;
+  height: 8em;
+  display: block;
+  background: white;
+  margin: auto;
+  padding-top: 2%;
+  text-align: center; }
+  .needs-review button {
+    margin-top: 1em; }
 
 .descField {
   margin-top: -2.5em; }
@@ -13244,7 +13260,8 @@ body.secure-marking #main-page-wrapper {
 
 .mission_statements_table {
   margin-bottom: 0;
-  border-collapse: collapse; }
+  border-collapse: collapse;
+  height: 13em; }
   .mission_statements_table tr {
     background: #f2f2f2 !important;
     border-bottom: 0; }
@@ -13252,7 +13269,7 @@ body.secure-marking #main-page-wrapper {
 .expanding_div {
   position: relative;
   display: block;
-  height: 8em;
+  height: 13em;
   margin-bottom: 1em;
   overflow: hidden;
   z-index: 4;
@@ -13261,11 +13278,13 @@ body.secure-marking #main-page-wrapper {
 .showLink {
   z-index: 2;
   position: absolute;
-  background: linear-gradient(rgba(0, 0, 0, 0), #f2f2f2, #f2f2f2, #f2f2f2);
+  background: linear-gradient(rgba(0, 0, 0, 0), #f2f2f2, #f2f2f2);
   text-align: center;
   margin-left: 41px;
   bottom: 0;
-  height: 20px; }
+  height: 4em;
+  padding-top: 2em;
+  width: 100%; }
 
 .review-divs {
   margin-bottom: 3em; }
@@ -13733,6 +13752,8 @@ body.secure-marking #main-page-wrapper {
   display: inline-block;
   margin: 1em;
   text-align: center; }
+  .unit-box :hover {
+    cursor: pointer; }
   .unit-box p:first-child {
     background: #6da9cf;
     color: white;
@@ -13762,6 +13783,8 @@ body.secure-marking #main-page-wrapper {
 
 h1 i {
   width: 20px; }
+  h1 :hover {
+    cursor: pointer; }
 
 .org_structrue_search_div {
   margin-top: -6em;
@@ -13819,4 +13842,4 @@ h1 i {
   .row .text-left {
     margin-left: -1.5em; }
 
-/*# sourceMappingURL=/build/css/all-112b1b1b.css.map */
+/*# sourceMappingURL=/build/css/all-1d502819.css.map */

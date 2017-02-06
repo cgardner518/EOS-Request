@@ -6,12 +6,16 @@
   <div class="indent-padding width-limited-1200">
     <div class="">
       <h2>Change Requests</h2>
-      Nostrud ullamco aute adipisicing ullamco tempor anim nostrud fugiat mollit dolore mollit est laboris anim eiusmod fugiat.Id sunt ut adipisicing officia excepteur cillum dolor quis non ea pariatur Lorem ea esse consequat dolor do.Ex cillum laboris enim eu ea anim do dolore veniam enim pariatur nulla exercitation excepteur.
+      <p>The Organization Structure &amp; Roles application allows you to request changes to the structure or roles at NRL. This includes modifications to existing codes as well as changes in personnel associated with official NRL roles.</p>
     </div>
-    {{-- <div class="needs-review">
-      There are 3 request that need to be reviewed
-      <button type="button" class="btn btn-success btn-gradient" name="button">Review Request</button>
-    </div> --}}
+    <div class="needs-review">
+      There are {{count($orgRequests)}} request that need to be reviewed
+      <button type="button" class="btn btn-success btn-gradient" name="button">Review Requests</button>
+    </div>
+    <div class="pull-left search-section">
+      <h2>Requests</h2>
+      {!! Form::text('search', '', ['placeholder' =>  'Search']) !!}
+    </div>
     <a class="pull-right btn btn-primary btn-gradient new-org-button" href="/org_changes/create">New Request</a>
     <table>
       {!! Form::open() !!}
@@ -31,7 +35,7 @@
           {{$org->id}}
           </a>
         </td> --}}
-      <td><a href="/org_changes/firstTab/{{$org->id}}/edit">
+      <td><a href="/org_changes/overview/{{$org->id}}/edit">
       @if($org->title)
         {{$org->title}}
       @else

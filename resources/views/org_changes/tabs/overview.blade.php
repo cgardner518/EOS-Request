@@ -237,7 +237,7 @@
         contentType: false,
         processData: false
       }).then(function(response){
-        window.location.replace('http://chris.zurka.com/org_changes/secondTab/'+$id+'/edit')
+        window.location.replace('http://chris.zurka.com/org_changes/changes/'+$id+'/edit')
       })
     })
    </script>
