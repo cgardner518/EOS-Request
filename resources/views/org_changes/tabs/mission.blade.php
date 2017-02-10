@@ -23,10 +23,10 @@
       <p><em>Currently no Mission Statements to update</em></p>
     @else
         @foreach ($missions as $mission)
-          <div class="expanding_div">
-            <div class="showLink">
-              <a href="javascript:undefined;">Show More</a>
-            </div>
+        <div class="expanding_div">
+          <div class="showLink">
+            <a href="javascript:undefined;">Show More</a>
+          </div>
           <table class="mission_statements_table">
               <tr>
                 <td class="personnel_table_td"><a href="javascript:undefined;" class="fa fa-pencil" style="text-decoration:none;" data-modal-url="{{URL::route('edit_mission_statement', ['id' => $mission['id']])}}" data-modal-id="mission_edit_{{ $mission['id'] }}"></a></td>
@@ -34,7 +34,6 @@
                   <label>Update For:</label> {{$organizations[$mission['code']]}} ({{$mission['code']}})
                   <div class="trey" style="overflow: hidden;">
                     {{$mission['statement']}}
-                    {{-- {{$mission['id']}} --}}
                     <br>
                     <br>
                   </div>
@@ -63,7 +62,6 @@
       $id = $('#id').val()
 
       $.each($('.showLink'), function(key,val){
-        console.log(val);
         $(val).css({
           'width': $(this).parent().width()-82
         })
@@ -83,7 +81,6 @@
         var animationheight = $(this).closest('.expanding_div').height()
         $(this).closest('.expanding_div').height(currHeight)
       //
-      // console.log()
         if ($(this).text() == 'Show More') {
           $(this).closest('.expanding_div').animate({
             'height': animationheight,

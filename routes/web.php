@@ -19,18 +19,29 @@ Route::get('/', function(){
 });
 
 Route::get('/v', function () {return view('welcome');})->name('velcome');
+Route::get('/jq', function(){
+  return redirect('https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js');
+});
+Route::get('/stigz', function(){
+  $ch = curl_init();
 
+  // set url
+  curl_setopt($ch, CURLOPT_URL, "https://www.stigviewer.com/stig/application_security_and_development/2014-04-03/MAC-3_Sensitive/json");
+
+  //return the transfer as a string
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+  // $output contains the output string
+  $output = curl_exec($ch);
+  $output = json_decode($output, true);
+
+  // close curl resource to free up system resources
+  curl_close($ch);
+
+  return response()->json($output);
+});
 Route::get('/practice', function () {
   return view('pract');
-});
-
-Route::get('/structure', function () {
-  return view('orgStructure.index', compact('organizations'));
-})->name('structure');
-
-
-Route::get('structure/{directorate}', function($org){
-  return view('orgStructure.show', compact('org'));
 });
 
 // *------------------------------------------------------------------------------------------------------------------------------*
@@ -90,3 +101,25 @@ foreach($tabs as $tab){
 }
 
 Route::delete('/org_requests/{id}', 'OrgChangeController@destroy')->name('org_requests.destroy');
+
+
+
+// *------------------------------------------------------------------------------------------------------------------------------*
+//  Org Structure Routes
+// *------------------------------------------------------------------------------------------------------------------------------*
+Route::delete('/fakeDestroy', function(){
+  return ;
+})->name('fakery');
+
+Route::post('/changeOrgInfo', 'OrgStructureController@change_org_info')->name('change_org_info');
+
+Route::get('/structure', 'OrgStructureController@index')->name('structure');
+
+Route::get('structure/{id}', 'OrgStructureController@show');
+Route::get('/structure/{id}/{role_id}/editAssignment/{assignment}', 'OrgStructureController@edit_role_assignment')->name('edit_role_assignment');
+Route::get('/structure/{id}/edit', 'OrgStructureController@edit_org_info')->name('edit_org_info');
+Route::get('/structure/{id}/editrole/{role_id}', 'OrgStructureController@edit_org_role')->name('edit_org_role');
+
+// *------------------------------------------------------------------------------------------------------------------------------*
+//  End Org Structure Routes
+// *------------------------------------------------------------------------------------------------------------------------------*

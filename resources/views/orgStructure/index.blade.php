@@ -14,7 +14,27 @@ Organization Structure
     <a class="pull-right btn btn-primary btn-gradient" href="org_changes/create">New Role</a><br>
     <input type="text" name="search" placeholder="Search">
   </div>
-  @each('orgStructure.org-partials.org-structure-partial', $organizations, 'value')
+  <div class="unit-box-container">
+    <div class="box-holder">
+      <h1><i class="fa fa-angle-right"></i></h1>
+      <div class="unit-box">
+        <div class="hack-class container-fluid">
+          <p class="unit-type text-center">{{$organizations['type']}}</p>
+        </div>
+        <div class="code-section">
+          <p class="code-text">{{$organizations['code']}}</p>
+        </div>
+      </div>
+      <h4><a href="/structure/{{$organizations['code']}}" style="color:inherit;">{{$organizations['name']}}</a></h4>
+    </div>
+    @if (isset($organizations['departments']))
+      <ul>
+        @foreach ($organizations['departments'] as $value)
+          @include('orgStructure.org-partials.org-structure-partial', $value)
+        @endforeach
+      </ul>
+    @endif
+  </div>
 </div>
 
 <script type="text/javascript">

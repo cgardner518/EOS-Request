@@ -1,19 +1,19 @@
 
-<div class="purposeBox">
+<section class="purposeBox">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-1 ">
-        <a href="javascript:undefined;" style="text-decoration:none;color:inherit;"><i class="fa fa-md fa-pencil"></i></a>
+      <div class="col-md-1" style="margin-left: -1em;">
+        <a href="javascript:undefined;" style="text-decoration:none;color:inherit;" data-modal-url="{{URL::route('edit_org_role', ['id' => $value['code']-$value['type'], 'role_id' => $value['type']])}}" data-modal-id="{{ $value['code'] }}_{{$value['type']}}_edit"><i class="fa fa-md fa-pencil"></i></a>
       </div>
-      <div class="col-md-1 text-right">
+      <div class="col-md-1 text-right" style="padding-left: 3em;">
         <label>Name:</label>
       </div>
-      <div class="col-md-9 text-left">
+      <div class="col-md-9 text-left" style="padding-left: 2em;">
         {{ $value['name'] }}
       </div>
-      <div class="col-md-1 pull-right">
+      <div class="col-md-1 pull-right" style="margin-right: -1em;">
 
-          <a href="javascript:undefined;" style="text-decoration: none;color:inherit;"><i class="fa fa-md fa-trash"></i></a>
+          <a href="javascript:undefined;" style="text-decoration: none;color:inherit;" data-delete-element="section" data-delete-url="{{ URL::route('fakery') }}"><i class="fa fa-md fa-trash"></i></a>
       </div>
     </div>
     <div class="row">
@@ -66,16 +66,25 @@
     </div>
     <br>
   @foreach ($value['assignments'] as $val)
-  <div class="assignments-table">
+  <section class="assignments-table">
+    {!!Form::open()!!}
+    {!!Form::close()!!}
     <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-2 text-right">
-        <label>Assignment:</label>
+      <div class="row">
+        <div class="col-md-1">
+          <a href="javascript:undefined;" style="text-decoration:none;color:inherit;" data-modal-url="{{URL::route('edit_role_assignment', ['id' => $value['code']-$value['type'], 'role_id' => $value['type'], 'assignment' => $val['name']])}}" data-modal-id="{{$value['type']}}_{{$val['name']}}_edit"><i class="fa fa-md fa-pencil"></i></a>
+        </div>
+        <div class="col-md-1" style="padding-left: 0.45em;">
+          <label>Assigned:</label>
+        </div>
+        <div class="col-md-9 text-left">
+          {{ $val['name'] }}
+        </div>
+        <div class="col-md-1 pull-right">
+
+            <a href="javascript:undefined;" style="text-decoration: none;color:inherit;" data-delete-element="section" data-delete-url="{{ URL::route('fakery') }}"><i class="fa fa-md fa-trash"></i></a>
+        </div>
       </div>
-      <div class="col-md-10 text-left">
-        {{ $val['name'] }}
-      </div>
-    </div>
     <div class="row">
       <div class="col-md-2 text-right">
         <label>Type:</label>
@@ -107,7 +116,7 @@
       </div>
     </div>
     </div>
-  </div>
+  </section>
   @endforeach
 </div>
-</div>
+</section>

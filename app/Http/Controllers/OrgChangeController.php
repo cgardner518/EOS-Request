@@ -70,7 +70,7 @@ class OrgChangeController extends Controller
       $org = OrgRequest::find($id);
       $codes = OrgChange::allOrgCodes();
       $orgs = OrgChange::allOrganizations();
-      $orgChanges = OrgChange::where('org_request', $id)->get()->toArray();
+      $orgChanges = $org->org_changes;
       $menuName = 'orgChangeTabs';
       $suffix = "/$id/edit";
 
@@ -180,7 +180,7 @@ class OrgChangeController extends Controller
     {
         //
         $org = OrgRequest::find($id);
-        $missions = MissionStatement::where('org_request', $id)->get()->toArray();
+        $missions = $org->mission_statements;
         $orgs = OrgChange::allOrganizations();
         $codes = OrgChange::allOrgCodes();
         $organizations = [];
@@ -290,8 +290,8 @@ class OrgChangeController extends Controller
     public function personnelEdit($id)
     {
         //
-        $personnel = Personnel::where('org_request', $id)->get()->toArray();
         $org = OrgRequest::find($id);
+        $personnel = $org->personnel;
         $menuName = 'orgChangeTabs';
         $suffix = "/$id/edit";
 
@@ -380,5 +380,5 @@ class OrgChangeController extends Controller
     // *******
     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-
+    // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 }

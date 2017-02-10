@@ -13747,44 +13747,72 @@ body.secure-marking #main-page-wrapper {
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 .unit-box {
   background: white;
-  width: 8em;
-  height: 3.5em;
+  width: 6.5em;
+  height: 3em;
   display: inline-block;
-  margin: 1em;
-  text-align: center; }
+  margin-left: 1.5em;
+  margin-right: 1em;
+  text-align: center;
+  border: 1px solid #dcdcdc; }
   .unit-box :hover {
     cursor: pointer; }
-  .unit-box p:first-child {
+  .unit-box .hack-class {
     background: #6da9cf;
     color: white;
     font-weight: lighter;
-    font-size: 0.75em;
+    font-size: 0.8em;
     padding: 0;
     margin: 0;
-    height: 1.3em;
-    padding-bottom: 2em; }
-  .unit-box .code-text {
-    font-size: 1.5em;
+    height: 1.25em;
+    display: block;
+    padding-bottom: 1.5em;
+    text-align: center; }
+  .unit-box .unit-type {
+    position: inline;
+    display: block;
+    padding-bottom: 0.5em;
+    text-align: center;
+    margin-top: -0.25em; }
+  .unit-box .code-section {
+    font-size: 1.25em;
     font-weight: lighter;
     padding: 0;
     padding-top: 0.13em;
-    margin: 0; }
+    margin: 0;
+    height: 2em; }
+  .unit-box .code-text {
+    position: absolute;
+    display: block;
+    padding-bottom: 0.5em;
+    padding-top: 0.1em;
+    margin-left: 1.35em;
+    margin-top: -0.25em; }
 
 .unit-box-container {
-  display: block; }
+  display: block;
+  margin-top: 1em;
+  width: 40em; }
   .unit-box-container ul {
     display: none;
     list-style-type: none; }
-  .unit-box-container h1 {
-    display: inline; }
   .unit-box-container h4 {
     display: inline;
-    text-decoration: underline; }
+    position: absolute;
+    text-decoration: underline;
+    font-size: 1.25em;
+    margin-top: 0.75em; }
+  .unit-box-container h1 {
+    font-size: 2em;
+    display: inline;
+    margin-top: 0.25em;
+    position: absolute; }
+    .unit-box-container h1 i {
+      width: 0.5em; }
+    .unit-box-container h1 :hover {
+      cursor: pointer; }
 
-h1 i {
-  width: 20px; }
-  h1 :hover {
-    cursor: pointer; }
+.box-holder {
+  width: 30em; }
 
 .org_structrue_search_div {
   margin-top: -6em;
@@ -13792,6 +13820,11 @@ h1 i {
   height: 10em;
   width: 20em; }
   .org_structrue_search_div input {
+    border-radius: 20px;
+    height: 26px;
+    line-height: 26px;
+    background: url("/build/images/search-icon-blue.png") 10px center no-repeat #fff;
+    padding-left: 30px;
     width: 20em;
     margin-top: 1.5em;
     position: absolute; }
@@ -13842,4 +13875,42 @@ h1 i {
   .row .text-left {
     margin-left: -1.5em; }
 
-/*# sourceMappingURL=/build/css/all-1d502819.css.map */
+.orgInfoModal label {
+  max-width: none; }
+
+.row.chris {
+  margin-top: 1em; }
+  .row.chris input {
+    margin-left: -2em; }
+  .row.chris select {
+    margin-left: -2em; }
+
+#orgModalPicker {
+  margin-top: 1em; }
+  #orgModalPicker .col-md-2 {
+    margin-left: -3.6em; }
+
+.pickerInput {
+  margin-left: -4.25em; }
+
+.form-row .col-md-2 label {
+  margin-left: -3em; }
+
+.dzoneModal {
+  position: relative;
+  border: 2px dashed lightgrey;
+  top: 1px;
+  padding: 30px 30px;
+  margin: auto; }
+  .dzoneModal em {
+    text-decoration: underline; }
+  .dzoneModal p {
+    font-size: 12px;
+    text-align: center; }
+  .dzoneModal span {
+    position: absolute;
+    float: right;
+    margin-top: -5em;
+    margin-right: -1.5em; }
+
+/*# sourceMappingURL=/build/css/all-1e6ac0e8.css.map */

@@ -22,7 +22,6 @@
 
       {!! Form::close() !!}
       <thead>
-        {{-- <th>Request Number</th> --}}
         <th>Title</th>
         <th>Description</th>
         <th>Status</th>
@@ -30,11 +29,6 @@
       </thead>
       @foreach ($orgRequests as $org)
     <tr>
-        {{-- <td data-toggle="tooltip" title="Edit this Organizational Change Request">
-          <a href="/org_changes/firstTab/{{$org->id}}/edit">
-          {{$org->id}}
-          </a>
-        </td> --}}
       <td><a href="/org_changes/overview/{{$org->id}}/edit">
       @if($org->title)
         {{$org->title}}
@@ -48,8 +42,6 @@
       @else
         <td>Needs Review</td>
       @endif
-      {{-- <td><a href="/oldChartDownload/{{$org->id}}">{{ $org->current_orgChart }}</a></td> --}}
-      {{-- <td><a href="/newChartDownload/{{$org->id}}">{{ $org->new_orgChart }}</a></td> --}}
       <td><a href="javascript:undefined;" class="fa fa-fw fa-trash" style="text-decoration: none;" data-delete-url="{{ URL::route('org_requests.destroy', $org['id']) }}"></a></td>
     </tr>
   @endforeach

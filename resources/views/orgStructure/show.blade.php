@@ -1,62 +1,17 @@
 @extends('Labcoat::layouts/standard')
-
-@php
-// dd($organizations);
-$ray = collect($organizations);
-$current_unit = $ray->map(function($item, $key) use($org){
-  if($item['code'] == $org){
-    return $item;
-  }elseif (isset($item['departments'])){
-    foreach ($item['departments'] as $v) {
-      if($v['code'] == $org){
-        return $v;
-      }elseif (isset($v['departments'])){
-        foreach($v['departments'] as $val){
-          if($val['code'] == $org){
-            return $val;
-          }elseif(isset($val['departments'])){
-            foreach ($val['departments'] as $value) {
-              if ($value['code'] == $org) {
-                return $value;
-              }elseif (isset($value['departments'])) {
-                foreach ($value['departments'] as $dep) {
-                  if ($dep['code'] == $org) {
-                    $value = $dep;
-                    return $value;
-                  }
-                }
-                # code...
-              }
-            }
-          }
-        }
-      }else{
-        return false;
-      }
-    }
-  }else{
-    return false;
-  }
-})
-->filter(function($val, $key){
-  return $val;
-});
-$value = array_values($current_unit->toArray());
-// dd($value);
-@endphp
-
+{{-- @php
+  dd($value);
+@endphp --}}
 @section('page-title')
+  <a href="/structure" style="color:white">NRL</a> / <a style="color:white;" href="/structure/1000">1000</a>
   @if (array_key_exists('parent_tree', $value[0]))
     @php
       $parents = explode('/', $value[0]['parent_tree'])
     @endphp
+    @foreach ($parents as $parent)
+      / <a style="color:white" href="/structure/{{$parent}}">{{$parent}}</a>
+    @endforeach
   @endif
-
-
-<a href="/structure" style="color:white">NRL</a> / <a href="/structure/1000" style="color:white">1000</a>
-@if(isset($parents))/ <a href="/structure/{{$parents[0]}}" style="color:white">{{$parents[0]}}</a> @endif
-@if(isset($parents[1]))/ <a href="/structure/{{$parents[1]}}" style="color:white">{{$parents[1]}}</a> @endif
-@if(isset($parents[2]))/ <a href="/structure/{{$parents[2]}}" style="color:white">{{$parents[2]}}</a> @endif
 @endsection
 @section('main-content')
 
@@ -64,21 +19,21 @@ $value = array_values($current_unit->toArray());
 @each('orgStructure.org-partials.org-structure-partial', $value, 'value')
 <div class="org-info-show">
   <h3>Organizational Information</h3>
-  <div class="purposeBox">
+  <section class="purposeBox">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-1 ">
-          <a href="javascript:undefined;" style="text-decoration:none;color:inherit;"><i class="fa fa-md fa-pencil"></i></a>
+        <div class="col-md-1" style="margin-left: -1em;">
+          <a href="javascript:undefined;" style="text-decoration:none;color:inherit;" data-modal-url="{{URL::route('edit_org_info', ['id' => $value[0]['code']])}}" data-modal-id="{{ $value[0]['code'] }}_edit"><i class="fa fa-md fa-pencil"></i></a>
         </div>
-        <div class="col-md-1 text-right">
+        <div class="col-md-1 text-right" style="padding-left: 3em;">
           <label>Name:</label>
         </div>
-        <div class="col-md-9 text-left">
+        <div class="col-md-9 text-left" style="padding-left: 2em;">
           {{ $value[0]['name'] }}
         </div>
-        <div class="col-md-1 pull-right">
+        <div class="col-md-1 pull-right" style="margin-right: -1em;">
 
-            <a href="javascript:undefined;" style="text-decoration: none;color:inherit;"><i class="fa fa-md fa-trash"></i></a>
+            <a href="javascript:undefined;" style="text-decoration: none;color:inherit;" data-delete-element="section" data-delete-url="{{ URL::route('fakery') }}"><i class="fa fa-md fa-trash"></i></a>
         </div>
       </div>
       <div class="row">
@@ -130,7 +85,7 @@ $value = array_values($current_unit->toArray());
         </div>
       </div>
     </div>
-    </div>
+  </section>
   </div>
   <div class="org-role-show">
     <h3>Roles</h3>

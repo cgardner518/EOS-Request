@@ -1,14 +1,14 @@
 @extends('Labcoat::modals/standard')
 @section('modal-title')
-  Create/Update Mission Statements
+  {{-- Create/Update Mission Statements --}}
 
 @stop
 
 @section('modal-body')
   {!! Form::open([ 'url' => '/savePersonnel', 'class' => 'personnel_modal']) !!}
 
-    {!! Form::label('user', 'User:') !!}
-    {!! Form::select('user', $users) !!}
+    {{-- {!! Form::label('user', 'User:') !!}
+    {!! Form::select('user', $users) !!} --}}
 
   {!! Form::close() !!}
 @stop
